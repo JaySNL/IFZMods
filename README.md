@@ -69,6 +69,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **HousePower** | Powered homes get a separate `+mood` bonus; chimneys emit smoke. |
 | **HouseRebalance** | Citizens auto-migrate to higher-priority housing when capacity exists — no more "want better housing" complaints with empty mansions. |
 | **IFZQualityOfLife** | Misc QoL toggles. |
+| **LocaleFix** | Forces InvariantCulture so ConfigurationManager can edit `.` decimal floats on comma-locale systems (nl-NL, de-DE, fr-FR, etc.). |
 | **PerfPack** | Billboard / blood-decay throttle, AI building cache. Helps lategame. |
 | **SaveUnlock** | Bypasses the "Unsupported save file" version check. Loads older saves on newer game builds. Schema-breaking saves may still fail mid-load — back up first. |
 | **SmartWorkerRedist** | Smarter worker redistribution. |
