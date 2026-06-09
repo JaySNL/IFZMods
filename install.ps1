@@ -1,5 +1,5 @@
 <#
-  IFZMods installer — Windows
+  IFZMods installer - Windows
   Downloads BepInEx 5.4.23.2 x64 + drops in this repo's plugin DLLs.
   Idempotent: safe to re-run for upgrades.
 #>
@@ -42,7 +42,7 @@ if (-not (Test-Path "$Game\winhttp.dll")) {
     Remove-Item "$env:TEMP\$BepInExFile" -Force
     Write-Host "BepInEx installed." -ForegroundColor Green
 } else {
-    Write-Host "BepInEx already present — skipping download." -ForegroundColor DarkGray
+    Write-Host "BepInEx already present - skipping download." -ForegroundColor DarkGray
 }
 
 # Plugins
