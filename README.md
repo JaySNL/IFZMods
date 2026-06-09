@@ -73,6 +73,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **PerfPack** | Billboard / blood-decay throttle, AI building cache. Helps lategame. |
 | **SaveUnlock** | Bypasses the "Unsupported save file" version check. Loads older saves on newer game builds. Schema-breaking saves may still fail mid-load — back up first. |
 | **SmartWorkerRedist** | Smarter worker redistribution. |
+| **SplitUnlock** | Bypasses "Building parts contain too narrow or too complex elements" on splits. Lets you cut up castles, cathedrals, and other irregular generated shapes. |
 | **SquadAutoBehavior** | Auto-return squads to HQ at low ammo, auto-resupply, auto-hospital when wounded. |
 | **SquadMerge** | Shift + right-click squad → merge into target squad. |
 | **VehicleSquadSize** | Vehicle squads carry their actual seat count. |
