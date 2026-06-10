@@ -69,7 +69,7 @@
       "nexusModId": 25,
       "dllPath": "../../plugins/CinematicFX.dll",
       "name": "Cinematic FX",
-      "summary": "Burning structures, buffed blood and tracers, demolish dust, impact craters, night thunderstorms.",
+      "summary": "Buffed blood and tracers, demolish dust, impact craters, night thunderstorms.",
       "description": "Visual polish pass. Five independent subsystems, each toggleable:\n\n- **Burning Structures** — buildings below configurable HP threshold emit cloned in-game smoke from their roof.\n- **Buffed Blood** — scales blood splash particle size and emission rate.\n- **Buffed Tracers** — widens bullet tracer LineRenderer.\n- **Demolish Dust** — dust burst on deconstruct completion.\n- **Impact Craters** — extra smoke puff on explosion sites.\n- **Night Storms** — thunder rolls during night after configurable game day.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`, per-feature toggles under each subsystem section.",
       "category": "Miscellaneous",
       "tags": [
