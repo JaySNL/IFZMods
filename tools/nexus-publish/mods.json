@@ -23,8 +23,27 @@
   },
   "mods": [
     {
+      "key": "IFZModAPI",
+      "nexusModId": 22,
+      "dllPath": "../../plugins/000_IFZModAPI.dll",
+      "name": "IFZ Mod API",
+      "summary": "Shared library other IFZMods depend on. Controller cache, time/night helpers, VFX + reflection utilities. Install if a mod lists it as required.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "isLibrary": true,
+      "sections": {
+        "description": "Shared helper library for Infection Free Zone BepInEx mods. Loads first (filename 000_IFZModAPI.dll). Provides a cached game-controller registry (Buildings / Groups / Squads / Stockrooms / Work / ColorSwitcher / Weather / Light), time + night-blend helpers, VFX helpers (real smoke prefab clone, pooled point lights), cached reflection, and a PostProcessing FloatParameter shim.\n\nYou only need this if another mod lists it as a requirement. It does nothing on its own.",
+        "installation": "Drop 000_IFZModAPI.dll into <game>/BepInEx/plugins/. Nothing to configure. Required by ArmyBackup, Cinematic FX, and Smart Worker Redistribution (and possibly others over time).",
+        "mainFeatures": "- Loads before all other IFZMods (alphabetical + BepInDependency)\n- Shared controller-instance cache\n- Time / sunrise / sunset / NightBlend helpers\n- VFX: real Smoke prefab clone, pooled point-light flashes\n- Cached reflection + FloatParameter shim",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
+      }
+    },
+    {
       "key": "ArmyBackup",
-      "nexusModId": 23,
+      "nexusModId": 24,
       "dllPath": "../../plugins/ArmyBackup.dll",
       "name": "Army Backup AI Fix",
       "summary": "Request Backup Army tanks actually engage hostiles near your base instead of idling.",
@@ -40,11 +59,14 @@
         "mainFeatures": "- Auto-engage hostiles near player base\n- Hysteresis (ReassignDistance) prevents target dithering\n- Separate toggles for Infected vs Bandits\n- Configurable engagement range, tick rate, base defence radius\n- F1 ConfigurationManager support, master Enabled toggle",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "requires": [
+        "IFZModAPI"
+      ]
     },
     {
       "key": "CinematicFX",
-      "nexusModId": null,
+      "nexusModId": 25,
       "dllPath": "../../plugins/CinematicFX.dll",
       "name": "Cinematic FX",
       "summary": "Burning structures, buffed blood and tracers, demolish dust, impact craters, night thunderstorms.",
@@ -60,11 +82,14 @@
         "mainFeatures": "- Burning Structures: smoke from damaged buildings below HP threshold\n- Buffed Blood: scales splash particle size and emission\n- Buffed Tracers: wider tracer LineRenderer\n- Demolish Dust: dust burst on deconstruct completion\n- Impact Craters: smoke puff on explosion sites\n- Night Storms: thunder rolls after configurable game day",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "requires": [
+        "IFZModAPI"
+      ]
     },
     {
       "key": "ConstructionETA",
-      "nexusModId": null,
+      "nexusModId": 26,
       "dllPath": "../../plugins/ConstructionETA.dll",
       "name": "Construction ETA",
       "summary": "Shows time-remaining on build, repair, and deconstruct panels.",
@@ -84,7 +109,7 @@
     },
     {
       "key": "DarkerNights",
-      "nexusModId": null,
+      "nexusModId": 27,
       "dllPath": "../../plugins/DarkerNights.dll",
       "name": "Darker Nights",
       "summary": "Actually-dark nights, full-moon brightness bonus, smooth dawn/dusk, day tone-shaping.",
@@ -104,7 +129,7 @@
     },
     {
       "key": "DeconstructCancel",
-      "nexusModId": null,
+      "nexusModId": 28,
       "dllPath": "../../plugins/DeconstructCancel.dll",
       "name": "Cancel Paused Deconstruction",
       "summary": "Cancel paused deconstruction tasks — vanilla blocks the delete button on partial demolitions.",
@@ -125,7 +150,7 @@
     },
     {
       "key": "ExplosivesUnlock",
-      "nexusModId": null,
+      "nexusModId": 29,
       "dllPath": "../../plugins/ExplosivesUnlock.dll",
       "name": "Explosives Planting Unlock",
       "summary": "Force-unlocks explosives_planting so the open-beta demolition feature actually works.",
@@ -145,7 +170,7 @@
     },
     {
       "key": "GunfireLights",
-      "nexusModId": null,
+      "nexusModId": 30,
       "dllPath": "../../plugins/GunfireLights.dll",
       "name": "Gunfire Lights",
       "summary": "Real-time point lights for muzzle flashes, explosions, headlights, tower searchlights, antenna beacons.",
@@ -165,7 +190,7 @@
     },
     {
       "key": "HousePower",
-      "nexusModId": null,
+      "nexusModId": 31,
       "dllPath": "../../plugins/HousePower.dll",
       "name": "House Power",
       "summary": "Powered homes get a +mood bonus, chimneys emit smoke, entrance lights at night.",
@@ -185,7 +210,7 @@
     },
     {
       "key": "HouseRebalance",
-      "nexusModId": null,
+      "nexusModId": 32,
       "dllPath": "../../plugins/HouseRebalance.dll",
       "name": "House Rebalance",
       "summary": "Citizens auto-migrate to higher-priority housing when capacity exists.",
@@ -205,7 +230,7 @@
     },
     {
       "key": "IFZQualityOfLife",
-      "nexusModId": null,
+      "nexusModId": 33,
       "dllPath": "../../plugins/IFZQualityOfLife.dll",
       "name": "IFZ Quality of Life Bundle",
       "summary": "TowerHMG + VehicleAmmoFix + HeightAdvantage. Three small QoL patches in one DLL.",
@@ -226,7 +251,7 @@
     },
     {
       "key": "LocaleFix",
-      "nexusModId": null,
+      "nexusModId": 34,
       "dllPath": "../../plugins/LocaleFix.dll",
       "name": "Locale Fix (ConfigurationManager floats)",
       "summary": "Forces InvariantCulture so ConfigurationManager can edit decimal floats on comma-locale systems.",
@@ -246,7 +271,7 @@
     },
     {
       "key": "PerfPack",
-      "nexusModId": null,
+      "nexusModId": 35,
       "dllPath": "../../plugins/PerfPack.dll",
       "name": "Performance Pack",
       "summary": "Billboard / blood-decay throttle and opt-in AI building cache. Helps lategame frame rate.",
@@ -265,7 +290,7 @@
     },
     {
       "key": "SaveUnlock",
-      "nexusModId": null,
+      "nexusModId": 36,
       "dllPath": "../../plugins/SaveUnlock.dll",
       "name": "Save File Version Unlock",
       "summary": "Bypasses the Unsupported save file version check. Load older saves on newer game builds.",
@@ -285,7 +310,7 @@
     },
     {
       "key": "SmartWorkerRedist",
-      "nexusModId": null,
+      "nexusModId": 37,
       "dllPath": "../../plugins/SmartWorkerRedist.dll",
       "name": "Smart Worker Redistribution",
       "summary": "Stalled construction sites auto-pull workers from idle jobs.",
@@ -301,11 +326,14 @@
         "mainFeatures": "- Periodic redistribution sweep\n- Frees idle workers from stalled construction\n- Live jobs pick them up via vanilla WorkController paths\n- Tunable verbosity for debugging",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "requires": [
+        "IFZModAPI"
+      ]
     },
     {
       "key": "SplitUnlock",
-      "nexusModId": null,
+      "nexusModId": 38,
       "dllPath": "../../plugins/SplitUnlock.dll",
       "name": "Split Unlock (castles, cathedrals)",
       "summary": "Bypasses \"Building parts contain too narrow or too complex elements\" on building splits.",
@@ -325,7 +353,7 @@
     },
     {
       "key": "SquadAutoBehavior",
-      "nexusModId": null,
+      "nexusModId": 39,
       "dllPath": "../../plugins/SquadAutoBehavior.dll",
       "name": "Squad Auto Behavior",
       "summary": "Auto-medbay when wounded, auto-resupply ammo, auto-return-to-HQ when ammo runs dry.",
@@ -345,7 +373,7 @@
     },
     {
       "key": "SquadMerge",
-      "nexusModId": null,
+      "nexusModId": 40,
       "dllPath": "../../plugins/SquadMerge.dll",
       "name": "Squad Merge (right-click)",
       "summary": "Right-click your own squad with another selected → merge into target squad.",
@@ -365,7 +393,7 @@
     },
     {
       "key": "VehicleSquadSize",
-      "nexusModId": null,
+      "nexusModId": 41,
       "dllPath": "../../plugins/VehicleSquadSize.dll",
       "name": "Vehicle Squad Size",
       "summary": "Vehicle capacity scales with cargo slots: 4 + floor(cargoSlots/4). Pickup 5, Van 6, Truck 8, Bus 9.",
