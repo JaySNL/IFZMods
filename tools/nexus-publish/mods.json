@@ -24,7 +24,7 @@
   "mods": [
     {
       "key": "IFZModAPI",
-      "nexusModId": 22,
+      "nexusModId": 42,
       "dllPath": "../../plugins/000_IFZModAPI.dll",
       "name": "IFZ Mod API",
       "summary": "Shared library other IFZMods depend on. Controller cache, time/night helpers, VFX + reflection utilities. Install if a mod lists it as required.",
