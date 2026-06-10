@@ -6,3 +6,4 @@ profile/
 .env.*
 *.stackdump
 media/
+captured-requests.jsonl
