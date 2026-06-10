@@ -2,6 +2,8 @@
 
 BepInEx mod pack for **Infection Free Zone**.
 
+> See [CHANGELOG.md](CHANGELOG.md) for what's new.
+
 15 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
 ---
@@ -87,6 +89,8 @@ All mods are tunable. Two ways:
 
 1. **In-game (recommended):** press `F1`, find the mod, tweak.
 2. **Files:** edit `<game>/BepInEx/config/<mod-guid>.cfg` (auto-generated on first launch).
+
+**Disabling a mod without removing the DLL:** every mod has a master `Enabled` toggle under its `General` section. Flip it to `false` in F1 to silence that mod live. Useful for A/B testing whether a specific mod is causing a glitch.
 
 ---
 
