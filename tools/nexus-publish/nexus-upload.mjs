@@ -1,0 +1,157 @@
+#!/usr/bin/env node
+// Official Nexus Upload API pipeline — pushes each mod's DLL to its EXISTING mod page.
+//
+// The Nexus v3 API can create/replace mod FILES but CANNOT create a new mod PAGE.
+// Page creation is still the web form (see CHEATSHEET.md / publish.mjs). Once a page exists
+// and its numeric ID is in mods.json (nexusModId), this script uploads the DLL to it.
+//
+// Pipeline per mod (from openapi.yaml):
+//   1. GET  /v3/games/{game}/mods/{numericId}        -> resolve opaque mod UID (data.id)
+//   2. POST /v3/uploads {size_bytes, filename}        -> {id, presigned_url}
+//   3. PUT  <presigned_url>  (raw DLL bytes)          -> S3
+//   4. POST /v3/uploads/{id}/finalise                 -> close session
+//   5. poll GET /v3/uploads/{id} until state=available
+//   6. POST /v3/mod-files {upload_id, mod_id, name, version, file_category:"main"}
+//
+// Auth: header `apikey: <key>`. Reads key from env NEXUS_API_KEY (never hardcoded/committed).
+//
+// Usage:
+//   NEXUS_API_KEY=... node nexus-upload.mjs            # upload all mods that have a nexusModId
+//   NEXUS_API_KEY=... node nexus-upload.mjs ArmyBackup # upload a single mod by key
+//
+// On Windows PowerShell:  $env:NEXUS_API_KEY="..."; node nexus-upload.mjs
+
+import fs from 'node:fs'
+import path from 'node:path'
+import url from 'node:url'
+
+const HERE = path.dirname(url.fileURLToPath(import.meta.url))
+
+// Load .env.local (gitignored) if present, without overwriting an already-set env var.
+const envPath = path.join(HERE, '.env.local')
+if (fs.existsSync(envPath)) {
+  for (const line of fs.readFileSync(envPath, 'utf8').split(/\r?\n/)) {
+    const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/)
+    if (m && !process.env[m[1]]) process.env[m[1]] = m[2]
+  }
+}
+
+const CFG = JSON.parse(fs.readFileSync(path.join(HERE, 'mods.json'), 'utf8'))
+const API = 'https://api.nexusmods.com/v3'
+const GAME = CFG.game.slug
+const KEY = process.env.NEXUS_API_KEY
+
+if (!KEY) {
+  console.error('[fatal] NEXUS_API_KEY env var not set.')
+  console.error('  PowerShell:  $env:NEXUS_API_KEY="<key>"; node nexus-upload.mjs')
+  console.error('  bash:        NEXUS_API_KEY=<key> node nexus-upload.mjs')
+  process.exit(1)
+}
+
+const onlyKey = process.argv[2] || null
+const H = { apikey: KEY, 'Content-Type': 'application/json' }
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+// Nexus / R2 occasionally connect-timeouts under rapid calls. Retry with backoff + a generous
+// per-attempt timeout (undici default connect timeout is only 10s).
+async function rfetch(url, opts = {}, attempts = 4) {
+  let lastErr
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const ctrl = new AbortController()
+      const t = setTimeout(() => ctrl.abort(), 60_000)
+      try {
+        return await fetch(url, { ...opts, signal: ctrl.signal })
+      } finally {
+        clearTimeout(t)
+      }
+    } catch (e) {
+      lastErr = e
+      const wait = 2000 * (i + 1)
+      console.log(`  …retry ${i + 1}/${attempts} after ${e.cause?.code || e.message} (waiting ${wait}ms)`)
+      await sleep(wait)
+    }
+  }
+  throw lastErr
+}
+
+async function jget(url) {
+  const r = await rfetch(url, { headers: { apikey: KEY } })
+  if (!r.ok) throw new Error(`GET ${url} -> ${r.status} ${await r.text()}`)
+  return r.json()
+}
+async function jpost(url, body) {
+  const r = await rfetch(url, { method: 'POST', headers: H, body: body ? JSON.stringify(body) : undefined })
+  const txt = await r.text()
+  if (!r.ok) throw new Error(`POST ${url} -> ${r.status} ${txt}`)
+  return txt ? JSON.parse(txt) : {}
+}
+
+async function resolveUid(numericId) {
+  const res = await jget(`${API}/games/${GAME}/mods/${numericId}`)
+  return res.data.id
+}
+
+async function uploadFile(dllAbs) {
+  const bytes = fs.readFileSync(dllAbs)
+  const filename = path.basename(dllAbs)
+  // 1. create upload session
+  const up = await jpost(`${API}/uploads`, { size_bytes: bytes.length, filename })
+  const { id, presigned_url } = up.data
+  // 2. PUT raw bytes to presigned R2/S3 URL. The URL signs content-disposition;content-type;host,
+  //    so both headers must be present (no apikey — it's a signed URL).
+  const put = await rfetch(presigned_url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/octet-stream',
+      'Content-Disposition': `attachment; filename="${filename}"`,
+    },
+    body: bytes,
+  })
+  if (!put.ok) throw new Error(`PUT presigned -> ${put.status} ${await put.text()}`)
+  // 3. finalise
+  await jpost(`${API}/uploads/${id}/finalise`, null)
+  // 4. poll until available
+  for (let i = 0; i < 30; i++) {
+    const st = await jget(`${API}/uploads/${id}`)
+    if (st.data.state === 'available') return id
+    await sleep(2000)
+  }
+  throw new Error(`upload ${id} never reached state=available`)
+}
+
+async function pushMod(mod) {
+  const dllAbs = path.resolve(HERE, mod.dllPath)
+  if (!fs.existsSync(dllAbs)) { console.log(`[skip] ${mod.key} — DLL missing: ${dllAbs}`); return }
+  console.log(`\n=== ${mod.key} (mod ${mod.nexusModId}) ===`)
+  const uid = await resolveUid(mod.nexusModId)
+  console.log(`  uid=${uid}`)
+  const uploadId = await uploadFile(dllAbs)
+  console.log(`  upload=${uploadId} available`)
+  const name = mod.name.replace(/[^a-zA-Z0-9 _'().-]/g, '').slice(0, 50)
+  try {
+    await jpost(`${API}/mod-files`, {
+      upload_id: uploadId,
+      mod_id: uid,
+      name,
+      version: CFG.common.version,
+      file_category: 'main',
+      description: mod.summary?.slice(0, 250) || '',
+    })
+    console.log(`  ✓ created mod file "${name}" v${CFG.common.version}`)
+  } catch (e) {
+    console.log(`  ✗ createModFile failed (file may already exist — use update-group flow): ${e.message.split('\n')[0]}`)
+  }
+}
+
+const targets = CFG.mods.filter((m) => m.nexusModId && (!onlyKey || m.key === onlyKey))
+if (targets.length === 0) {
+  console.error(onlyKey ? `[fatal] ${onlyKey} has no nexusModId in mods.json` : '[fatal] no mods have a nexusModId yet — create pages first')
+  process.exit(1)
+}
+console.log(`Uploading ${targets.length} mod(s) to Nexus (${GAME})...`)
+for (const m of targets) {
+  try { await pushMod(m) } catch (e) { console.log(`[error] ${m.key}: ${e.message.split('\n')[0]}`) }
+  await sleep(3000) // gentle pacing
+}
+console.log('\n[done]')

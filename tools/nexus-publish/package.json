@@ -1,0 +1,16 @@
+{
+  "name": "ifzmods-nexus-publish",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Playwright pipeline to bulk-create IFZMods Nexus pages.",
+  "scripts": {
+    "login": "node publish.mjs --login-only",
+    "create": "node publish.mjs --create",
+    "update": "node publish.mjs --update",
+    "dry-run": "node publish.mjs --create --dry-run"
+  },
+  "dependencies": {
+    "playwright": "^1.49.0"
+  }
+}

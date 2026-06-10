@@ -6,6 +6,19 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-11
+
+### Added
+- **IFZModAPI** (`000_IFZModAPI.dll`) — new shared library, always loads first (filename prefix + `BepInDependency`). Extracts patterns duplicated across mods: controller-instance cache (Buildings / Groups / Squads / Stockrooms / Work / ColorSwitcher / Weather / Light), Time helpers (Hour / Sunrise / Sunset / IsNight / NightBlend), Vfx helpers (real `Smoke._smoke` prefab clone, pooled point-light flash), cached reflection, and a PostProcessing FloatParameter shim. ArmyBackup, SmartWorkerRedist, and CinematicFX now depend on it instead of carrying their own copies.
+
+### Changed
+- **CinematicFX → 1.1.0: BurningStructures (smoke/fire on damaged buildings) removed and pinned.** The game ships no persistent fire asset and only a small chimney-scale smoke particle system, so a convincing "building heavily damaged / on fire" effect can't be assembled from real game assets without faking it (oversized chimney puffs + a synthetic light dressed up as fire). Rather than ship something that doesn't read right, the feature is parked until either the game exposes a fire / large-smoke effect, or we ship a custom particle asset bundle. Blood, tracers, demolish dust, impact craters, and night storms are unaffected.
+
+### Fixed
+- **IFZModAPI smoke clone rendered nothing.** Root cause (found by diffing against HousePower's working chimney smoke): the prefab was sourced from `Resources.FindObjectsOfTypeAll` which returns inactive template objects, then `Instantiate` produced an inactive clone, and `ParticleSystem.Play()` on an inactive GameObject is a no-op. `Vfx.CloneSmokeAt` now sources the real `Smoke._smoke` PS and forces `SetActive(true)` + play. (Kept for DemolishDust / future use; the burning-structures consumer is pinned per above.)
+
+---
+
 ## 2026-06-10
 
 ### Added

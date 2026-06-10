@@ -1,0 +1,86 @@
+# Pushes every DLL in plugins/ to its existing Nexus mod page on every tag.
+#
+# Requires:
+#   - Each mod page already created via the web form (see tools/nexus-publish/CHEATSHEET.md).
+#   - Mod IDs recorded in tools/nexus-publish/mods.json under each mod's nexusModId.
+#   - Repository secret NEXUS_API_KEY — your personal API key from
+#     https://next.nexusmods.com/settings/api-keys.
+#
+# Usage:
+#   git tag v1.2.0
+#   git push --tags
+#
+# Each mod in the matrix gets a new file uploaded with version = the tag (without 'v' prefix),
+# description = its entry in CHANGELOG.md.
+
+name: Publish to Nexus
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (e.g. 1.2.0)'
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 2          # Nexus rate-limits; keep concurrency low
+      matrix:
+        # Pairs of (mod key in mods.json, Nexus numeric mod ID).
+        # Fill in nexusModId for each mod after manually creating its page.
+        # Mods without an ID yet should be commented out.
+        mod:
+          # - { key: ArmyBackup,        id: 0,  file: plugins/ArmyBackup.dll }
+          # - { key: CinematicFX,       id: 0,  file: plugins/CinematicFX.dll }
+          # - { key: ConstructionETA,   id: 0,  file: plugins/ConstructionETA.dll }
+          # - { key: DarkerNights,      id: 0,  file: plugins/DarkerNights.dll }
+          # - { key: DeconstructCancel, id: 0,  file: plugins/DeconstructCancel.dll }
+          # - { key: ExplosivesUnlock,  id: 0,  file: plugins/ExplosivesUnlock.dll }
+          # - { key: GunfireLights,     id: 0,  file: plugins/GunfireLights.dll }
+          # - { key: HousePower,        id: 0,  file: plugins/HousePower.dll }
+          # - { key: HouseRebalance,    id: 0,  file: plugins/HouseRebalance.dll }
+          # - { key: IFZQualityOfLife,  id: 0,  file: plugins/IFZQualityOfLife.dll }
+          # - { key: LocaleFix,         id: 0,  file: plugins/LocaleFix.dll }
+          # - { key: PerfPack,          id: 0,  file: plugins/PerfPack.dll }
+          # - { key: SaveUnlock,        id: 0,  file: plugins/SaveUnlock.dll }
+          # - { key: SmartWorkerRedist, id: 0,  file: plugins/SmartWorkerRedist.dll }
+          # - { key: SplitUnlock,       id: 0,  file: plugins/SplitUnlock.dll }
+          # - { key: SquadAutoBehavior, id: 0,  file: plugins/SquadAutoBehavior.dll }
+          # - { key: SquadMerge,        id: 0,  file: plugins/SquadMerge.dll }
+          # - { key: VehicleSquadSize,  id: 0,  file: plugins/VehicleSquadSize.dll }
+          - { key: PLACEHOLDER, id: 0, file: README.md }   # remove once any mod ID is filled in
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip placeholder
+        if: matrix.mod.key == 'PLACEHOLDER'
+        run: |
+          echo "No mod IDs configured yet. Edit .github/workflows/publish-nexus.yml matrix."
+          exit 0
+
+      - name: Resolve version
+        id: ver
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload ${{ matrix.mod.key }} to Nexus
+        if: matrix.mod.key != 'PLACEHOLDER'
+        uses: Nexus-Mods/upload-action@v3
+        with:
+          api-key: ${{ secrets.NEXUS_API_KEY }}
+          game: infectionfreezone
+          mod-id: ${{ matrix.mod.id }}
+          file-path: ${{ matrix.mod.file }}
+          version: ${{ steps.ver.outputs.version }}
+          file-description: 'See CHANGELOG.md for changes in this release.'

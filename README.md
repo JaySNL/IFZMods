@@ -61,8 +61,9 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 
 | Mod | What it does |
 |---|---|
-| **ArmyBackup** | Fixes "Request Backup" tanks — they now actively engage hostiles near your base instead of idling. |
-| **CinematicFX** | Burning structures, buffed blood/tracers, demolish dust, impact craters, night thunderstorms. |
+| **000_IFZModAPI** | Shared library (loads first). Controller cache, time/night helpers, VFX + reflection utilities used by other mods. Required by ArmyBackup, SmartWorkerRedist, CinematicFX. Keep it in `plugins/`. |
+| **ArmyBackup** | Fixes "Request Backup" tanks — they now actively engage hostiles near your base instead of idling. *(Requires 000_IFZModAPI.)* |
+| **CinematicFX** | Buffed blood/tracers, demolish dust, impact craters, night thunderstorms. (Burning-structures smoke/fire pinned — see CHANGELOG.) *(Requires 000_IFZModAPI.)* |
 | **ConstructionETA** | Shows time-remaining on build / repair / deconstruct panels. |
 | **DarkerNights** | Actually dark nights. Full-moon brightness bonus. Smooth dawn/dusk transitions. |
 | **DeconstructCancel** | Cancel paused deconstruction tasks (game won't normally let you). |
@@ -74,7 +75,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **LocaleFix** | Forces InvariantCulture so ConfigurationManager can edit `.` decimal floats on comma-locale systems (nl-NL, de-DE, fr-FR, etc.). |
 | **PerfPack** | Billboard / blood-decay throttle, AI building cache. Helps lategame. |
 | **SaveUnlock** | Bypasses the "Unsupported save file" version check. Loads older saves on newer game builds. Schema-breaking saves may still fail mid-load — back up first. |
-| **SmartWorkerRedist** | Smarter worker redistribution. |
+| **SmartWorkerRedist** | Smarter worker redistribution. *(Requires 000_IFZModAPI.)* |
 | **SplitUnlock** | Bypasses "Building parts contain too narrow or too complex elements" on splits. Lets you cut up castles, cathedrals, and other irregular generated shapes. |
 | **SquadAutoBehavior** | Auto-return squads to HQ at low ammo, auto-resupply, auto-hospital when wounded. |
 | **SquadMerge** | Shift + right-click squad → merge into target squad. |
