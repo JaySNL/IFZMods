@@ -8,6 +8,9 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-06-11
 
+### Fixed
+- **Crash loading older saves (SmartWorkerRedist + IFZQualityOfLife).** `WorkBase.CanExecute()` NREs deep in `ProductionData.GetProfitPairs()` when a production building's draft data is incomplete — which happens on saves from older game versions loaded past the version gate (e.g. via SaveUnlock). The exception escaped our per-tick work scans and tripped the game's critical-error reporter; new games were unaffected (fresh draft data). Guarded all three `CanExecute()` call sites (SmartWorkerRedist `RedistDriver`, IFZQoL `WorkController.CustomUpdate` rewrite, IFZQoL `SmartWorkerRedistribution`) to skip malformed works instead of throwing.
+
 ### Added
 - **IFZModAPI** (`000_IFZModAPI.dll`) — new shared library, always loads first (filename prefix + `BepInDependency`). Extracts patterns duplicated across mods: controller-instance cache (Buildings / Groups / Squads / Stockrooms / Work / ColorSwitcher / Weather / Light), Time helpers (Hour / Sunrise / Sunset / IsNight / NightBlend), Vfx helpers (real `Smoke._smoke` prefab clone, pooled point-light flash), cached reflection, and a PostProcessing FloatParameter shim. ArmyBackup, SmartWorkerRedist, and CinematicFX now depend on it instead of carrying their own copies.
 
