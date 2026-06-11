@@ -48,7 +48,15 @@ if (!KEY) {
   process.exit(1)
 }
 
-const onlyKey = process.argv[2] || null
+// Modes:
+//   node nexus-upload.mjs [key]                  -> first upload (createModFile)
+//   node nexus-upload.mjs update <version> [key] -> new version on existing file (createUpdateGroupVersion)
+const isUpdate = process.argv[2] === 'update'
+const updateVersion = isUpdate ? process.argv[3] : null
+// One or more keys may follow (update mode: argv[4..], first-upload mode: argv[2..]).
+const keyList = (isUpdate ? process.argv.slice(4) : process.argv.slice(2)).filter(Boolean)
+const keySet = keyList.length ? new Set(keyList) : null
+if (isUpdate && !updateVersion) { console.error('[fatal] update mode needs a version: node nexus-upload.mjs update 1.1.0 [key ...]'); process.exit(1) }
 const H = { apikey: KEY, 'Content-Type': 'application/json' }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -144,14 +152,43 @@ async function pushMod(mod) {
   }
 }
 
-const targets = CFG.mods.filter((m) => m.nexusModId && (!onlyKey || m.key === onlyKey))
+// --- versioned update: add a new version to the mod's existing file update group ---
+async function updateMod(mod, version) {
+  const dllAbs = path.resolve(HERE, mod.dllPath)
+  if (!fs.existsSync(dllAbs)) { console.log(`[skip] ${mod.key} — DLL missing: ${dllAbs}`); return }
+  console.log(`\n=== ${mod.key} (mod ${mod.nexusModId}) -> v${version} ===`)
+  const uid = await resolveUid(mod.nexusModId)
+  const groups = (await jget(`${API}/mods/${uid}/file-update-groups`)).data.groups || []
+  if (!groups.length) { console.log(`  ✗ no update groups (was a file ever uploaded? run first-upload mode)`); return }
+  const group = groups.find((g) => g.is_active) || groups[0]
+  console.log(`  uid=${uid} group=${group.id}${group.name ? ` (${group.name})` : ''}`)
+  const uploadId = await uploadFile(dllAbs)
+  console.log(`  upload=${uploadId} available`)
+  const name = mod.name.replace(/[^a-zA-Z0-9 _'().-]/g, '').slice(0, 50)
+  try {
+    await jpost(`${API}/mod-file-update-groups/${group.id}/versions`, {
+      upload_id: uploadId,
+      name,
+      version,
+      file_category: 'main',
+      description: mod.summary?.slice(0, 250) || '',
+      archive_existing_file: true,
+    })
+    console.log(`  ✓ new version "${name}" v${version} (old archived)`)
+  } catch (e) {
+    console.log(`  ✗ createUpdateGroupVersion failed: ${e.message.split('\n')[0]}`)
+  }
+}
+
+const targets = CFG.mods.filter((m) => m.nexusModId && (!keySet || keySet.has(m.key)))
 if (targets.length === 0) {
-  console.error(onlyKey ? `[fatal] ${onlyKey} has no nexusModId in mods.json` : '[fatal] no mods have a nexusModId yet — create pages first')
+  console.error(keySet ? `[fatal] none of [${[...keySet].join(', ')}] have a nexusModId in mods.json` : '[fatal] no mods have a nexusModId yet — create pages first')
   process.exit(1)
 }
-console.log(`Uploading ${targets.length} mod(s) to Nexus (${GAME})...`)
+console.log(`${isUpdate ? `Versioning ${targets.length} mod(s) to v${updateVersion}` : `Uploading ${targets.length} mod(s)`} on Nexus (${GAME})...`)
 for (const m of targets) {
-  try { await pushMod(m) } catch (e) { console.log(`[error] ${m.key}: ${e.message.split('\n')[0]}`) }
+  try { if (isUpdate) await updateMod(m, updateVersion); else await pushMod(m) }
+  catch (e) { console.log(`[error] ${m.key}: ${e.message.split('\n')[0]}`) }
   await sleep(3000) // gentle pacing
 }
 console.log('\n[done]')
