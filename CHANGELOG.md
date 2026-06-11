@@ -9,6 +9,7 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 ## 2026-06-11
 
 ### Fixed
+- **GunfireLights 1.1.0 — crash on older saves with defence towers (beta API break).** The 0.26.6 beta renamed/removed `StructureAttackPerformer.LastAttackedGroup`; the tower-searchlight code called it directly, throwing `MissingMethodException` every frame once any defence tower exists → the critical-error reporter tripped. New games didn't hit it until a tower was built. Now reads the property via reflection — present on stable → searchlight tracks the last-attacked target; absent on beta → graceful idle-sweep. **One DLL works on both beta and stable**, no separate builds.
 - **Crash loading older saves (SmartWorkerRedist + IFZQualityOfLife).** `WorkBase.CanExecute()` NREs deep in `ProductionData.GetProfitPairs()` when a production building's draft data is incomplete — which happens on saves from older game versions loaded past the version gate (e.g. via SaveUnlock). The exception escaped our per-tick work scans and tripped the game's critical-error reporter; new games were unaffected (fresh draft data). Guarded all three `CanExecute()` call sites (SmartWorkerRedist `RedistDriver`, IFZQoL `WorkController.CustomUpdate` rewrite, IFZQoL `SmartWorkerRedistribution`) to skip malformed works instead of throwing.
 
 ### Added
