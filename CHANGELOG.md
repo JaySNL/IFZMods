@@ -6,6 +6,16 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-12
+
+### Fixed (reported by Vivi)
+- **VehicleSquadSize 1.1.0 — "clown car" over-capacity.** A big squad (e.g. 8 from a truck) climbing into a small vehicle (a 4-seat sports car) kept showing all 8 pips — `GetMaxGroupCount` was inflated to the actual member count even inside a vehicle, so the cap never bound and the squad stayed permanently over capacity. Inside a vehicle the cap is now the **hard vehicle capacity** (`4 + floor(cargoSlots / 4)`), never inflated to the member count; the game's own seat logic then stops overfill. SquadMerge's twin `GetMaxGroupCount` postfix now also skips vehicle-bound squads so it can't re-introduce the same bug.
+- **VehicleSquadSize 1.1.0 — squad panel "sliced in half / shoved up, no way to scroll back."** The expanded seat grid kept the previous squad's scroll offset: select a truck (which scrolls), scroll down, then select a small car and its panel stayed pushed up off-screen with scrolling disabled. The grid content now snaps back to the top whenever the selected squad changes, and a vehicle whose capacity doesn't need scrolling always resets to the top instead of inheriting a stale offset.
+- **SquadMerge 1.1.0 — unintended merges during combat.** Right-clicking your own squad to reposition while fighting a swarm fired a merge. New `SkipInCombat` toggle (default **on**) skips merging while either squad has an enemy in view range (`EnemiesProvider.HaveEnemyInViewRange()`), falling back to the vanilla follow order so the click still does something sensible. Turn off to merge mid-fight.
+- **GunfireLights 1.2.1 — tower searchlights / beacons / headlights invisible at normal zoom (regression from 1.2.0's distance cull).** The 1.2.0 `MaxRenderDistance` cull measured 3D distance from the camera, but IFZ's RTS rig sits directly above the focus at `Y = Zoom` and zooms up past `minY + 450` units — so the camera's straight-line distance to any ground tower is dominated by camera **height**, exceeding a 130 m budget at almost every zoom. Result: every searchlight got deactivated even though it was dead-center on screen (12 searchlights confirmed *attached* in the log, just culled). Cull is now an **off-screen (viewport) test** — zoom-invariant, lights visible on screen stay lit — with `MaxRenderDistance` kept only as a horizontal-distance (XZ, never camera height) backstop, default raised to 250 m. Fixes searchlights, antenna beacons, and vehicle headlights together.
+
+---
+
 ## 2026-06-11
 
 ### Added / Fixed
