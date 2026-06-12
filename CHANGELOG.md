@@ -6,6 +6,11 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-13
+
+### Fixed
+- **DarkerNights 1.1.1 — day-tone sliders now apply live.** Saturation / contrast / warmth edits in the F1 menu appeared frozen until the in-game time moved. Root cause: those three were written into ColorSwitcher's `*_Day_PP` *source* fields, but the game only consumes those into the live `colorGrading` during the sunrise/sunset lerp windows — at a stable day or night (i.e. most of the time) `UpdatePostProcess` early-returns and never reads them, so the edit just sat in the source field. They're now driven straight into the live `colorGrading` params each tick (reconstructing the vanilla night→day base + boost × day-weight), the same direct-write path the exposure/ambient values already used — so edits are live regardless of time of day. The runtime-disable revert now also restores those tone params to their vanilla base instead of zeroing them (no more flat image after a stable-time disable). Night params (AbsoluteExposure, NightExposureBias, ambient) were already live and are unchanged.
+
 ## 2026-06-12
 
 ### Added
