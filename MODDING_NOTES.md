@@ -101,6 +101,52 @@ Legend: ✅ works · ❌ broken/inert · ⚠️ works-with-caveat · 🧭 how-to
 - ✅ **GetMaxGroupCount** vehicle cap: inside a vehicle, report the hard vehicle capacity
   (`4 + floor(cargoSlots/4)`), never inflate to member count, or you get the "clown car" overfill.
 
+## Candidate features (assessed, not built)
+
+### "Ruined/occupied zones" — environmental storytelling POIs (community request, 2026-06-13)
+
+Spawn walled compounds onto the map — ruined (fallen-zone storytelling) or active (bandit-held).
+Optional start-tile variant = head-start base. **Verdict: LOW–MOD. Pieces exist; no new assets
+needed.** Core insight: **don't generate buildings — repurpose an existing OSM building cluster**
+(map is data-driven OSM, not procedural).
+
+Confirmed seams (decompiled, 2026-06-13):
+- 🧭 **Ruins are built-in.** `StructureStateType` enum has `Abandoned`, `Ruined`, `Rubble`
+  (`Gameplay/Rebuilding/StateMachine/StructureStateType.cs`). State classes
+  `BuildingRuinedState` / `BuildingAbandonedState` / `BuildingRubbleState`. Drive via the
+  `StructureStateMachine` (`ChangeTo(StructureStateType.Ruined)`).
+- 🧭 **Ruin visuals exist.** `StructureAppearance` holds `regularMesh` + `ruinMesh`.
+  `BuildingMaterialChanger`: `SetRuinsHeight(0..1)` (collapse shader), `SetDemolishedMat()` →
+  `RuinsMaterial`, `BrokenWindowsSetter(bool)`, `SetRoofOpacity`. `BuildingVisualsConfig` has
+  `Material` / `RuinsMaterial` / `TransparentMaterial`. ❌ **No fire/burnt/scorched state** —
+  collapse + abandoned-decay only; scorch = custom shader.
+- 🧭 **Debris/rubble props.** `BuildingDestruction.CreateDebris(multiplier)` scatters gatherable
+  `Debris` in the footprint (`BuildingDestructionConfig.debrisPer100m2OfBuilding`).
+- ✅ **Walls/gates spawn standalone (not convoy-locked).**
+  `WallConstructor.CreateWall(Vector3 start, Vector3 end, PlaceableObjectDraft draft, float snapRange,
+  List<Wall> result, bool isGenerated)` chains segments; `isGenerated=true` = auto-placed, not
+  player-built. `WallFactory.Create(prefab, pos, rot, isGenerated)`. Gates:
+  `GatesController.CreateGate(PlaceableObjectDraft)` / `GateFactory.Create(prefab)`. Towers via
+  factory (all implement `IWallSnap`).
+- ❌ **No compound/layout template system.** No `*StructureGroup` / `*CompoundLayout`. Must
+  orchestrate perimeter yourself: compute hull around the building cluster → chain `CreateWall`
+  → drop gates/towers. **This is the real work** (irregular-cluster perimeter geometry).
+- ❌ **Convoys are monolithic prefabs** — walls baked in, NOT a reusable layout assembler. Don't
+  mine them for compound assembly.
+- 🧭 **Active variant ≈ existing Hideout.** `HideoutBuilder.Build(HideoutDraft, Building)` wraps an
+  existing building as a bandit camp (no walls of its own). Add generated walls around it for the
+  "fortified, still-held" look. See [[Hideout == Lair]] note above.
+- 🧭 **Map-gen injection seams.** Gen chain bound in `Map.GetMapGenerator()` (`MapEssentials/Map.cs`,
+  `builder.BindGenerator<…>()`). `HideoutsLocationsGenerator : LateGenerator` already picks buildings
+  late → mirror it for zone-cluster selection, or do it post-load on `Map.OnGenerated`. POI tagging:
+  `PoiGenerator.DoGeneration` / `BuildingPoiCreator.Execute(Building, token)`.
+- ⚠️ **Walls need a `PlaceableObjectDraft` + prefab ref** (pull from wall/gate controllers or drafts)
+  and run inside async gen timing. Start-tile head-start (player pre-owns the compound) is the
+  hardest slice — touches claim/save/init (`Structure.IsClaimedByPlayer`).
+
+Difficulty ladder: ruined storytelling zone **LOW–MOD** · active bandit zone **LOW–MOD** · random
+placement **MOD** (clustering + gen seam) · start-tile player head-start **MOD–HIGH** (claim/save).
+
 ## Nexus publishing
 
 - 🧭 **Official v3 API uploads FILES only, cannot create PAGES.** Page creation = web form. Once a
