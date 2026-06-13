@@ -71,6 +71,12 @@ Legend: ✅ works · ❌ broken/inert · ⚠️ works-with-caveat · 🧭 how-to
   them. Reach the controller via `EventsSystemController.HideoutsController`, or patch the
   `HideoutsController` constructor. `Hideout`: `Id`, `Position`, `Fraction`, `PatrollingGroups`,
   `TryCreateGroupFromMainGroup(out Group)`. (RaiderEscalation)
+- ✅ **Cheap off-screen density = `VirtualGroup` / `VirtualGroupsController`.** `VirtualGroup` is a
+  lightweight `IGroup` (`Show()`, `OnBecomeVisible/Invisible`); `VirtualGroupsController.Create(draft,
+  size[, weapon])` makes them. The engine already represents distant/off-screen swarms virtually and
+  materializes near the player — so "surrounded by thousands" is feasible WITHOUT thousands of active
+  sim units (the game is main-thread bound at ~350 active groups). This is the lever for any
+  large-horde / "Surrounded" (They-Are-Billions-style) mode. (2026-06-13)
 - 🧭 **Second, unrelated "lair":** `Building : ILair` + `MarkedAsLairCount` is an AI-targeting flag
   (infected nesting in a building), not the clear/reward structure. Don't conflate.
 - 🧭 **Fractions:** `Player`, `Infected` (swarms), `Bandits`, `Bandits_ransom`, `Army`, `Immigrants`.
