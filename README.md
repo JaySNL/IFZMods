@@ -4,7 +4,7 @@ BepInEx mod pack for **Infection Free Zone**.
 
 > See [CHANGELOG.md](CHANGELOG.md) for what's new.
 
-15 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
+20 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
 ---
 
@@ -65,7 +65,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **ArmyBackup** | Fixes "Request Backup" tanks — they now actively engage hostiles near your base instead of idling. *(Requires 000_IFZModAPI.)* |
 | **CinematicFX** | Buffed blood/tracers, demolish dust, impact craters, night thunderstorms. (Burning-structures smoke/fire pinned — see CHANGELOG.) *(Requires 000_IFZModAPI.)* |
 | **ConstructionETA** | Shows time-remaining on build / repair / deconstruct panels. |
-| **DarkerNights** | Actually dark nights. Full-moon brightness bonus. Smooth dawn/dusk transitions. |
+| **DarkerNights** | Actually dark nights, with live tuning. Night brightness is controlled by **NightSunFactor** (Lighting) — raise to brighten, lower to darken. Full-moon bonus, smooth dawn/dusk, day tone-shaping. |
 | **DeconstructCancel** | Cancel paused deconstruction tasks (game won't normally let you). |
 | **ExplosivesUnlock** | Unlocks explosives crafting earlier. |
 | **GunfireLights** | Real-time point lights for muzzle flashes, explosions, vehicle headlights, tower searchlights, antenna aviation beacons. |
@@ -73,13 +73,14 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **HouseRebalance** | Citizens auto-migrate to higher-priority housing when capacity exists — no more "want better housing" complaints with empty mansions. |
 | **IFZQualityOfLife** | Misc QoL toggles. |
 | **LocaleFix** | Forces InvariantCulture so ConfigurationManager can edit `.` decimal floats on comma-locale systems (nl-NL, de-DE, fr-FR, etc.). |
-| **PerfPack** | Billboard / blood-decay throttle, AI building cache. Helps lategame. |
+| **PerfPack** | Billboard / blood-decay throttle, AI building cache, and an A\* graph-update throttle (spreads navmesh rebuilds from build/demolish bursts across frames). Helps the CPU-bound lategame. |
+| **RaiderEscalation** | Raider camps that dynamically grow when ignored, weaken when you fight them off, recoup, occasionally raid your base, and drop loot when wiped. Also pays out on cleared swarm nests. Fully tunable. *(Requires 000_IFZModAPI.)* |
 | **SaveUnlock** | Bypasses the "Unsupported save file" version check. Loads older saves on newer game builds. Schema-breaking saves may still fail mid-load — back up first. |
 | **SmartWorkerRedist** | Smarter worker redistribution. *(Requires 000_IFZModAPI.)* |
 | **SplitUnlock** | Bypasses "Building parts contain too narrow or too complex elements" on splits. Lets you cut up castles, cathedrals, and other irregular generated shapes. |
 | **SquadAutoBehavior** | Auto-return squads to HQ at low ammo, auto-resupply, auto-hospital when wounded. |
-| **SquadMerge** | Shift + right-click squad → merge into target squad. |
-| **VehicleSquadSize** | Vehicle squads carry their actual seat count. |
+| **SquadMerge** | Right-click one of *your own* squads with another selected → merges their members into one squad (soft cap 8). This is how you get a bigger squad **on foot**. Skips merging during combat by default. |
+| **VehicleSquadSize** | A squad gains seats **only while inside a vehicle** (capacity = `4 + floor(cargoSlots / 4)` → Pickup 5, Van 6, Truck 8, Bus 9). The extra panel slots are vehicle passenger seats — on foot the game still caps at 4, so they stay empty until you board. For a bigger **foot** squad, use **SquadMerge**. |
 | **ConfigurationManager** | Press **F1** in-game → tweak every mod's config live. |
 
 ---
@@ -113,6 +114,8 @@ Delete `winhttp.dll` and the `BepInEx/` folder from the game install dir. Done. 
 ## Build from source
 
 Mods aren't in this repo (DLLs only). Source lives at `C:\Users\Jooshua\Projects\IFZ-Modding`. Each mod is a `dotnet build -c Release` netstandard2.1 project.
+
+See [MODDING_NOTES.md](MODDING_NOTES.md) — a living tracker of what works / is broken / dead-ends in the IFZ engine (lighting, performance, engine systems, publishing). Check it before re-investigating a quirk.
 
 ---
 
