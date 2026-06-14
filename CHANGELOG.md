@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-14
+
+### Added
+- **Surrounded 0.2.1 — new "Surrounded" siege game-mode mod.** Turns the map into a sustained siege: the vanilla swarm attacks more often and bigger, and building scavenge loot is multiplied so you're pushed out to forage between assaults.
+  - **Siege** drives the game's OWN swarm system by scaling two difficulty multipliers it already reads live: `SwarmsIntensity` (a spawn-delay multiplier → divided by `SwarmFrequencyBoost`, default 2× more frequent) and `HordeSizeMultiplier` (group size + a secondary frequency boost → ×`HordeSizeBoost`, default 1.5). The swarms are fully engine-built — correctly targeting and zero extra crash surface.
+  - **Loot** multiplies scavenge yield via `ResourcesToFindProvider` (`Loot.Multiplier`, default 2.5×).
+  - All tunable in F1: `Siege.SwarmFrequencyBoost`, `Siege.HordeSizeBoost`, `Loot.Multiplier`, plus master/section toggles.
+  - **Dev note:** an earlier approach that hand-spawned hordes via `VirtualGroupsController.Create` was abandoned — the free spawn path produces engine-invalid groups (uninjected `LairFinder` → per-frame NRE crash) and races save-load. Steering the native swarm multipliers is the correct, crash-proof lever. (See MODDING_NOTES.md.)
+
 ## 2026-06-13
 
 ### Fixed
