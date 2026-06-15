@@ -73,6 +73,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **HouseRebalance** | Citizens auto-migrate to higher-priority housing when capacity exists — no more "want better housing" complaints with empty mansions. |
 | **IFZQualityOfLife** | Misc QoL toggles. |
 | **LocaleFix** | Forces InvariantCulture so ConfigurationManager can edit `.` decimal floats on comma-locale systems (nl-NL, de-DE, fr-FR, etc.). |
+| **MassDeconstruct** | Drag-box mass deconstruction. Press **K** (configurable), drag a rectangle over your base, confirm, and every qualifying building inside is queued at once — vanilla only lets you deconstruct one at a time. Mirrors the game's own deconstruct rules (skips the HQ, non-deconstructable, and already-queued buildings). *(Requires 000_IFZModAPI.)* |
 | **PerfPack** | Billboard / blood-decay throttle, AI building cache, and an A\* graph-update throttle (spreads navmesh rebuilds from build/demolish bursts across frames). Helps the CPU-bound lategame. |
 | **RaiderEscalation** | Raider camps that dynamically grow when ignored, weaken when you fight them off, recoup, occasionally raid your base, and drop loot when wiped. Also pays out on cleared swarm nests. Fully tunable. *(Requires 000_IFZModAPI.)* |
 | **SaveUnlock** | Bypasses the "Unsupported save file" version check. Loads older saves on newer game builds. Schema-breaking saves may still fail mid-load — back up first. |

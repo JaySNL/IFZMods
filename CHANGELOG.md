@@ -6,6 +6,14 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-15
+
+### Added
+- **MassDeconstruct 1.0.0 — new drag-box mass-deconstruction mod.** Vanilla only lets you deconstruct one building at a time via its panel. This adds a marquee: press **K** (configurable hotkey) to arm, drag a rectangle over the map, confirm the building count in a dialog, and every qualifying building inside is queued for deconstruction at once. Right-click / Esc cancels.
+  - Per-building trigger is the engine's own `Structure.StartDeconstruction()` (the same call the deconstruct button fires), so workers pick the jobs up normally.
+  - Selection mirrors the game's deconstruct-button gate — skips the HQ, non-deconstructable structures, and anything already being torn down — with a `PlayerBuildingsOnly` toggle (default on) so a wide drag doesn't queue the whole abandoned city. The confirmation dialog shows the count before committing.
+  - Self-contained input (own marquee + IMGUI confirm); it does **not** touch the game's AreaWork cursor, so it can't conflict with the scavenge/gather tools. *(Requires 000_IFZModAPI.)*
+
 ## 2026-06-14
 
 ### Added
