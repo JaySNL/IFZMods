@@ -6,7 +6,7 @@ BepInEx mod pack for **Infection Free Zone**.
 
 > 🆕 **Never modded before? → [Read the super-easy install guide (INSTALL.md)](INSTALL.md)** — no commands, ~2 minutes.
 
-22 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
+23 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
 ---
 
@@ -84,6 +84,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **DarkerNights** | Actually dark nights, with live tuning. Night brightness is controlled by **NightSunFactor** (Lighting) — raise to brighten, lower to darken. Full-moon bonus, smooth dawn/dusk, day tone-shaping. |
 | **DeconstructCancel** | Cancel paused deconstruction tasks (game won't normally let you). |
 | **ExplosivesUnlock** | Unlocks explosives crafting earlier. |
+| **Flares** | ⚠️ *v0.1.2 — experimental.* Mortar **illumination flares**. At night, bunker/squad mortars auto-lob a flare at dark infected clusters in range — it arcs up, airbursts, **parachutes down** (red light + thin smoke trail) and **reveals the fog-of-war** so your mortars can shell the lit horde. Flares are a **separate mod-tracked stack**, crafted from HE ammo (1 → 5) via a draggable native-styled panel. Pairs with **DarkerNights**. *(Requires 000_IFZModAPI.)* |
 | **GunfireLights** | Real-time point lights for muzzle flashes, explosions, vehicle headlights, tower searchlights, antenna aviation beacons. |
 | **HousePower** | Powered homes get a separate `+mood` bonus; chimneys emit smoke. |
 | **HouseRebalance** | Citizens auto-migrate to higher-priority housing when capacity exists — no more "want better housing" complaints with empty mansions. |

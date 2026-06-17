@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-18
+
+### Added
+- **Flares 0.1.2 — new mortar illumination-flare mod. ⚠️ EXPERIMENTAL.** At night, bunker- and squad-mounted mortars autonomously lob an illumination flare at dark infected clusters within range; it arcs up over a tunable flight time, airbursts, and parachutes down as a red light + thin smoke trail, **revealing the fog-of-war** under it so mortars can engage the lit horde. Built as a pure driver + reflection (no Harmony).
+  - **FoW reveal without instantiating an observer** — replicates `FogOfWarObserver.CustomUpdate` by pushing the flare position into the `FogOfWarObserversCountFinder` + `FogOfWarUnitsVoid` singletons (refs pulled from a live squad observer). Reveal holds full radius for the flare's whole burn, so **one flare = one engagement window** (no over-flaring).
+  - **Detects bunker/tower mortars**, not just squads — `StructureDefenceModule.SelectedWeapon` flagged ground-attack + explosive; targets infected from `Cache.Groups` within the weapon's reach. Filters to `Fraction.Infected` (skips neutral wildlife).
+  - **Separate flare ammo stack** (a true new resource isn't moddable — `ResourceID` is a baked enum), tracked mod-side and **crafted from HE ammo (1 → 5)** via a **draggable, native-TMP-styled panel** (borrows the game's font; shows only in-game). Lifetime/descent run on game time, so flares freeze on pause and scale with game speed.
+  - **Fixes since first cut:** craft button no longer crashes the game (was `ForceRemoveResource` corrupting resource state → next-frame exception → BugDetector; now uses the safe `TryRemoveResource` on the stockroom container, fully guarded); panel no longer shows in the main menu. *(Requires 000_IFZModAPI. Pairs with DarkerNights.)*
+
 ## 2026-06-17
 
 ### Added
