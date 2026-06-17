@@ -33,9 +33,13 @@ if (-not (Test-Path "$Game\Infection Free Zone.exe")) {
 }
 Write-Host "Game: $Game" -ForegroundColor Cyan
 
-# BepInEx
-if (-not (Test-Path "$Game\winhttp.dll")) {
-    Write-Host "Downloading BepInEx 5.4.23.2..." -ForegroundColor Cyan
+# BepInEx — require ALL key pieces, not just winhttp.dll (a partial copy missing
+# doorstop_config.ini or the core preloader leaves BepInEx unable to bootstrap).
+$BepInExComplete = (Test-Path "$Game\winhttp.dll") -and `
+                   (Test-Path "$Game\doorstop_config.ini") -and `
+                   (Test-Path "$Game\BepInEx\core\BepInEx.Preloader.dll")
+if (-not $BepInExComplete) {
+    Write-Host "Installing BepInEx 5.4.23.2..." -ForegroundColor Cyan
     Invoke-WebRequest -Uri $BepInExUrl -OutFile "$env:TEMP\$BepInExFile" -UseBasicParsing
     Write-Host "Extracting BepInEx..." -ForegroundColor Cyan
     Expand-Archive -Path "$env:TEMP\$BepInExFile" -DestinationPath $Game -Force
@@ -78,5 +82,15 @@ if (Test-Path "$PluginSource\ConfigurationManager\ConfigurationManager.dll") {
     Write-Host "  + ConfigurationManager/ConfigurationManager.dll" -ForegroundColor DarkGray
 }
 
+# Strip Mark-of-the-Web from everything we placed. Files pulled from the internet
+# carry a Zone.Identifier that makes Windows silently refuse to LOAD the DLLs
+# (BepInEx then never starts → F1 only changes game speed). Unblock fixes that.
+Write-Host "Unblocking files (clearing 'downloaded from internet' flag)..." -ForegroundColor Cyan
+foreach ($f in @("$Game\winhttp.dll", "$Game\doorstop_config.ini", "$Game\.doorstop_version")) {
+    if (Test-Path $f) { Unblock-File -Path $f -ErrorAction SilentlyContinue }
+}
+Get-ChildItem "$Game\BepInEx" -Recurse -File -ErrorAction SilentlyContinue | Unblock-File -ErrorAction SilentlyContinue
+
 Write-Host "`nDone." -ForegroundColor Green
 Write-Host "Launch the game. Press F1 in-game to configure mods." -ForegroundColor Cyan
+Write-Host "If F1 only changes game speed, Smart App Control is blocking BepInEx - turn it Off." -ForegroundColor Yellow
