@@ -108,8 +108,28 @@ The one-click `.bat` is for **Windows**. On the others it's still easy, but ther
 |---|---|
 | Double-clicked `.bat`, window flashed and vanished | Right-click `install.bat` → **Run as administrator**. If it still flashes, your game may be in an unusual folder — see below. |
 | "Game not auto-detected" | The window will ask you to **paste the path** to your game folder (the one with `Infection Free Zone.exe`). In Steam: right-click the game → **Manage → Browse local files**, copy that folder's address from the bar at the top, paste it in, press Enter. |
-| Game launches but **no mods / no F1 menu** | **Windows:** re-run `install.bat`. **Steam Deck/Linux/Mac:** you're missing the launch option above. |
+| **Pressing F1 just changes game speed** (no mod menu) | That's the giveaway that **BepInEx isn't loading** — see the dedicated section below. |
+| Game launches but **no mods / no F1 menu** | **Windows:** see "BepInEx isn't loading" below. **Steam Deck/Linux/Mac:** you're missing the launch option above. |
 | Antivirus blocked it | Allow/whitelist the file. It's open-source — you can read exactly what it does in [install.ps1](https://github.com/JaySNL/IFZMods/blob/main/install.ps1). |
+
+---
+
+## "I pressed F1 and it only changed the game speed" (BepInEx isn't loading)
+
+If F1 changes speed instead of opening a settings menu, the mod loader (**BepInEx**) isn't running. Here's how to find out why in 30 seconds.
+
+**The one check:** Steam → right-click the game → **Manage → Browse local files**. **Launch the game once**, then look in that folder for **`BepInEx\LogOutput.log`**.
+
+### If that file does NOT exist (and no `BepInEx\config` folder appeared)
+
+`winhttp.dll` isn't loading. Two causes:
+
+1. **It's in the wrong place.** `winhttp.dll` has to sit **directly next to `Infection Free Zone.exe`** in the main game folder — **not** inside the `BepInEx` folder. If you did the manual install, double-check you copied it to the right spot.
+2. **Smart App Control is blocking it.** SAC silently stops the unsigned loader from running. If `winhttp.dll` is in the right place and BepInEx still won't load, **turning Smart App Control Off is the only fix** (Start → search "Smart App Control" → Off). ⚠️ Off is permanent until a Windows reset.
+
+### If that file DOES exist
+
+BepInEx is loading fine — the mods just aren't where it looks. Make sure **`ConfigurationManager.dll`** is inside **`BepInEx\plugins\`** (a `ConfigurationManager\` subfolder is fine), and that all the other mod `.dll` files are in `BepInEx\plugins\` too. Re-running `install.bat` puts them back.
 
 ---
 
