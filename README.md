@@ -4,7 +4,7 @@ BepInEx mod pack for **Infection Free Zone**.
 
 > See [CHANGELOG.md](CHANGELOG.md) for what's new.
 
-21 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
+22 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
 ---
 
@@ -81,6 +81,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **SplitUnlock** | Bypasses "Building parts contain too narrow or too complex elements" on splits. Lets you cut up castles, cathedrals, and other irregular generated shapes. |
 | **SquadAutoBehavior** | Auto-return squads to HQ at low ammo, auto-resupply, auto-hospital when wounded. |
 | **SquadMerge** | Right-click one of *your own* squads with another selected → merges their members into one squad (soft cap 8). This is how you get a bigger squad **on foot**. Skips merging during combat by default. |
+| **SquadMoveFire** | ⚠️ *v0.1 — testing only.* Squads **fire while moving** instead of halting (needs Fire-at-Will + Move-at-Will stances). Adds an "accuracy = damage" model: penalties for walking/running/driving and a **hard** penalty while swimming; confidence **bonus** firing from inside buildings, **penalty** when swarmed in the open. All tunable in F1. |
 | **Surrounded** | "Surrounded" siege mode. Makes the vanilla swarm attack **more often and bigger** (`SwarmFrequencyBoost`, `HordeSizeBoost`) and multiplies **building scavenge loot** (`Loot.Multiplier`) so you're pushed out to forage between assaults. Drives the game's own swarm system — no performance-killing custom spawns. *(Requires 000_IFZModAPI.)* |
 | **VehicleSquadSize** | A squad gains seats **only while inside a vehicle** (capacity = `4 + floor(cargoSlots / 4)` → Pickup 5, Van 6, Truck 8, Bus 9). The extra panel slots are vehicle passenger seats — on foot the game still caps at 4, so they stay empty until you board. For a bigger **foot** squad, use **SquadMerge**. |
 | **ConfigurationManager** | Press **F1** in-game → tweak every mod's config live. |

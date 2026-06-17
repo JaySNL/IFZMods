@@ -6,6 +6,14 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-17
+
+### Added
+- **SquadMoveFire 0.1.0 — new move-and-fire + accuracy mod. ⚠️ TESTING ONLY.** Squads currently halt to shoot; this lets them fire on the move, with a damage-based "accuracy" model layered on top.
+  - **Move + fire:** native IFZ gates attack-while-moving behind the Fire-at-Will + Move-at-Will stances but then always pauses to shoot (`IdleState.CanPauseOrderToExecuteAttack`). This forces the no-pause branch so the squad keeps moving while firing. Enable both stances on the squad.
+  - **Accuracy = damage:** IFZ ranged combat has no hit/miss roll (damage is deterministic distance falloff), so penalties are applied as a multiplier on `CharacterFightHandler.GetDamage`. Movement penalty (walk → run lerp, separate driving penalty), a **hard swimming penalty**, an **indoor confidence bonus**, and an **open-field swarm-panic penalty** scaling with nearby infected. Melee exempt from the movement penalty by default; all factors tunable in F1.
+  - **Status:** experimental — pending in-game confirmation that squads truly keep moving while firing (watch the stop-to-shoot cooldown) and balance tuning.
+
 ## 2026-06-15
 
 ### Added
