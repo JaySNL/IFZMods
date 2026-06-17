@@ -12,15 +12,21 @@ BepInEx mod pack for **Infection Free Zone**.
 
 ## TL;DR
 
-### Easiest (Windows) — one file, double-click
+### ⭐ Easiest (Windows) — paste one line
 
-1. Open **[install.bat](https://github.com/JaySNL/IFZMods/raw/main/install.bat)** → the **Download** button (the ⬇ icon, top-right of the file view, next to **Raw**).
-2. **Double-click** the downloaded `install.bat`.
-3. Launch the game. Press **F1** in-game to configure mods.
+Open **PowerShell** (Start → type `powershell` → Enter), paste this, press **Enter**:
 
-That's it — no PowerShell, no commands, no "scripts are disabled" error. The `.bat` downloads BepInEx + every mod and installs them automatically. Re-run any time to update.
+```powershell
+iex (irm 'https://raw.githubusercontent.com/JaySNL/IFZMods/main/install.ps1')
+```
 
-> Windows SmartScreen may warn on an unknown `.bat` → **More info → Run anyway**.
+Then launch the game and press **F1**. It auto-detects your game, installs BepInEx + every mod, and unblocks the files. This is the most reliable method — it sidesteps the "scripts are disabled" error and download warnings. Re-run any time to update.
+
+**Hit an error or it's blocked?** → see **[INSTALL.md → If it's blocked](INSTALL.md#if-its-blocked)** (covers execution policy + Smart App Control).
+
+### Prefer to click? — `install.bat`
+
+Download **[install.bat](https://github.com/JaySNL/IFZMods/raw/main/install.bat)** and double-click it (SmartScreen → *More info → Run anyway*). ⚠️ Windows 11 **Smart App Control** may block the downloaded `.bat` outright — if so, use the one-line method above.
 
 ### Manual / other platforms
 

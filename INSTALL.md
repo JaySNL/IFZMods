@@ -1,36 +1,66 @@
 # How to install IFZMods — the super easy way
 
-This guide is for people who have **never modded a game before**. No commands, no coding. Just follow the steps. It takes about 2 minutes.
+This guide is for people who have **never modded a game before**. Just follow the steps. It takes about 2 minutes.
 
 > 💡 You need the game **Infection Free Zone** installed through **Steam** first. If you can play the game, you're good.
 
 ---
 
-## Step 1 — Download the installer
+## ⭐ Easiest way — one line (recommended)
 
-1. Click this link: **[install.bat](https://github.com/JaySNL/IFZMods/raw/main/install.bat)**
-2. Your browser downloads a file called **`install.bat`** (it goes to your **Downloads** folder).
+This is the most reliable method. It gets past Windows' "scripts are disabled" error **and** the file-download warnings, because you're pasting it into a tool Windows already trusts.
 
-> If your browser asks *"Keep this file?"* or says it's *"not commonly downloaded"*, click **Keep**. It's safe — it just copies the mods into your game.
+1. Press **Start**, type **`powershell`**, and open **Windows PowerShell**.
+2. Copy this **one line**, paste it into the blue window (right-click pastes), and press **Enter**:
 
----
+   ```powershell
+   iex (irm 'https://raw.githubusercontent.com/JaySNL/IFZMods/main/install.ps1')
+   ```
 
-## Step 2 — Run it
+3. It finds your game, downloads the mod loader + all mods, installs them, and unblocks the files. When it says **"Done."**, close the window.
+4. Start the game, press **F1** → the mod menu opens. 🎉
 
-1. Open your **Downloads** folder.
-2. **Double-click** `install.bat`.
-3. A black window pops up and does everything for you — finds your game, downloads the mod loader, and installs all the mods.
-4. When it says **"Finished. You can close this window."** — you're done. Close it.
-
-That's it. 🎉
+> 🛟 **Got a red error or nothing happened?** Jump to **[If it's blocked](#if-its-blocked)** below.
 
 ---
 
-## Step 3 — Play
+## Alternative — download the installer file
+
+If you'd rather click than paste:
+
+1. Download **[install.bat](https://github.com/JaySNL/IFZMods/raw/main/install.bat)** (your browser may say "Keep" — it's safe).
+2. **Double-click** it. If Windows shows *"Windows protected your PC"* → **More info → Run anyway**.
+3. When it says **"Finished"**, launch the game and press **F1**.
+
+> ⚠️ On Windows 11 with **Smart App Control**, the downloaded `.bat` may be blocked with no "Run anyway". Use the **one-line method above instead** — it doesn't hit that.
+
+---
+
+## If it's blocked
+
+Try these **in order**, in the same PowerShell window. Re-run the install line after each.
+
+**1. "running scripts is disabled on this system"** — paste this, then re-run the install line:
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass -Force
+```
+
+**2. Download fails / TLS or security error** — paste this, then re-run:
+```powershell
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+```
+
+**3. Still blocked, or the game runs but F1 only changes game speed** — this means **Smart App Control** (Windows 11) is stopping the mod loader. It can't be bypassed per-app:
+- Press **Start** → type **Smart App Control** → open its settings → set it to **Off**.
+- Re-run the one-line install command, then launch + **F1**.
+- ⚠️ Turning Smart App Control **off is permanent** until a full Windows reset. If you don't want that, there's no way around it yet (until we ship a signed build).
+
+---
+
+## Play
 
 1. Start **Infection Free Zone** like normal.
-2. Once you're in a game, press **F1** on your keyboard.
-3. A menu appears where you can turn each mod on/off and change its settings.
+2. Press **F1** → a menu appears where you turn each mod on/off and change its settings.
 
 ---
 
