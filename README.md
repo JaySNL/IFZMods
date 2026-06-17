@@ -10,16 +10,24 @@ BepInEx mod pack for **Infection Free Zone**.
 
 ## TL;DR
 
-1. Clone this repo.
-2. Run the installer for your platform.
-3. Launch the game.
-4. Press **F1** in-game to configure mods.
+### Easiest (Windows) — one file, double-click
+
+1. Open **[install.bat](https://github.com/JaySNL/IFZMods/raw/main/install.bat)** → the **Download** button (the ⬇ icon, top-right of the file view, next to **Raw**).
+2. **Double-click** the downloaded `install.bat`.
+3. Launch the game. Press **F1** in-game to configure mods.
+
+That's it — no PowerShell, no commands, no "scripts are disabled" error. The `.bat` downloads BepInEx + every mod and installs them automatically. Re-run any time to update.
+
+> Windows SmartScreen may warn on an unknown `.bat` → **More info → Run anyway**.
+
+### Manual / other platforms
 
 ```bash
-# Windows (PowerShell)
+# Windows (PowerShell) — if you prefer it
 git clone https://github.com/JaySNL/IFZMods.git
 cd IFZMods
 .\install.ps1
+# (or just download install.ps1 and run:  powershell -ExecutionPolicy Bypass -File install.ps1 )
 
 # macOS / Linux / Steam Deck
 git clone https://github.com/JaySNL/IFZMods.git

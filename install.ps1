@@ -45,18 +45,36 @@ if (-not (Test-Path "$Game\winhttp.dll")) {
     Write-Host "BepInEx already present - skipping download." -ForegroundColor DarkGray
 }
 
+# Resolve plugin source: a local clone next to this script, else download the repo from GitHub.
+# (Running the raw install.ps1 standalone — or via `irm ... | iex` — has no local plugins folder.)
+$PluginSource = if ($RepoRoot) { Join-Path $RepoRoot "plugins" } else { $null }
+if (-not $PluginSource -or -not (Test-Path $PluginSource)) {
+    Write-Host "Downloading IFZMods from GitHub..." -ForegroundColor Cyan
+    $RepoZip = "$env:TEMP\IFZMods.zip"
+    $ExtractDir = "$env:TEMP\IFZMods_extract"
+    Invoke-WebRequest -Uri "https://github.com/JaySNL/IFZMods/archive/refs/heads/main.zip" -OutFile $RepoZip -UseBasicParsing
+    if (Test-Path $ExtractDir) { Remove-Item $ExtractDir -Recurse -Force }
+    Expand-Archive -Path $RepoZip -DestinationPath $ExtractDir -Force
+    $PluginSource = Join-Path $ExtractDir "IFZMods-main\plugins"
+    Remove-Item $RepoZip -Force
+}
+if (-not (Test-Path $PluginSource)) {
+    Write-Host "ERROR: could not locate mod plugins (local or downloaded)." -ForegroundColor Red
+    exit 1
+}
+
 # Plugins
 $PluginDest = "$Game\BepInEx\plugins"
 New-Item -ItemType Directory -Force -Path $PluginDest | Out-Null
 New-Item -ItemType Directory -Force -Path "$PluginDest\ConfigurationManager" | Out-Null
 
 Write-Host "Copying mods..." -ForegroundColor Cyan
-Get-ChildItem "$RepoRoot\plugins" -Filter *.dll | ForEach-Object {
+Get-ChildItem "$PluginSource" -Filter *.dll | ForEach-Object {
     Copy-Item $_.FullName "$PluginDest\$($_.Name)" -Force
     Write-Host "  + $($_.Name)" -ForegroundColor DarkGray
 }
-if (Test-Path "$RepoRoot\plugins\ConfigurationManager\ConfigurationManager.dll") {
-    Copy-Item "$RepoRoot\plugins\ConfigurationManager\ConfigurationManager.dll" "$PluginDest\ConfigurationManager\ConfigurationManager.dll" -Force
+if (Test-Path "$PluginSource\ConfigurationManager\ConfigurationManager.dll") {
+    Copy-Item "$PluginSource\ConfigurationManager\ConfigurationManager.dll" "$PluginDest\ConfigurationManager\ConfigurationManager.dll" -Force
     Write-Host "  + ConfigurationManager/ConfigurationManager.dll" -ForegroundColor DarkGray
 }
 

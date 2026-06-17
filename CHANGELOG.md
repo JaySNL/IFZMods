@@ -8,6 +8,10 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-06-17
 
+### Added
+- **One-click `install.bat` for non-technical Windows users.** Download it, double-click — no PowerShell, no commands, and it sidesteps the `"running scripts is disabled on this system"` execution-policy error people hit when running `install.ps1` directly (it invokes PowerShell with `-ExecutionPolicy Bypass`). It runs a local `install.ps1` if present, otherwise pulls the latest from GitHub.
+- **`install.ps1` is now self-sufficient.** When run standalone (raw download, or `irm … | iex`) with no local `plugins\` folder, it downloads the repo from GitHub and installs from that — so grabbing just the script works.
+
 ### Fixed
 - **Surrounded 0.2.2 — `Loot.Multiplier` now also scales EXPEDITION loot** (reported by Furippu). It was only lifting building scavenge. Root cause: `ResourcesToFindProvider.DrawResourcesForTag` has two yield paths — the scavenge path multiplies by `amountMultiplier` (which the mod scaled), but the expedition path computes `resourceAmount = (int)(min + max/2)` and **ignores `amountMultiplier` entirely**. Since `min`/`max` are proportional to `cubicMeter`, the loot prefix now also scales `cubicMeter` when `expedition == true`, so expedition yield rises with the same multiplier.
 
