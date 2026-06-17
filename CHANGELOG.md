@@ -8,6 +8,9 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-06-17
 
+### Fixed
+- **Surrounded 0.2.2 — `Loot.Multiplier` now also scales EXPEDITION loot** (reported by Furippu). It was only lifting building scavenge. Root cause: `ResourcesToFindProvider.DrawResourcesForTag` has two yield paths — the scavenge path multiplies by `amountMultiplier` (which the mod scaled), but the expedition path computes `resourceAmount = (int)(min + max/2)` and **ignores `amountMultiplier` entirely**. Since `min`/`max` are proportional to `cubicMeter`, the loot prefix now also scales `cubicMeter` when `expedition == true`, so expedition yield rises with the same multiplier.
+
 ### Added
 - **SquadMoveFire 0.1.0 — new move-and-fire + accuracy mod. ⚠️ TESTING ONLY.** Squads currently halt to shoot; this lets them fire on the move, with a damage-based "accuracy" model layered on top.
   - **Move + fire:** native IFZ gates attack-while-moving behind the Fire-at-Will + Move-at-Will stances but then always pauses to shoot (`IdleState.CanPauseOrderToExecuteAttack`). This forces the no-pause branch so the squad keeps moving while firing. Enable both stances on the squad.

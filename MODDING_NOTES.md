@@ -251,7 +251,7 @@ placement **MOD** (clustering + gen seam) · start-tile player head-start **MOD�
 | GunfireLights | Real-time lights; viewport cull (not 3D distance); one-light-per-tower. |
 | RaiderEscalation | Dynamic Hideout strength loop; loot-on-clear both fractions; raiders-only escalation/raids. |
 | MassDeconstruct | Drag-box deconstruct: K arms, CTRL+drag → `Physics.OverlapBox` on "Building" layer → `Structure.StartDeconstruction()` each. Gate mirrors Y button (incl. abandoned). Requires IFZModAPI. |
-| Surrounded | Siege mode: scales `SwarmsIntensity`+`HordeSizeMultiplier` getters (native swarms, more/bigger) + scavenge loot ×N. NOT hand-spawned (that crashes). |
+| Surrounded | Siege mode: scales `SwarmsIntensity`+`HordeSizeMultiplier` getters (native swarms, more/bigger) + scavenge & expedition loot ×N. Loot patch: `DrawResourcesForTag` expedition branch IGNORES `amountMultiplier` (uses `(int)(min+max/2)`), so scale `cubicMeter` when `expedition==true` (min/max ∝ cubicMeter). NOT hand-spawned (that crashes). |
 | SquadMerge | Right-click own squad = merge; SkipInCombat. |
 | SquadMoveFire | ⚠️ v0.1 testing. Move+fire: prefix `IdleState.CanPauseOrderToExecuteAttack`→false (needs Fire+Move-at-Will stances). Accuracy=damage mult on `CharacterFightHandler.GetDamage`: move/run/drive/swim penalties + indoor bonus + open-field swarm panic. No hit-roll in IFZ. |
 | VehicleSquadSize | Capacity `4+floor(cargo/4)`; hard vehicle cap (no clown car); panel scroll reset. |
