@@ -8,6 +8,9 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-06-18
 
+### Fixed
+- **Flares 0.1.3 — save-bound flare stack + crash hardening.** Flare count is now **per-save** (keyed to `SaveHandler.SaveInfo`, restored from the save on load) instead of a single global per-install count that leaked across saves and showed up on a fresh launch. The counter/craft UI now stays hidden in the main menu and loading screens. And every mod callback is wrapped so an exception during save-load can't surface the game's bug-reporter window — the mod fails quietly to its log instead.
+
 ### Added
 - **Flares 0.1.2 — new mortar illumination-flare mod. ⚠️ EXPERIMENTAL.** At night, bunker- and squad-mounted mortars autonomously lob an illumination flare at dark infected clusters within range; it arcs up over a tunable flight time, airbursts, and parachutes down as a red light + thin smoke trail, **revealing the fog-of-war** under it so mortars can engage the lit horde. Built as a pure driver + reflection (no Harmony).
   - **FoW reveal without instantiating an observer** — replicates `FogOfWarObserver.CustomUpdate` by pushing the flare position into the `FogOfWarObserversCountFinder` + `FogOfWarUnitsVoid` singletons (refs pulled from a live squad observer). Reveal holds full radius for the flare's whole burn, so **one flare = one engagement window** (no over-flaring).
