@@ -49,6 +49,35 @@ This happens with almost every small free tool. The installer only copies mod fi
 
 ---
 
+## "Smart App Control blocked it / may be unsafe"
+
+This is a **different, stricter** Windows 11 feature called **Smart App Control (SAC)**. Unlike the warning above, it does **not** give you a "Run anyway" button — it just blocks the file. You have two ways around it.
+
+### Option A — Install by hand (no script runs, SAC can't block it) ✅ recommended
+
+This is the same install, just done by copying files yourself. Smart App Control blocks *running programs*, not *copying files*, so this gets past it.
+
+1. **Download the mods:** on the [main repo page](https://github.com/JaySNL/IFZMods), click the green **`<> Code`** button → **Download ZIP**. Unzip it (right-click → **Extract All**). You now have a folder with a **`plugins`** folder inside.
+2. **Download BepInEx** (the mod loader): get **[BepInEx_win_x64_5.4.23.2.zip](https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.2/BepInEx_win_x64_5.4.23.2.zip)** and unzip it.
+3. **Find your game folder:** in Steam, right-click **Infection Free Zone → Manage → Browse local files**. This opens the folder that has `Infection Free Zone.exe`.
+4. **Copy BepInEx in:** copy everything from the unzipped BepInEx folder (`winhttp.dll`, the `BepInEx` folder, `doorstop_config.ini`, etc.) **into the game folder** next to `Infection Free Zone.exe`.
+5. **Copy the mods in:** open `BepInEx\plugins` inside the game folder, then copy **everything from the repo's `plugins` folder** into it.
+6. Start the game, press **F1**.
+
+Done — nothing was "run", so SAC stays happy.
+
+### Option B — Turn Smart App Control off (quick, but read the warning)
+
+1. Press **Start**, type **Smart App Control**, open **Smart App Control settings**.
+2. Set it to **Off**.
+3. Now run `install.bat` normally.
+
+> ⚠️ **Important:** once you turn Smart App Control **off, Windows can't turn it back on** — re-enabling it requires a full Windows reset. If that bothers you, use **Option A** instead.
+
+> ℹ️ If you did the manual install (Option A) and the game runs but **no mods load / no F1 menu**, Smart App Control may also be blocking the mod loader (`winhttp.dll`) itself. In that case Option B is the only fix — or wait for a signed release.
+
+---
+
 ## How to update later
 
 New mods or fixes? Just **download `install.bat` again and double-click it again.** It safely overwrites the old files with the new ones. You won't lose anything.
