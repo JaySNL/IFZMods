@@ -9,17 +9,16 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 ## 2026-06-17
 
 ### Added
+- **Pre-bundled `manual-install/` folder — no-script, one-copy install.** For users blocked by Smart App Control or antivirus: the folder contains BepInEx 5.4.23.2 **and** every mod in the final game-folder layout. Download the repo ZIP, copy everything inside `manual-install/` into the game folder, launch. Nothing is executed, so SAC/AV can't block the *install* (it can still block the loader from *running* — that still needs SAC off).
 - **One-click `install.bat` for non-technical Windows users.** Download it, double-click — no PowerShell, no commands, and it sidesteps the `"running scripts is disabled on this system"` execution-policy error people hit when running `install.ps1` directly (it invokes PowerShell with `-ExecutionPolicy Bypass`). It runs a local `install.ps1` if present, otherwise pulls the latest from GitHub.
 - **`install.ps1` is now self-sufficient.** When run standalone (raw download, or `irm … | iex`) with no local `plugins\` folder, it downloads the repo from GitHub and installs from that — so grabbing just the script works.
-
-### Fixed
-- **Surrounded 0.2.2 — `Loot.Multiplier` now also scales EXPEDITION loot** (reported by Furippu). It was only lifting building scavenge. Root cause: `ResourcesToFindProvider.DrawResourcesForTag` has two yield paths — the scavenge path multiplies by `amountMultiplier` (which the mod scaled), but the expedition path computes `resourceAmount = (int)(min + max/2)` and **ignores `amountMultiplier` entirely**. Since `min`/`max` are proportional to `cubicMeter`, the loot prefix now also scales `cubicMeter` when `expedition == true`, so expedition yield rises with the same multiplier.
-
-### Added
 - **SquadMoveFire 0.1.0 — new move-and-fire + accuracy mod. ⚠️ TESTING ONLY.** Squads currently halt to shoot; this lets them fire on the move, with a damage-based "accuracy" model layered on top.
   - **Move + fire:** native IFZ gates attack-while-moving behind the Fire-at-Will + Move-at-Will stances but then always pauses to shoot (`IdleState.CanPauseOrderToExecuteAttack`). This forces the no-pause branch so the squad keeps moving while firing. Enable both stances on the squad.
   - **Accuracy = damage:** IFZ ranged combat has no hit/miss roll (damage is deterministic distance falloff), so penalties are applied as a multiplier on `CharacterFightHandler.GetDamage`. Movement penalty (walk → run lerp, separate driving penalty), a **hard swimming penalty**, an **indoor confidence bonus**, and an **open-field swarm-panic penalty** scaling with nearby infected. Melee exempt from the movement penalty by default; all factors tunable in F1.
-  - **Status:** experimental — pending in-game confirmation that squads truly keep moving while firing (watch the stop-to-shoot cooldown) and balance tuning.
+  - **Status:** experimental — pending in-game confirmation that squads truly keep moving while firing (watch the stop-to-shoot cooldown) and balance tuning. **MoveAndFire defaults OFF** after a suspected hard crash; enable it alone to test.
+
+### Fixed
+- **Surrounded 0.2.2 — `Loot.Multiplier` now also scales EXPEDITION loot** (reported by Furippu). It was only lifting building scavenge. Root cause: `ResourcesToFindProvider.DrawResourcesForTag` has two yield paths — the scavenge path multiplies by `amountMultiplier` (which the mod scaled), but the expedition path computes `resourceAmount = (int)(min + max/2)` and **ignores `amountMultiplier` entirely**. Since `min`/`max` are proportional to `cubicMeter`, the loot prefix now also scales `cubicMeter` when `expedition == true`, so expedition yield rises with the same multiplier.
 
 ## 2026-06-15
 

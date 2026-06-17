@@ -55,16 +55,14 @@ This is a **different, stricter** Windows 11 feature called **Smart App Control 
 
 ### Option A — Install by hand (no script runs, SAC can't block it) ✅ recommended
 
-This is the same install, just done by copying files yourself. Smart App Control blocks *running programs*, not *copying files*, so this gets past it.
+This is the same install, just done by copying files yourself. Smart App Control blocks *running programs*, not *copying files*, so this gets past it. Everything you need — the mod loader **and** all the mods — is pre-bundled, so it's **one download, one copy**.
 
-1. **Download the mods:** on the [main repo page](https://github.com/JaySNL/IFZMods), click the green **`<> Code`** button → **Download ZIP**. Unzip it (right-click → **Extract All**). You now have a folder with a **`plugins`** folder inside.
-2. **Download BepInEx** (the mod loader): get **[BepInEx_win_x64_5.4.23.2.zip](https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.2/BepInEx_win_x64_5.4.23.2.zip)** and unzip it.
-3. **Find your game folder:** in Steam, right-click **Infection Free Zone → Manage → Browse local files**. This opens the folder that has `Infection Free Zone.exe`.
-4. **Copy BepInEx in:** copy everything from the unzipped BepInEx folder (`winhttp.dll`, the `BepInEx` folder, `doorstop_config.ini`, etc.) **into the game folder** next to `Infection Free Zone.exe`.
-5. **Copy the mods in:** open `BepInEx\plugins` inside the game folder, then copy **everything from the repo's `plugins` folder** into it.
-6. Start the game, press **F1**.
+1. **Download the pack:** on the [main repo page](https://github.com/JaySNL/IFZMods), click the green **`<> Code`** button → **Download ZIP**. Unzip it (right-click → **Extract All**).
+2. **Find your game folder:** in Steam, right-click **Infection Free Zone → Manage → Browse local files**. This opens the folder that has `Infection Free Zone.exe`.
+3. **Copy it in:** open the **`manual-install`** folder from the unzipped pack, and copy **everything inside it** into the game folder. If asked, choose **Replace the files in the destination**. You should now see `winhttp.dll` sitting right next to `Infection Free Zone.exe`, plus a `BepInEx` folder.
+4. Start the game, press **F1**.
 
-Done — nothing was "run", so SAC stays happy.
+Done — nothing was "run", so SAC stays happy. (The `manual-install` folder already contains BepInEx 5.4.23.2 + every mod, so there's no separate BepInEx download.)
 
 ### Option B — Turn Smart App Control off (quick, but read the warning)
 
