@@ -4,6 +4,8 @@ BepInEx mod pack for **Infection Free Zone**.
 
 > See [CHANGELOG.md](CHANGELOG.md) for what's new.
 
+> 🆕 **Never modded before? → [Read the super-easy install guide (INSTALL.md)](INSTALL.md)** — no commands, ~2 minutes.
+
 22 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
 ---
