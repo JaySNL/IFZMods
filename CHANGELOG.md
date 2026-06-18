@@ -6,6 +6,11 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-19
+
+### Added
+- **IFZQualityOfLife 1.1.3 — ShellLairs: order mortars/squads to shell infected lairs.** Vanilla won't let you attack-order an infected lair (they're "enter to clear" only — `CanAttackBuilding` is false for them, while bandit/provirus hideouts are attackable once revealed). ShellLairs adds the option **without** flipping `CanAttackBuilding` globally (that makes the auto-combat AI shell every infected hideout in range, uninvited, and stops vehicles mid-move). Instead: select your squad(s), hover a **revealed** infected lair, and press the **ShellLairs key (default B)** — the lair nearest the cursor gets the game's own attack-building order. Lair structure HP scales with building volume, so a bigger/spread-out lair soaks more shells (the "needs more ammo" penalty is built in). Config: `ShellLairs > Enabled / Key / CursorRadius`. Captures `SquadsController`/`BuildingsController` locally (no new dependency).
+
 ## 2026-06-18
 
 ### Changed
