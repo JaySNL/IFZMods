@@ -432,7 +432,7 @@
     },
     {
       "key": "Surrounded",
-      "nexusModId": null,
+      "nexusModId": 55,
       "dllPath": "../../plugins/Surrounded.dll",
       "name": "Surrounded - siege mode",
       "summary": "Vanilla swarms attack far more often and bigger; scavenge loot multiplied so you push out between waves.",
@@ -447,11 +447,12 @@
         "mainFeatures": "- Siege: vanilla swarms attack much more frequently and bigger (SwarmFrequencyBoost, HordeSizeBoost)\n- Difficulty ease-in ramp (RampDays, default 30) so day 1 isn't an instant loss\n- Loot pull: scavenge + expedition yield multiplied (Loot.Multiplier) so you forage between assaults\n- Read-only F1 Status panel: live effective spawn-frequency / horde-size / lair-formation numbers\n- Optional opt-in lair-formation lever\n- Everything live-tunable in F1; master toggle if it gets too brutal",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "0.4.0"
     },
     {
       "key": "Hives",
-      "nexusModId": null,
+      "nexusModId": 56,
       "dllPath": "../../plugins/Hives.dll",
       "name": "Hives - infected hive seeding (experimental)",
       "summary": "Seeds extra infected hideouts across the map on a new game; they grow into lairs. Pairs with Surrounded.",
@@ -466,11 +467,12 @@
         "mainFeatures": "- Seeds infected hives into buildings across the map on a new game\n- Kept away from your start (MinDistanceFromHQ) so there's room to find them\n- HiveCount (default 50), PlacePerTick tunable in F1\n- Once per save — never re-stacks on reload\n- Uses the engine's own hideout spawn (no crash-prone hand-spawns)",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "0.1.0"
     },
     {
       "key": "RaiderEscalation",
-      "nexusModId": null,
+      "nexusModId": 57,
       "dllPath": "../../plugins/RaiderEscalation.dll",
       "name": "Raider Escalation",
       "summary": "Raider camps grow when ignored, weaken when fought, raid your base, and drop loot when wiped.",
@@ -485,11 +487,12 @@
         "mainFeatures": "- Camps dynamically grow when ignored, weaken when fought, then recoup\n- Camps occasionally raid your base\n- Loot drops when a camp is wiped; payouts on cleared swarm nests\n- Raiders spawn armed with real weapons\n- Fully tunable in F1",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.2.4"
     },
     {
       "key": "MassDeconstruct",
-      "nexusModId": null,
+      "nexusModId": 58,
       "dllPath": "../../plugins/MassDeconstruct.dll",
       "name": "Mass Deconstruct - drag-box",
       "summary": "Press K, drag a box over your base, confirm — every qualifying building inside is queued for deconstruction at once.",
@@ -504,11 +507,12 @@
         "mainFeatures": "- Hotkey to arm (default K), CTRL+drag to box-select\n- Confirm dialog before queueing\n- Honors the game's own deconstruct eligibility (skips HQ, non-deconstructable, already-queued)\n- OwnedOnly and confirm toggles in F1",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "SquadMoveFire",
-      "nexusModId": null,
+      "nexusModId": 59,
       "dllPath": "../../plugins/SquadMoveFire.dll",
       "name": "Squad Move and Fire (experimental)",
       "summary": "Squads fire while moving instead of halting — on foot and in vehicles. Hold Your Ground truly anchors.",
@@ -522,11 +526,12 @@
         "mainFeatures": "- Fire while moving, on foot and in vehicles\n- Hold Your Ground anchors (fires but won't advance)\n- Accuracy-as-damage: move/swim/drive penalties, indoor confidence bonus, open-field swarm penalty\n- All multipliers tunable in F1",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "0.1.2"
     },
     {
       "key": "Flares",
-      "nexusModId": null,
+      "nexusModId": 54,
       "dllPath": "../../plugins/Flares.dll",
       "name": "Flares - mortar illumination (experimental)",
       "summary": "At night, mortars autonomously lob illumination flares at dark infected clusters, revealing fog-of-war.",
@@ -540,7 +545,8 @@
         "mainFeatures": "- Mortars auto-fire illumination flares at dark infected clusters at night\n- Flare airbursts and parachutes down, revealing fog-of-war\n- Red light + thin smoke trail\n- Per-save flare stack; tunable in F1",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "0.1.3"
     }
   ]
 }
