@@ -59,10 +59,10 @@ function html(mod) {
   </div></body></html>`
 }
 
-const ctx = await chromium.launchPersistentContext(path.join(HERE, 'profile'), {
-  headless: true, channel: 'chrome', viewport: { width: 1280, height: 720 },
-})
-const page = ctx.pages()[0] || (await ctx.newPage())
+// Banner rendering needs no auth/profile — use bundled chromium (no system Chrome dependency).
+const ctx = await chromium.launch({ headless: true })
+const page = await ctx.newPage()
+await page.setViewportSize({ width: 1280, height: 720 })
 for (const mod of CFG.mods) {
   await page.setContent(html(mod), { waitUntil: 'load' })
   const out = path.join(OUT, `${mod.key}.png`)
