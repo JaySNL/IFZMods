@@ -8,6 +8,9 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-06-18
 
+### Changed
+- **Hives 0.1.1 — smarter hive placement (fixes the "everything stacked on one street" look).** 0.1.0 shuffled all qualifying buildings and dropped 50 hives into them; with each hive spawning a real infected group, 50 groups converged on one road and read as a single mega-lair conga-line. 0.1.1 reworks selection: hives now go into the **largest** buildings (new `MinBuildingVolume` gate, default 2000 — bigger building genuinely hosts a bigger hive, `volume × 0.001` extra infected), **far** from HQ (`MinDistanceFromHQ`), and **spaced apart** (new `MinSpacingBetweenHives`, default 120 m) so they scatter instead of clumping. Default `HiveCount` cut **50 → 12**. Seeding still uses the engine-valid `TryInstantiateHideout` and stays **once per save**. Gated per-hive verbose logging added for diagnostics. *(Requires 000_IFZModAPI.)*
+
 ### Fixed
 - **IFZQualityOfLife 1.1.2 — building-icon toggle (I) now actually hides icons.** The toggle registered a `MapIcon.AddConditionToShow` show-condition, but `StructureIcon.RefreshState()` is an override that ignores those conditions (it recomputes visibility from the game's own rules), so the icons never hid. Reworked to postfix `StructureIcon.RefreshState` and force the icon inactive while the toggle is on (re-applied on every game refresh; new icons spawn hidden too); the keypress re-runs `RefreshState` on all live icons. (Version aligned 1.0.x → 1.1.2 to stay ahead of the published page.)
 
