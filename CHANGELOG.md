@@ -8,6 +8,9 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-06-18
 
+### Added
+- **Surrounded 0.3.0 — siege difficulty ease-in ramp.** The swarm boosts no longer hit full strength on day 1 (which could overrun a fresh base). The effective boost now lerps from vanilla on day 1 up to your full configured `SwarmFrequencyBoost`/`HordeSizeBoost` by day `RampDays` (default 30), then stays at full. New: `Siege.RampDays` (30, `0` = full boost immediately) and `Siege.RampStartFactor` (1.0 = vanilla day 1; lower for a softer-than-vanilla start). Applies to both frequency and horde-size levers, driven by `TimeController.Day`.
+
 ### Fixed
 - **Flares 0.1.3 — save-bound flare stack + crash hardening.** Flare count is now **per-save** (keyed to `SaveHandler.SaveInfo`, restored from the save on load) instead of a single global per-install count that leaked across saves and showed up on a fresh launch. The counter/craft UI now stays hidden in the main menu and loading screens. And every mod callback is wrapped so an exception during save-load can't surface the game's bug-reporter window — the mod fails quietly to its log instead.
 
