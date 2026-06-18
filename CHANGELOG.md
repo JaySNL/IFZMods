@@ -9,6 +9,8 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 ## 2026-06-18
 
 ### Added
+- **Hives 0.1.0 — new infected-hive seeding mod. ⚠️ EXPERIMENTAL.** On a new game it seeds extra infected hideouts ("hives") into buildings scattered across the map (away from your HQ); they can grow into lairs over time — more scattered objectives + siege pressure. Uses the game's own `HideoutsController.TryInstantiateHideout` (engine-valid, not a hand-spawn) and seeds **once per save** (per-save flag → never re-stacks on reload; loading a pre-Hives save re-seeds with current settings). Tunable: `HiveCount` (50), `MinDistanceFromHQ`, `PlacePerTick`. Pairs with Surrounded. *(Requires 000_IFZModAPI.)*
+- **IFZQualityOfLife — building-icon hide/show toggle.** New hotkey (default **I**, configurable) hides/shows **all building icons** to declutter the map, without touching the rest of the HUD; state persists across reloads. Uses the icon system's own show-condition gating (no GameObject disable, so building selection is unaffected).
 - **Surrounded 0.3.0 — siege difficulty ease-in ramp.** The swarm boosts no longer hit full strength on day 1 (which could overrun a fresh base). The effective boost now lerps from vanilla on day 1 up to your full configured `SwarmFrequencyBoost`/`HordeSizeBoost` by day `RampDays` (default 30), then stays at full. New: `Siege.RampDays` (30, `0` = full boost immediately) and `Siege.RampStartFactor` (1.0 = vanilla day 1; lower for a softer-than-vanilla start). Applies to both frequency and horde-size levers, driven by `TimeController.Day`.
 
 ### Fixed

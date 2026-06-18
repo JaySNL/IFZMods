@@ -6,7 +6,7 @@ BepInEx mod pack for **Infection Free Zone**.
 
 > 🆕 **Never modded before? → [Read the super-easy install guide (INSTALL.md)](INSTALL.md)** — no commands, ~2 minutes.
 
-23 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
+24 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
 > 🍎 **macOS (CrossOver/Wine) users:** the included `IFZMacFix.dll` fixes the new-game crash and the
 > save-load crash caused by macOS-Wine filesystem quirks. It auto-activates only on macOS and is
@@ -90,9 +90,10 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **ExplosivesUnlock** | Unlocks explosives crafting earlier. |
 | **Flares** | ⚠️ *v0.1.3 — experimental.* Mortar **illumination flares**. At night, bunker/squad mortars auto-lob a flare at dark infected clusters in range — it arcs up, airbursts, **parachutes down** (red light + thin smoke trail) and **reveals the fog-of-war** so your mortars can shell the lit horde. Flares are a **separate mod-tracked stack**, crafted from HE ammo (1 → 5) via a draggable native-styled panel. Pairs with **DarkerNights**. *(Requires 000_IFZModAPI.)* |
 | **GunfireLights** | Real-time point lights for muzzle flashes, explosions, vehicle headlights, tower searchlights, antenna aviation beacons. |
+| **Hives** | ⚠️ *v0.1.0 — experimental.* Seeds extra **infected hives** into buildings scattered across the map on a **new game** (they grow into lairs) — more scattered objectives + siege pressure. Uses the game's own hideout spawn (engine-valid); seeded **once per save** (never re-stacks on reload). Tune count / min-distance-from-HQ in F1. Pairs with **Surrounded**. *(Requires 000_IFZModAPI.)* |
 | **HousePower** | Powered homes get a separate `+mood` bonus; chimneys emit smoke. |
 | **HouseRebalance** | Citizens auto-migrate to higher-priority housing when capacity exists — no more "want better housing" complaints with empty mansions. |
-| **IFZQualityOfLife** | Misc QoL toggles. |
+| **IFZQualityOfLife** | Misc QoL toggles, incl. a **building-icon hide/show hotkey** (default **I**) to declutter the map view without touching the HUD (persists), plus TowerHMG / VehicleAmmoFix / HeightAdvantage. |
 | **LocaleFix** | Forces InvariantCulture so ConfigurationManager can edit `.` decimal floats on comma-locale systems (nl-NL, de-DE, fr-FR, etc.). |
 | **MassDeconstruct** | Drag-box mass deconstruction. Press **K** (configurable), drag a rectangle over your base, confirm, and every qualifying building inside is queued at once — vanilla only lets you deconstruct one at a time. Mirrors the game's own deconstruct rules (skips the HQ, non-deconstructable, and already-queued buildings). *(Requires 000_IFZModAPI.)* |
 | **PerfPack** | Billboard / blood-decay throttle, AI building cache, and an A\* graph-update throttle (spreads navmesh rebuilds from build/demolish bursts across frames). Helps the CPU-bound lategame. |
