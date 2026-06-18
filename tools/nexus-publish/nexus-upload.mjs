@@ -52,11 +52,12 @@ if (!KEY) {
 //   node nexus-upload.mjs [key]                  -> first upload (createModFile)
 //   node nexus-upload.mjs update <version> [key] -> new version on existing file (createUpdateGroupVersion)
 const isUpdate = process.argv[2] === 'update'
-const updateVersion = isUpdate ? process.argv[3] : null
-// One or more keys may follow (update mode: argv[4..], first-upload mode: argv[2..]).
-const keyList = (isUpdate ? process.argv.slice(4) : process.argv.slice(2)).filter(Boolean)
+const isFirst  = process.argv[2] === 'first'   // first-upload at an explicit version
+const updateVersion = (isUpdate || isFirst) ? process.argv[3] : null
+// One or more keys may follow (update/first mode: argv[4..], bare first-upload mode: argv[2..]).
+const keyList = ((isUpdate || isFirst) ? process.argv.slice(4) : process.argv.slice(2)).filter(Boolean)
 const keySet = keyList.length ? new Set(keyList) : null
-if (isUpdate && !updateVersion) { console.error('[fatal] update mode needs a version: node nexus-upload.mjs update 1.1.0 [key ...]'); process.exit(1) }
+if ((isUpdate || isFirst) && !updateVersion) { console.error(`[fatal] ${process.argv[2]} mode needs a version: node nexus-upload.mjs ${process.argv[2]} 1.1.0 [key ...]`); process.exit(1) }
 const H = { apikey: KEY, 'Content-Type': 'application/json' }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -128,10 +129,11 @@ async function uploadFile(dllAbs) {
   throw new Error(`upload ${id} never reached state=available`)
 }
 
-async function pushMod(mod) {
+async function pushMod(mod, versionArg) {
+  const version = versionArg || mod.version || CFG.common.version
   const dllAbs = path.resolve(HERE, mod.dllPath)
   if (!fs.existsSync(dllAbs)) { console.log(`[skip] ${mod.key} — DLL missing: ${dllAbs}`); return }
-  console.log(`\n=== ${mod.key} (mod ${mod.nexusModId}) ===`)
+  console.log(`\n=== ${mod.key} (mod ${mod.nexusModId}) -> v${version} ===`)
   const uid = await resolveUid(mod.nexusModId)
   console.log(`  uid=${uid}`)
   const uploadId = await uploadFile(dllAbs)
@@ -142,11 +144,11 @@ async function pushMod(mod) {
       upload_id: uploadId,
       mod_id: uid,
       name,
-      version: CFG.common.version,
+      version,
       file_category: 'main',
       description: mod.summary?.slice(0, 250) || '',
     })
-    console.log(`  ✓ created mod file "${name}" v${CFG.common.version}`)
+    console.log(`  ✓ created mod file "${name}" v${version}`)
   } catch (e) {
     console.log(`  ✗ createModFile failed (file may already exist — use update-group flow): ${e.message.split('\n')[0]}`)
   }
@@ -187,7 +189,7 @@ if (targets.length === 0) {
 }
 console.log(`${isUpdate ? `Versioning ${targets.length} mod(s) to v${updateVersion}` : `Uploading ${targets.length} mod(s)`} on Nexus (${GAME})...`)
 for (const m of targets) {
-  try { if (isUpdate) await updateMod(m, updateVersion); else await pushMod(m) }
+  try { if (isUpdate) await updateMod(m, updateVersion); else await pushMod(m, isFirst ? updateVersion : null) }
   catch (e) { console.log(`[error] ${m.key}: ${e.message.split('\n')[0]}`) }
   await sleep(3000) // gentle pacing
 }

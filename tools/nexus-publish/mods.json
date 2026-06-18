@@ -39,7 +39,8 @@
         "mainFeatures": "- Loads before all other IFZMods (alphabetical + BepInDependency)\n- Shared controller-instance cache\n- Time / sunrise / sunset / NightBlend helpers\n- VFX: real Smoke prefab clone, pooled point-light flashes\n- Cached reflection + FloatParameter shim",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "ArmyBackup",
@@ -62,7 +63,8 @@
       },
       "requires": [
         "IFZModAPI"
-      ]
+      ],
+      "version": "1.0.0"
     },
     {
       "key": "CinematicFX",
@@ -85,7 +87,8 @@
       },
       "requires": [
         "IFZModAPI"
-      ]
+      ],
+      "version": "1.1.0"
     },
     {
       "key": "ConstructionETA",
@@ -105,7 +108,8 @@
         "mainFeatures": "- ETA on Build / Repair / Deconstruct panels\n- Pulls live from the game's own progress data\n- Useful for planning when crews free up",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "DarkerNights",
@@ -125,7 +129,8 @@
         "mainFeatures": "- Configurable night sun-intensity factor (0 = pitch black, 1 = vanilla)\n- Forced night ambient colour + intensity + AutoExposure clamp\n- Full-moon nights apply a brightness multiplier\n- Day tone-shaping: saturation / contrast / warmth / post-exposure\n- Smooth dawn/dusk via configurable TransitionHours\n- Pairs with GunfireLights for synchronised tower-light fade-in",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.1.6"
     },
     {
       "key": "DeconstructCancel",
@@ -146,7 +151,8 @@
         "mainFeatures": "- Delete button stays visible on paused deconstructions\n- Forces clean delete (state machine reverts, work entry cleared)\n- No leftover state on the structure",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "ExplosivesUnlock",
@@ -166,7 +172,8 @@
         "mainFeatures": "- Single Harmony postfix, zero side effects\n- Unlocks explosives planting in current and new saves\n- No balance change otherwise",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "GunfireLights",
@@ -186,7 +193,8 @@
         "mainFeatures": "- Muzzle flashes: pooled point light per gun, warmer for heavy / shotgun\n- Explosions: orange flash with configurable range\n- Vehicle headlights: forward spot light on moving vehicles at night\n- Tower searchlights: slow-sweeping spot, holds on last-attacked target\n- Antenna beacons: real-world FAA-style red/green blinking, 24/7 or night-only\n- Smooth fade-in/out around sunrise / sunset via TransitionHours\n- 32-light pool, no shadow casting (cheap)",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.2.1"
     },
     {
       "key": "HousePower",
@@ -206,7 +214,8 @@
         "mainFeatures": "- +mood bonus shown in the mood panel, scales with fraction of residents in powered homes\n- Chimney smoke on powered houses (or roof centre fallback, skips high-rises without chimneys)\n- Entrance / window lights on at night, dimmer during day\n- Throttled to 2 Hz across hundreds of buildings for low perf cost\n- Tunable wood-per-tick and tick interval",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "HouseRebalance",
@@ -226,7 +235,8 @@
         "mainFeatures": "- Periodic citizen re-housing sweep\n- Uses the game's native FindBestHouse priority\n- Eliminates \"want better housing\" complaints with empty premium housing\n- Tick interval tunable in F1",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "IFZQualityOfLife",
@@ -247,7 +257,8 @@
         "mainFeatures": "- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) after carworkshop_hcal research\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when stockroom path fails\n- HeightAdvantage: squads in tall buildings get fight-range bonus based on building height",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "LocaleFix",
@@ -267,7 +278,8 @@
         "mainFeatures": "- One-time culture pin on Awake\n- Per-frame Sentinel re-pin (cheap branch + pointer compare)\n- Fixes float-parse FormatException in ConfigurationManager UI\n- Caveat: the Awake-time pin applies once at process start regardless of toggle",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "PerfPack",
@@ -286,7 +298,8 @@
         "mainFeatures": "- Billboard throttle: refreshes each billboard every Nth frame, staggered (default N=3)\n- Blood decay throttle: clamps SetBloodPuddleValue writes to once every IntervalSec per body\n- AI building cache (opt-in, OFF by default): caches FindHealingSpot result per AI for N seconds",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.1.0"
     },
     {
       "key": "SaveUnlock",
@@ -306,7 +319,8 @@
         "mainFeatures": "- Two-line Harmony patch, no behaviour change beyond the gate\n- Works across beta version bumps\n- Master Enabled toggle in F1 if you want vanilla checks back",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "SmartWorkerRedist",
@@ -329,7 +343,8 @@
       },
       "requires": [
         "IFZModAPI"
-      ]
+      ],
+      "version": "1.0.0"
     },
     {
       "key": "SplitUnlock",
@@ -349,7 +364,8 @@
         "mainFeatures": "- Two split toggles: AllowWrongDimensions (narrow/complex) and AllowSmallSurface (size), both default on\n- NEW: custom-building size override — MaxBuildingSurface (vanilla 1000 m²) and MinBuildingSurface (vanilla 5 m²); raise the max to draw bigger custom buildings\n- All tunable in F1 ConfigurationManager",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.1.0"
     },
     {
       "key": "SquadAutoBehavior",
@@ -369,7 +385,8 @@
         "mainFeatures": "- Auto-medbay when wounded near HQ\n- Auto-resupply ammo from stockroom indoors\n- Auto-return-to-HQ when ammo runs dry\n- Daylight-only by default (configurable)\n- Per-squad cooldowns prevent order spam",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.0.0"
     },
     {
       "key": "SquadMerge",
@@ -389,7 +406,8 @@
         "mainFeatures": "- Right-click squad-to-squad merge for own faction\n- Configurable soft-cap (default 8)\n- Long-distance follow-then-merge inside MergeRange (default 10m)\n- RequireShift toggle exists but is off by default (vanilla hijacks Shift before the click)",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.1.0"
     },
     {
       "key": "VehicleSquadSize",
@@ -409,7 +427,8 @@
         "mainFeatures": "- Vehicle capacity scales with cargo slots\n- Right-click vehicle with squad selected = merge members into vehicle\n- Long-distance: follow first, auto-merge inside 10m\n- Split on exit: merged passengers become their own functional squad with unique name\n- UI shows members / vehicleCap while in vehicle\n- Save / reload tested",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
-      }
+      },
+      "version": "1.1.0"
     },
     {
       "key": "Surrounded",
