@@ -8,6 +8,10 @@ BepInEx mod pack for **Infection Free Zone**.
 
 23 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
+> 🍎 **macOS (CrossOver/Wine) users:** the included `IFZMacFix.dll` fixes the new-game crash and the
+> save-load crash caused by macOS-Wine filesystem quirks. It auto-activates only on macOS and is
+> inert on Windows/Linux. Details: **[docs/MACOS_CROSSOVER_FIX.md](docs/MACOS_CROSSOVER_FIX.md)**.
+
 ---
 
 ## TL;DR
