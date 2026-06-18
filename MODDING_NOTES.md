@@ -196,6 +196,15 @@ Legend: ✅ works · ❌ broken/inert · ⚠️ works-with-caveat · 🧭 how-to
   `Awake`.** A `typeof(Structure).GetMethod(...)` at load was implicated in a chainload stall; deferring it
   behind a `bool _resolved` getter keeps `Awake` reflection-free and the BepInEx preloader never hangs on
   it. (MassDeconstruct, 2026-06-15)
+- 🧭 **Custom (draw-your-own) building validity = `CustomBuildingData.TestIsValid()`**, a fixed ordered
+  chain of private predicates → first failure sets `InValidReason` (`Colliding`, `Slope`, `WallSize`,
+  `NodesNumber`, `Position`, `Angels`, `Intersection`, `MaxSize`, `MinSize`, `NodesDistance`). **Size
+  gate** = `IsBelowMaximalAreaSize()` (`Surface < CustomBuildingConfig.MaxSurface`, vanilla **1000**) and
+  `HasMinimalAreaSize()` (`Surface > MinSurface`, vanilla **5**). `Max/MinSurface` are plain `[SerializeField]`
+  fields on the `CustomBuildingConfig : Config` ScriptableObject (no getter to Harmony-patch) — so to make
+  the size limit configurable, postfix the two PREDICATE methods and re-test against `__instance.Surface`
+  (public getter) vs your own bounds. Other gates (`MinWallLength`, `MinAngel`, slope, intersection) are
+  independent. (SplitUnlock 1.1.0, 2026-06-18)
 
 ## Candidate features (assessed, not built)
 
