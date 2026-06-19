@@ -104,3 +104,16 @@ Tie to the new `AllowShortWalls` (or reuse `OverrideBuildingSize` if you prefer 
 - Both verified against `CustomBuildingData` / `HideoutDraft` / `Fraction` in `Ifz.dll`.
 - macOS/CrossOver build/test toolchain (no Windows needed): bottle `csc` compile + `ilspycmd`
   decompile — see `project_ifz_macos_modding` memory.
+
+---
+
+## Status (built on macOS/CrossOver)
+
+- **SplitUnlock 1.2.0** — reconstructed clean source (`src/SplitUnlock/SplitUnlock.cs`),
+  compiled with the bottle `csc`, deployed + `plugins/SplitUnlock.dll` updated. Adds
+  `WallLengthPatch` + `AllowShortWalls`. **Built & working on Mac.**
+- **Hives 0.1.2** — clean source with the draft-variety fix in `src/Hives/Hives.cs`.
+  Does NOT compile via hand-rolled macOS `csc`: the game API exposes `IReadOnlyCollection`/
+  `IReadOnlyList`, which trip a netstandard2.1 ↔ mscorlib circular type-forwarder unless a
+  proper reference-assembly set is used. **Build in the normal Windows project** (its `.csproj`
+  has the right refs) — the source is correct and ready.
