@@ -8,6 +8,10 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-06-19
 
+### Fixed
+- **Hives 0.1.2 — hives no longer all-dogs.** `SeedNow` picked the infected `HideoutDraft` with `FirstOrDefault(Fraction==Infected)`, which always returned the first one (the dog nest), so all 12 hives spawned dogs. Now collects **every** infected draft and picks one at random per placement, so nest types vary across the map. Verbose logging prints the draft count + names on seed (run once to confirm how many distinct infected nests the game data defines — if there's only the dog draft, "dogs only" is the game's data, not selectable mod-side). *(Requires 000_IFZModAPI.)*
+- **SplitUnlock 1.2.0 — bypass "at least one of the walls is too short".** This rejection isn't a split check — it's custom-building validation (`CustomBuildingData.WallsHasMinimalLenght` → `InvalidReason.WallSize`, any segment below `MinWallLength`). 1.1.0 already lifted the sibling area gates but not wall-length. New `BuildingSize > AllowShortWalls` (default on) postfixes that predicate so tight/irregular footprints place. Mirrors the existing area-patch pattern; angle/slope/intersection checks still apply.
+
 ### Added
 - **IFZQualityOfLife 1.1.3 — ShellLairs: order mortars/squads to shell infected lairs.** Vanilla won't let you attack-order an infected lair (they're "enter to clear" only — `CanAttackBuilding` is false for them, while bandit/provirus hideouts are attackable once revealed). ShellLairs adds the option **without** flipping `CanAttackBuilding` globally (that makes the auto-combat AI shell every infected hideout in range, uninvited, and stops vehicles mid-move). Instead: select your squad(s), hover a **revealed** infected lair, and press the **ShellLairs key (default B)** — the lair nearest the cursor gets the game's own attack-building order. Lair structure HP scales with building volume, so a bigger/spread-out lair soaks more shells (the "needs more ammo" penalty is built in). Config: `ShellLairs > Enabled / Key / CursorRadius`. Captures `SquadsController`/`BuildingsController` locally (no new dependency).
 
