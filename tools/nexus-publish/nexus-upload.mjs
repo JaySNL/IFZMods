@@ -41,17 +41,24 @@ if (fs.existsSync(envPath)) {
 
 const CFG = JSON.parse(fs.readFileSync(path.join(HERE, 'mods.json'), 'utf8'))
 
-// Preflight guard — catches the two mistakes that have silently mislabeled uploads:
-//   (1) duplicate "version" keys in a mod entry (JSON.parse keeps the LAST -> wrong version POSTed),
+// Preflight guard — catches the mistakes that have silently mislabeled uploads:
+//   (1) duplicate TOP-LEVEL keys in a mod entry (JSON.parse keeps the LAST -> wrong value POSTed).
+//       Happens when two editors each add the same key (bit us on "version" AND "fileNotes").
 //   (2) a resolved version that doesn't exist in the DLL bytes (stale build / typo'd bump).
 const MODS_RAW = fs.readFileSync(path.join(HERE, 'mods.json'), 'utf8')
+// Top-level, scalar keys only — none of these appear inside the nested "sections" object, so a plain
+// per-entry occurrence count can't false-positive on a nested key of the same name.
+const DUP_CHECK_KEYS = ['nexusModId', 'version', 'dllPath', 'name', 'summary', 'fileNotes', 'category']
 function preflight(targets) {
   const problems = []
   const blocks = MODS_RAW.split(/"key":\s*"/).slice(1)
   for (const b of blocks) {
     const key = b.slice(0, b.indexOf('"'))
-    const n = (b.slice(0, b.search(/"key":/) >>> 0 || b.length).match(/"version"\s*:/g) || []).length
-    if (n > 1) problems.push(`${key}: ${n} duplicate "version" keys in mods.json (JSON keeps the last -> wrong version uploaded)`)
+    const scope = b.slice(0, b.search(/"key":/) >>> 0 || b.length) // this entry only
+    for (const k of DUP_CHECK_KEYS) {
+      const n = (scope.match(new RegExp(`"${k}"\\s*:`, 'g')) || []).length
+      if (n > 1) problems.push(`${key}: ${n} duplicate "${k}" keys in mods.json (JSON keeps the last -> wrong value uploaded)`)
+    }
   }
   for (const m of targets) {
     const ver = (!updateVersion || updateVersion === 'auto') ? (m.version || CFG.common.version) : updateVersion
