@@ -6,6 +6,16 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-20
+
+### Fixed
+- **Late-game multi-second freezes / FPS hitches — root-caused to our own mods' `Object.FindObjectsOfType` scans.** `GunfireLights.FlashTicker` scanned the whole scene for defence modules + antennas every 6s (~165ms single-frame stall in a big late-game map); `Flares.FlareController` did the same for defence modules every 3s (~81ms). Both are now **event-driven** via a new shared registry — zero scene scans, identical lights/flares. Proven by a no-op A/B that the *steady* FPS floor is base-game sim+render (mods don't move it); these scans were the *hitches*, and they're gone (spike count dropped from thousands to a handful). *(GunfireLights 1.3.0, Flares 0.1.6, requires 000_IFZModAPI 1.1.0.)*
+- **Hives 0.1.3 — no more re-seeding / dog-stacking on reload, and real nest variety.** The once-per-save flag keyed on `SaveInfo.Name + DateTime.Ticks`; `DateTime` is the *last-saved* time, so it changed on every autosave → the flag never matched on reload → Hives **re-seeded 12 hives every load**, stacking groups onto the same buildings (the "wall of dogs"). Now keyed on the stable map coordinates. Also: skips buildings that already host a hideout (**1 hive per building**), picks buildings **randomly across the map** (was biggest-first, which clustered them), and spawns **varied nest types** from the game's own GroupDraft→hideout mapping (`inf_human` + `inf_dog`) — the old "all dogs" was a swallowed `.First()` throw on an unmapped draft. *(Requires 000_IFZModAPI.)*
+
+### Added
+- **IFZModAPI 1.1.0 — tower defence-module / antenna registries.** `Cache.DefenceModules` / `Cache.Antennas` live lists + `*Added` / `*Removed` events, maintained by Harmony `Awake`/`OnDestroy` patches. Lets mods react to tower/antenna spawns instead of calling the O(scene) `FindObjectsOfType`. Additive — existing API unchanged.
+- **PerfPack 1.3.0 — `FindClosestBuilding` cache + scheduler + opt-in diagnostics.** Caches the enemy "go to nearest building" AI scan (per-group, short TTL). Adds `PerfScheduler` (frame-budget drain queue + stagger + self-evicting TTL caches) as the foundation for future spread/throttle work. Bundles read-only diagnostics — frame-spike profiler (render/GC-tagged) and an all-mod per-method CPU sampler — **both off by default** (enable in config only while diagnosing).
+
 ## 2026-06-19
 
 ### Fixed
