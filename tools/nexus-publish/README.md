@@ -50,13 +50,33 @@ npm run dry-run
 
 ---
 
-## Updating existing pages (after `nexusModId`s are set)
+## Updating existing pages — the API uploader (canonical)
 
 ```sh
-npm run update
+# new file on each page at its mods.json version (NEXUS_API_KEY from .env.local)
+node nexus-upload.mjs add auto IFZModAPI Flares PerfPack   # specific keys
+node nexus-upload.mjs add auto                              # all mods with a nexusModId
 ```
 
-Opens each mod's file-edit tab, attaches the new DLL, waits for you to fill version + changelog and click Submit. Throttled to 15s between mods.
+`add` posts a new **MAIN** file to an existing page via the official Upload API — no browser. Each
+file's **Description** ("what's new/fixed", shown on the Files tab, **255-char cap**) comes from that
+mod's `fileNotes` in `mods.json` (falls back to `summary`). Confirmed: this sets the live description
+automatically, so no manual step for new versions.
+
+**Releasing a new version — do this:**
+1. **Edit** the mod's existing `version` field in `mods.json` (do NOT add a second `version` key — JSON
+   keeps the *last* duplicate, which silently uploads the wrong version). Update its `fileNotes`.
+2. Check what's already live so you don't upload a duplicate file:
+   `curl -s -H "apikey: $KEY" https://api.nexusmods.com/v1/games/infectionfreezone/mods/<id>/files.json`
+3. `node nexus-upload.mjs add auto <Key>` — a **preflight guard** aborts if any entry has duplicate
+   `version` keys or if the version string isn't found in the DLL bytes (stale build / typo).
+
+**What the public API CANNOT do (use the website):** delete a file, or edit an existing file's
+description in place (`add` would duplicate; `update` archives the current file). Fix mislabeled/old
+files manually on nexusmods.com.
+
+`npm run update` (Playwright) still exists for the rare case the API path can't be used, but the API
+uploader above is the route.
 
 ---
 
