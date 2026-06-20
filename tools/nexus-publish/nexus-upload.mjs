@@ -179,7 +179,7 @@ async function pushMod(mod, versionArg) {
       name,
       version,
       file_category: 'main',
-      description: mod.summary?.slice(0, 250) || '',
+      description: (mod.fileNotes || mod.summary || '').slice(0, 1000),
     })
     console.log(`  ✓ created mod file "${name}" v${version}`)
   } catch (e) {
@@ -206,7 +206,7 @@ async function updateMod(mod, version) {
       name,
       version,
       file_category: 'main',
-      description: mod.summary?.slice(0, 250) || '',
+      description: (mod.fileNotes || mod.summary || '').slice(0, 1000),
       archive_existing_file: true,
     })
     console.log(`  ✓ new version "${name}" v${version} (old archived)`)
