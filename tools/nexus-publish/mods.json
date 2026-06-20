@@ -243,8 +243,8 @@
       "nexusModId": 33,
       "dllPath": "../../plugins/IFZQualityOfLife.dll",
       "name": "IFZ Quality of Life Bundle",
-      "summary": "TowerHMG + VehicleAmmoFix + HeightAdvantage. Three small QoL patches in one DLL.",
-      "description": "Bundle of three small but useful patches:\n\n- **TowerHMG** — defensive towers (eq_hmg) accept Heavy MGs as an upgrade after carworkshop_hcal is researched.\n- **VehicleAmmoFix** — vehicles auto-refill ammo from their own trunk cargo when stockroom refill fails. Also patches the ammo crate max-quantity bug.\n- **HeightAdvantage** — squads in tall buildings get a fight-range bonus based on elevation. Vanilla range was 2D-only.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]` + per-feature toggles: `TowerHMGEnabled`, `VehicleAmmoFixEnabled`, `HeightAdvantageEnabled`.",
+      "summary": "Bundle of small QoL tweaks: TowerHMG, VehicleAmmoFix, HeightAdvantage, BuildingIconToggle, ShellLairs, ClayPitRegen. Each toggleable in F1.",
+      "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- HeightAdvantage: squads in tall buildings get a fight-range bonus scaled by building height.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. Select your squad(s)/mortars, hover a revealed infected lair, press the ShellLairs key (default B) to order a shelling.\n- ClayPitRegen: depleted clay pits regenerate production to ~50% after a configurable number of days, and a depleted pit can be demolished to reclaim the land.",
       "category": "Miscellaneous",
       "tags": [
         "Quality of Life",
@@ -252,13 +252,13 @@
         "Gameplay"
       ],
       "sections": {
-        "description": "Three small QoL patches bundled in one DLL: TowerHMG, VehicleAmmoFix, HeightAdvantage.\n\nEach feature is individually toggleable in F1 ConfigurationManager.",
+        "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- HeightAdvantage: squads in tall buildings get a fight-range bonus scaled by building height.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. Select your squad(s)/mortars, hover a revealed infected lair, press the ShellLairs key (default B) to order a shelling.\n- ClayPitRegen: depleted clay pits regenerate production to ~50% after a configurable number of days, and a depleted pit can be demolished to reclaim the land.",
         "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) after carworkshop_hcal research\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when stockroom path fails\n- HeightAdvantage: squads in tall buildings get fight-range bonus based on building height",
+        "mainFeatures": "- TowerHMG: towers accept Heavy MGs after carworkshop_hcal research\n- VehicleAmmoFix: vehicles refill ammo from their own trunk when stockroom path fails\n- HeightAdvantage: fight-range bonus for squads in tall buildings\n- BuildingIconToggle: hotkey to hide/show all building icons (persists)\n- ShellLairs: hotkey to order mortars/squads to shell a revealed infected lair\n- ClayPitRegen: depleted clay pits regenerate (~50%) after N days; depleted pits demolishable",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.1.3"
+      "version": "1.2.0"
     },
     {
       "key": "LocaleFix",

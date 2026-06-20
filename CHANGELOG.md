@@ -15,6 +15,7 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 ### Added
 - **IFZModAPI 1.1.0 — tower defence-module / antenna registries.** `Cache.DefenceModules` / `Cache.Antennas` live lists + `*Added` / `*Removed` events, maintained by Harmony `Awake`/`OnDestroy` patches. Lets mods react to tower/antenna spawns instead of calling the O(scene) `FindObjectsOfType`. Additive — existing API unchanged.
 - **PerfPack 1.3.0 — `FindClosestBuilding` cache + scheduler + opt-in diagnostics.** Caches the enemy "go to nearest building" AI scan (per-group, short TTL). Adds `PerfScheduler` (frame-budget drain queue + stagger + self-evicting TTL caches) as the foundation for future spread/throttle work. Bundles read-only diagnostics — frame-spike profiler (render/GC-tagged) and an all-mod per-method CPU sampler — **both off by default** (enable in config only while diagnosing).
+- **IFZQualityOfLife 1.2.0 — ClayPitRegen.** Depleted clay pits regenerate production to ~50% of their original limit after a configurable number of game days (diminishing returns — clay doesn't fully replenish), and a depleted pit can now be demolished to reclaim the land. (Catch-up upload: 1.2.0 was built earlier but never published — the page was still on 1.1.3.)
 
 ## 2026-06-19
 
