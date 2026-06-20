@@ -40,6 +40,33 @@ if (fs.existsSync(envPath)) {
 }
 
 const CFG = JSON.parse(fs.readFileSync(path.join(HERE, 'mods.json'), 'utf8'))
+
+// Preflight guard — catches the two mistakes that have silently mislabeled uploads:
+//   (1) duplicate "version" keys in a mod entry (JSON.parse keeps the LAST -> wrong version POSTed),
+//   (2) a resolved version that doesn't exist in the DLL bytes (stale build / typo'd bump).
+const MODS_RAW = fs.readFileSync(path.join(HERE, 'mods.json'), 'utf8')
+function preflight(targets) {
+  const problems = []
+  const blocks = MODS_RAW.split(/"key":\s*"/).slice(1)
+  for (const b of blocks) {
+    const key = b.slice(0, b.indexOf('"'))
+    const n = (b.slice(0, b.search(/"key":/) >>> 0 || b.length).match(/"version"\s*:/g) || []).length
+    if (n > 1) problems.push(`${key}: ${n} duplicate "version" keys in mods.json (JSON keeps the last -> wrong version uploaded)`)
+  }
+  for (const m of targets) {
+    const ver = (!updateVersion || updateVersion === 'auto') ? (m.version || CFG.common.version) : updateVersion
+    const dll = path.resolve(HERE, m.dllPath)
+    if (!fs.existsSync(dll)) { problems.push(`${m.key}: DLL missing at ${dll}`); continue }
+    const buf = fs.readFileSync(dll)
+    if (!buf.includes(Buffer.from(ver, 'ascii')) && !buf.includes(Buffer.from(ver, 'utf16le')))
+      problems.push(`${m.key}: version ${ver} not found in ${path.basename(dll)} (stale DLL or version mismatch?)`)
+  }
+  if (problems.length) {
+    console.error('[fatal] preflight failed:')
+    for (const p of problems) console.error('  - ' + p)
+    process.exit(1)
+  }
+}
 const API = 'https://api.nexusmods.com/v3'
 const GAME = CFG.game.slug
 const KEY = process.env.NEXUS_API_KEY
@@ -193,6 +220,7 @@ if (targets.length === 0) {
   console.error(keySet ? `[fatal] none of [${[...keySet].join(', ')}] have a nexusModId in mods.json` : '[fatal] no mods have a nexusModId yet — create pages first')
   process.exit(1)
 }
+preflight(targets)
 console.log(`${isUpdate ? `Versioning ${targets.length} mod(s) to v${updateVersion}` : `Uploading ${targets.length} mod(s)`} on Nexus (${GAME})...`)
 for (const m of targets) {
   // `update auto [keys...]` uploads each mod at its OWN mods.json version (the canonical route)
