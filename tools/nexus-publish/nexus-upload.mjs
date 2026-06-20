@@ -15,9 +15,12 @@
 //
 // Auth: header `apikey: <key>`. Reads key from env NEXUS_API_KEY (never hardcoded/committed).
 //
-// Usage:
-//   NEXUS_API_KEY=... node nexus-upload.mjs            # upload all mods that have a nexusModId
-//   NEXUS_API_KEY=... node nexus-upload.mjs ArmyBackup # upload a single mod by key
+// Usage (CANONICAL — the API route; no browser):
+//   node nexus-upload.mjs add auto [key ...]   # add a new file at each mod's mods.json version
+//   node nexus-upload.mjs add 1.3.0 PerfPack   # add a new file at an explicit version
+//   node nexus-upload.mjs update auto [key ...] # version into an existing API file-update-group
+//   (key reads from .env.local NEXUS_API_KEY; no keys = all mods with a nexusModId)
+//   Note: `publish.mjs` (Playwright) is ONLY for CREATING a new page; file uploads go through here.
 //
 // On Windows PowerShell:  $env:NEXUS_API_KEY="..."; node nexus-upload.mjs
 
@@ -52,7 +55,10 @@ if (!KEY) {
 //   node nexus-upload.mjs [key]                  -> first upload (createModFile)
 //   node nexus-upload.mjs update <version> [key] -> new version on existing file (createUpdateGroupVersion)
 const isUpdate = process.argv[2] === 'update'
-const isFirst  = process.argv[2] === 'first'   // first-upload at an explicit version
+// 'add' is the canonical route: createModFile adds a new file version to an EXISTING page (does NOT
+// create a page). 'first' kept as an alias. Use this — web-uploaded pages have no API file-update-
+// group, so `update` 404s; `add` is what actually works.
+const isFirst  = process.argv[2] === 'first' || process.argv[2] === 'add'
 const updateVersion = (isUpdate || isFirst) ? process.argv[3] : null
 // One or more keys may follow (update/first mode: argv[4..], bare first-upload mode: argv[2..]).
 const keyList = ((isUpdate || isFirst) ? process.argv.slice(4) : process.argv.slice(2)).filter(Boolean)
@@ -189,7 +195,9 @@ if (targets.length === 0) {
 }
 console.log(`${isUpdate ? `Versioning ${targets.length} mod(s) to v${updateVersion}` : `Uploading ${targets.length} mod(s)`} on Nexus (${GAME})...`)
 for (const m of targets) {
-  try { if (isUpdate) await updateMod(m, updateVersion); else await pushMod(m, isFirst ? updateVersion : null) }
+  // `update auto [keys...]` uploads each mod at its OWN mods.json version (the canonical route)
+  const ver = updateVersion === 'auto' ? (m.version || CFG.common.version) : updateVersion
+  try { if (isUpdate) await updateMod(m, ver); else await pushMod(m, isFirst ? ver : null) }
   catch (e) { console.log(`[error] ${m.key}: ${e.message.split('\n')[0]}`) }
   await sleep(3000) // gentle pacing
 }
