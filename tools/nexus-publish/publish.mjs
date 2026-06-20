@@ -48,6 +48,9 @@ const MODE = {
   auto: args.has('--auto'),
   dryRun: args.has('--dry-run'),
 }
+// Optional positional mod keys restrict --update to just those mods (case-insensitive),
+// so you don't re-upload all 24 pages. e.g. `npm run update -- Hives Flares PerfPack`
+const ONLY_KEYS = new Set([...args].filter((a) => !a.startsWith('--')).map((s) => s.toLowerCase()))
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -285,8 +288,7 @@ async function main() {
   await fs.mkdir(PROFILE_DIR, { recursive: true })
 
   const ctx = await chromium.launchPersistentContext(PROFILE_DIR, {
-    headless: false,
-    channel: 'chrome', // use system Chrome — no Playwright Chromium download required
+    headless: false,                       // bundled chromium (no system Chrome needed)
     viewport: { width: 1500, height: 950 },
     args: ['--disable-blink-features=AutomationControlled'],
   })
@@ -361,7 +363,9 @@ async function main() {
   }
 
   if (MODE.update) {
+    if (ONLY_KEYS.size) console.log(`[update] restricted to: ${[...ONLY_KEYS].join(', ')}`)
     for (const mod of cfg.mods) {
+      if (ONLY_KEYS.size && !ONLY_KEYS.has(mod.key.toLowerCase())) continue
       if (!mod.nexusModId) {
         console.log(`[skip] ${mod.key} — no nexusModId, run --create first`)
         continue

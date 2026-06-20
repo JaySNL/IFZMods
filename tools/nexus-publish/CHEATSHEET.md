@@ -26,6 +26,12 @@ Game = Infection Free Zone, Category = Miscellaneous (only option IFZ exposes).
 | SquadAutoBehavior | 39 |  |
 | SquadMerge | 40 |  |
 | VehicleSquadSize | 41 |  |
+| Flares | 54 | IFZModAPI |
+| Surrounded | 55 |  |
+| Hives | 56 | IFZModAPI |
+| RaiderEscalation | 57 |  |
+| MassDeconstruct | 58 |  |
+| SquadMoveFire | 59 |  |
 
 ---
 
