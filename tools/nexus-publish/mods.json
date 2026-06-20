@@ -244,8 +244,8 @@
       "dllPath": "../../plugins/IFZQualityOfLife.dll",
       "name": "IFZ Quality of Life Bundle",
       "summary": "Bundle of small QoL tweaks: TowerHMG, VehicleAmmoFix, HeightAdvantage, BuildingIconToggle, ShellLairs, ClayPitRegen. Each toggleable in F1.",
-      "fileNotes": "Changed in 1.3.0: ShellLairs is now a native right-click on a revealed infected lair with mortar squad(s) selected (no more B hotkey); plain infantry still enter to clear. Also includes ClayPitRegen from 1.2.0. (Bunker mortar shelling is being reworked.)",
-      "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- HeightAdvantage: squads in tall buildings get a fight-range bonus scaled by building height.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal.\n- ClayPitRegen: depleted clay pits regenerate production to ~50% after a configurable number of days, and a depleted pit can be demolished to reclaim the land.",
+      "fileNotes": "New in 1.3.1: select a bunker/tower with a mortar weapon, right-click a revealed lair, and it shells the lair on its own cooldown until destroyed (toggle [ShellLairs] Bunkers). Also fixes BuildingIconToggle so it hides structure icons again.",
+      "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- HeightAdvantage: squads in tall buildings get a fight-range bonus scaled by building height.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.\n- ClayPitRegen: depleted clay pits regenerate production to ~50% after a configurable number of days, and a depleted pit can be demolished to reclaim the land.",
       "category": "Miscellaneous",
       "tags": [
         "Quality of Life",
@@ -253,13 +253,13 @@
         "Gameplay"
       ],
       "sections": {
-        "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- HeightAdvantage: squads in tall buildings get a fight-range bonus scaled by building height.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal.\n- ClayPitRegen: depleted clay pits regenerate production to ~50% after a configurable number of days, and a depleted pit can be demolished to reclaim the land.",
+        "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- HeightAdvantage: squads in tall buildings get a fight-range bonus scaled by building height.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.\n- ClayPitRegen: depleted clay pits regenerate production to ~50% after a configurable number of days, and a depleted pit can be demolished to reclaim the land.",
         "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
         "mainFeatures": "- TowerHMG: towers accept Heavy MGs after carworkshop_hcal research\n- VehicleAmmoFix: vehicles refill ammo from their own trunk when stockroom path fails\n- HeightAdvantage: fight-range bonus for squads in tall buildings\n- BuildingIconToggle: hotkey to hide/show all building icons (persists)\n- ShellLairs: right-click a revealed infected lair with mortar squads to shell it\n- ClayPitRegen: depleted clay pits regenerate (~50%) after N days; depleted pits demolishable",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.3.0"
+      "version": "1.3.1"
     },
     {
       "key": "LocaleFix",
@@ -374,21 +374,22 @@
       "nexusModId": 39,
       "dllPath": "../../plugins/SquadAutoBehavior.dll",
       "name": "Squad Auto Behavior",
-      "summary": "Auto-medbay when wounded, auto-resupply ammo, auto-return-to-HQ when ammo runs dry.",
-      "description": "Every TickSeconds (default 8) the mod sweeps player squads:\n\n- **Auto-return when wounded** — wounded squad outside HQ moves to nearest building with a soldiers-treatment module and available beds.\n- **Auto-resupply** — squad inside a HQ-zone enterable auto-grabs ammo from the stockroom when below LowAmmoFraction.\n- **Auto-return when dry** — squad outside HQ with avg ammo below ReturnAmmoFraction issues a GoToHq order.\n\nDaylight-only by default (configurable). Per-squad cooldowns prevent order spam.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Each behaviour individually toggleable.",
+      "summary": "Auto-medbay when wounded, auto-resupply ammo, auto-return to the nearest ammo source when dry.",
+      "fileNotes": "New in 1.1.0: when a squad runs dry it now heads to the NEAREST reachable building that holds ammo (a warehouse next door beats trekking back to HQ), and falls back to HQ only if no closer ammo source is reachable. Less cross-map babysitting.",
+      "description": "Every TickSeconds (default 8) the mod sweeps player squads:\n\n- **Auto-return when wounded** — wounded squad outside HQ moves to nearest building with a soldiers-treatment module and available beds.\n- **Auto-resupply** — squad inside a HQ-zone enterable auto-grabs ammo from the stockroom when below LowAmmoFraction.\n- **Auto-return when dry** — squad outside HQ with avg ammo below ReturnAmmoFraction is sent to the NEAREST reachable building holding ammo (a closer warehouse beats the HQ); falls back to HQ if none is reachable.\n\nDaylight-only by default (configurable). Per-squad cooldowns prevent order spam.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Each behaviour individually toggleable.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
         "Quality of Life"
       ],
       "sections": {
-        "description": "Reduces babysitting. Every TickSeconds (default 8) the mod sweeps player squads and issues smart orders: wounded squads go to medbay, indoor squads grab ammo from stockrooms, dry squads return to HQ.",
+        "description": "Reduces babysitting. Every TickSeconds (default 8) the mod sweeps player squads and issues smart orders: wounded squads go to medbay, indoor squads grab ammo from stockrooms, dry squads head to the nearest building that holds ammo (HQ as a fallback).",
         "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- Auto-medbay when wounded near HQ\n- Auto-resupply ammo from stockroom indoors\n- Auto-return-to-HQ when ammo runs dry\n- Daylight-only by default (configurable)\n- Per-squad cooldowns prevent order spam",
+        "mainFeatures": "- Auto-medbay when wounded near HQ\n- Auto-resupply ammo from stockroom indoors\n- Auto-return to the NEAREST building with ammo when dry (HQ as fallback)\n- Daylight-only by default (configurable)\n- Per-squad cooldowns prevent order spam",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "key": "SquadMerge",
@@ -458,7 +459,7 @@
       "dllPath": "../../plugins/Hives.dll",
       "name": "Hives - infected hive seeding (experimental)",
       "summary": "Seeds extra infected hideouts across the map on a new game; they grow into lairs. Pairs with Surrounded.",
-      "fileNotes": "Fixed in 0.1.4: save-load crash (NullReferenceException) on saves containing a revealed hive - this also recovers saves bricked by 0.1.3. Update the DLL and the save loads again.",
+      "fileNotes": "Fixed in 0.1.5: clearing a hive/lair then entering or standing by it no longer crashes. Lairs on ordinary buildings hit two game-side null crashes (scavenging it; squads reacting) that spammed crash logs - both now guarded. Includes 0.1.4 fix.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
@@ -471,7 +472,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.1.4"
+      "version": "0.1.5"
     },
     {
       "key": "RaiderEscalation",
