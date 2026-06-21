@@ -215,7 +215,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.0.1"
+      "fileNotes": "1.0.2: fixes the constant frame hiccups. The chimney-smoke source lookup ran a full-scene object scan per house several times a second whenever no smoke existed yet (early game / small map) - now throttled globally and cached. No gameplay change.",
+      "version": "1.0.2"
     },
     {
       "key": "HouseRebalance",
