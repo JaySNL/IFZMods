@@ -325,7 +325,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.0.0"
+      "fileNotes": "1.0.1: the per-load 'Verbose' diagnostic log now defaults OFF (was on) - no log line on every save load during normal play. No gameplay change. Existing configs keep their value; flip [General] Verbose off in F1 if you want it quiet.",
+      "version": "1.0.1"
     },
     {
       "key": "SmartWorkerRedist",
