@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-21
+
+### Added
+- **SwarmFix 1.1.0 — restores late-game infected night waves that silently stop.** On long saves (~day 200+) the infected swarm waves quietly stop spawning while raiders keep attacking — the tell. Root cause (vanilla): `SwarmSpawner` compounds its aggro value every evaluation (`aggro += aggro * modifier`), so over a long game it grows past the highest swarm tier's `MaxAggroPoints` (here 9,999,999) all the way to `+Infinity`; the save format can't store Infinity, so on reload it comes back as `NaN`. The wave dispatch calls `SwarmConfig.GetSwarm(aggro)`, which only matches a tier where `Min <= aggro <= Max` — with aggro at Infinity, NaN, or simply past the top tier, **no tier matches, `GetSwarm` returns null, and no wave is ever dispatched again.** A Harmony prefix on `GetSwarm` sanitises the lookup so a tier always resolves: finite in-range aggro is untouched (healthy saves keep normal scaling), legitimately over-max aggro clamps to the top tier, and corrupted aggro (NaN/Infinity) falls back to `GarbageHordeScale x top tier` (default 1.0 = max horde; tunable down live in F1). Lookup-only — the stored/serialized aggro is never modified, so it's non-destructive and reversible. Confirmed in-game: dead waves became hordes assaulting HQ again across multiple nights. *(Reportable to the devs — unbounded aggro compounding overflows the tier table.)*
+
+---
+
 ## 2026-06-20
 
 ### Fixed

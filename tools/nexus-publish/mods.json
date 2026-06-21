@@ -552,6 +552,27 @@
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "version": "0.1.7"
+    },
+    {
+      "key": "SwarmFix",
+      "nexusModId": 63,
+      "dllPath": "../../plugins/SwarmFix.dll",
+      "name": "Swarm Fix",
+      "summary": "Restores late-game infected night waves that silently stop. The swarm aggro overflows past the top tier (Infinity/NaN) so no wave ever spawns again while raiders keep attacking; this sanitises the tier lookup so the hordes come back.",
+      "fileNotes": "1.1.0 - first release. Fixes late-game infected swarms that stop spawning once swarm aggro overflows past the top tier (to Infinity, or NaN after a reload). Healthy saves unaffected. Corrupted-save horde size tunable in F1 (GarbageHordeScale).",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Bug Fixes"
+      ],
+      "sections": {
+        "description": "On long Infection Free Zone saves the nightly infected swarms quietly stop coming - while raiders keep attacking (the tell). Cause: the game's swarm 'aggro' value compounds every wave and eventually overflows past its largest swarm tier all the way to +Infinity; the save can't store Infinity, so after a reload it comes back as NaN. The wave picker (SwarmConfig.GetSwarm) only matches a tier where Min <= aggro <= Max, so once aggro is Infinity / NaN / past the top tier, nothing matches and no swarm is ever spawned again.\n\nSwarmFix adds a Harmony prefix that sanitises that lookup so a tier always resolves: healthy saves are untouched (normal scaling), legitimately high aggro clamps to the top tier, and corrupted aggro falls back to a tunable fraction of the top tier (GarbageHordeScale, default = max horde). It only touches the lookup - your saved aggro is never modified, so it's non-destructive and fully reversible.\n\nConfigurable in F1 ConfigurationManager.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Restores infected swarm waves that stop on long (~day 200+) saves\n- Fixes swarm aggro overflowing past the top tier (Infinity, or NaN after reload)\n- Healthy saves keep normal aggro-based horde scaling\n- Corrupted-save horde size tunable live in F1 (GarbageHordeScale)\n- Lookup-only: never edits your saved aggro; fully reversible",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 - runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals - nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.1.0"
     }
   ]
 }
