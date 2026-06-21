@@ -194,7 +194,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.3.1"
+      "fileNotes": "1.3.2: brighter, punchier muzzle flashes - bigger warm light pools per shot at night (Intensity 3->5.5, Range 8->11m) + stronger explosion flash. Existing configs keep old values: delete or raise the [Muzzle] lines in F1 for the new look.",
+      "version": "1.3.2"
     },
     {
       "key": "HousePower",
