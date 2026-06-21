@@ -88,7 +88,8 @@
       "requires": [
         "IFZModAPI"
       ],
-      "version": "1.1.0"
+      "fileNotes": "1.1.1: punchier combat visuals - wider bullet tracers (WidthMul 2.0->3.0) and bigger blood splashes (2.4x). Existing configs keep old values: delete the [Tracers]/[Blood] lines or raise them in F1 for the new look.",
+      "version": "1.1.1"
     },
     {
       "key": "ConstructionETA",
