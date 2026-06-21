@@ -6,6 +6,16 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-21 — HouseRebalance 1.1.0 + MassDeconstruct 1.2.0
+
+### Added
+- **MassDeconstruct 1.2.0 — category filters + safer arming.** The drag-box now filters by category — buildings, walls, barbed wire, gates, towers — each independently toggleable, so you can mass-deconstruct just walls without touching buildings (and vice-versa). Adds an owned-only filter and a **Ctrl** modifier on the hotkey to prevent accidental arming. Requires IFZ Mod API 1.2.1+.
+
+### Changed
+- **HouseRebalance 1.1.0 — PinWhenStable.** Once a citizen settles into suitable housing, the rebalancer now leaves them alone instead of repeatedly re-evaluating stable residents each sweep — less churn, fewer needless relocations. On by default (`[General] PinWhenStable`).
+
+---
+
 ## 2026-06-21 — Cross-mod crash fixes (Linux / Proton / Steam Deck)
 
 ### Fixed

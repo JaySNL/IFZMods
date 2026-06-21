@@ -241,7 +241,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.0.0"
+      "version": "1.1.0",
+      "fileNotes": "1.1.0: adds PinWhenStable - once a citizen settles into suitable housing the rebalancer leaves them alone instead of repeatedly re-evaluating stable residents. On by default."
     },
     {
       "key": "IFZQualityOfLife",
@@ -521,7 +522,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.0.0"
+      "version": "1.2.0",
+      "fileNotes": "1.2.0: drag-box now filters by category (buildings / walls / barbed wire / gates / towers, each toggleable), plus an owned-only filter and a Ctrl modifier on the hotkey to prevent accidental arming. Requires IFZ Mod API 1.2.1+."
     },
     {
       "key": "SquadMoveFire",
