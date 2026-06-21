@@ -542,7 +542,7 @@
       "dllPath": "../../plugins/Flares.dll",
       "name": "Flares - mortar illumination (experimental)",
       "summary": "At night, mortars autonomously lob illumination flares at dark infected clusters, revealing fog-of-war.",
-      "fileNotes": "0.1.8: per-tick diagnostic logging now defaults OFF (was on) - no Player.log spam during normal play. No gameplay change. (0.1.7: flares clear fog again after a mid-session save-load.)",
+      "fileNotes": "0.1.9: brighter, more vivid flare glow - intensity 8->12, reach 60->66m, colour nudged toward amber (more illumination, less deep-red). Existing configs keep old values: delete the [Flare] lines or raise them in F1 for the new look.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay"
@@ -554,7 +554,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.1.8"
+      "version": "0.1.9"
     },
     {
       "key": "SwarmFix",
