@@ -6,6 +6,22 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-21 — Cross-mod crash fixes (Linux / Proton / Steam Deck)
+
+### Fixed
+- **Pack-wide: eliminated the cross-mod crashes that hit Linux/Proton/Steam Deck players running multiple IFZ mods together.** Under Wine, when two BepInEx mods place a Harmony patch on the *same* game method, MonoMod regenerates the combined trampoline and the regenerated copy comes back with no IL body (`BadImageFormatException: Method has zero rva`), which throws when the method is first called and takes the game down via its bug-reporter. It never reproduces on native Windows, so the colliding mods looked fine for most players while silently crashing Linux users. Several shipped mods were independently patching the same game controllers and methods. The shared **IFZ Mod API** is now the **single** patcher of every shared target and hands the data to the other mods through caches/events, so no method is ever patched twice. An exhaustive sweep of all shipped mods confirms zero remaining shared-method collisions. **Update the whole set together** — every mod below now requires **IFZ Mod API 1.2.1**.
+  - **IFZ Mod API 1.2.1** — sole patcher of the shared game controllers, plus new shared hooks for explosions and squad orders/size.
+  - **CinematicFX 1.1.3 + GunfireLights 1.3.32** — explosion VFX now both go through one shared explosion hook (previously both patched `Explosion.Explode` → crash if you ran both).
+  - **SquadMerge 1.1.2 + VehicleSquadSize 1.1.2** — now coexist: both register with shared squad hooks instead of double-patching the same squad methods (previously crashed if you ran both; they cover different features — infantry merging vs vehicle capacity — and are meant to be used together).
+  - **HousePower 1.0.3, IFZ Quality of Life 1.3.2, SquadAutoBehavior 1.1.2, DarkerNights 1.1.7, PerfPack 1.5.1, Hives 0.1.6, Raider Escalation 1.2.5** — read the shared game controllers from IFZ Mod API instead of each re-patching their constructors. (Raider Escalation 1.2.5 = the live 1.2.4 raid features + this crash fix.)
+  - No gameplay or visual changes — purely a stability/compatibility fix. Native-Windows users were unaffected either way.
+
+### Changed
+- **PerfPack 1.5.1 — adds an in-game performance HUD.** Toggle with **F10** (configurable). Native-styled overlay showing main/render thread time, draw calls, and live game-entity counts (infected, groups, swarms, spawn points, buildings) to see what's loading the frame. Off by default; zero cost when hidden.
+- **Flares 0.2.0 — finalised flare look.** Brighter amber illumination light, a real native smoke plume, and a soft additive glow. Requires IFZ Mod API 1.2.1+. (Note: BepInEx persists config defaults, so existing users keep old values — delete the `[Flare]` lines from the .cfg or raise them in F1 for the new look.)
+
+---
+
 ## 2026-06-21
 
 ### Added

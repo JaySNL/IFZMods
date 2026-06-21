@@ -40,8 +40,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
       },
-      "fileNotes": "1.1.1: adds a pause-aware time helper (Time.IsPaused) and makes pooled point-light flashes freeze while the game clock is paused instead of expiring. Required update for Gunfire Lights 1.3.3 and Cinematic FX 1.1.2.",
-      "version": "1.1.1"
+      "fileNotes": "1.2.1: now the sole patcher of shared game controllers plus shared Explosion and squad-order hooks, so dependent IFZ mods never double-patch the same method (fixes a Linux/Proton/Steam Deck crash). Update your IFZ mods alongside this library.",
+      "version": "1.2.1"
     },
     {
       "key": "ArmyBackup",
@@ -89,8 +89,8 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "1.1.2: demolish dust now freezes when the game is paused (pause-aware lifetime) so it holds for screenshots. Requires IFZ Mod API 1.1.1+.",
-      "version": "1.1.2"
+      "fileNotes": "1.1.3: explosion impact dust now uses IFZ Mod API's shared explosion hook, so it no longer crashes on Linux/Proton when GunfireLights is also installed. Requires IFZ Mod API 1.2.1+.",
+      "version": "1.1.3"
     },
     {
       "key": "ConstructionETA",
@@ -132,7 +132,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.1.6"
+      "version": "1.1.7",
+      "fileNotes": "1.1.7: reads the weather and colour controllers via IFZ Mod API instead of re-patching them (fixes a Linux/Proton double-patch crash with other IFZ mods). Requires IFZ Mod API 1.2.1+."
     },
     {
       "key": "DeconstructCancel",
@@ -196,8 +197,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "fileNotes": "1.3.3: muzzle and explosion flashes now freeze when the game is paused instead of vanishing - pause a firefight and the glow holds for screenshots. Requires IFZ Mod API 1.1.1+.",
-      "version": "1.3.3"
+      "fileNotes": "1.3.32: explosion lights now use IFZ Mod API's shared explosion hook, so it no longer crashes on Linux/Proton when CinematicFX is also installed. Requires IFZ Mod API 1.2.1+.",
+      "version": "1.3.32"
     },
     {
       "key": "HousePower",
@@ -218,8 +219,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "fileNotes": "1.0.2: fixes the constant frame hiccups. The chimney-smoke source lookup ran a full-scene object scan per house several times a second whenever no smoke existed yet (early game / small map) - now throttled globally and cached. No gameplay change.",
-      "version": "1.0.2"
+      "fileNotes": "1.0.3: reads game controllers via IFZ Mod API instead of re-patching their constructors (fixes a Linux/Proton double-patch crash when other IFZ mods are installed). Requires IFZ Mod API 1.2.1+.",
+      "version": "1.0.3"
     },
     {
       "key": "HouseRebalance",
@@ -248,7 +249,7 @@
       "dllPath": "../../plugins/IFZQualityOfLife.dll",
       "name": "IFZ Quality of Life Bundle",
       "summary": "Bundle of small QoL tweaks: TowerHMG, VehicleAmmoFix, HeightAdvantage, BuildingIconToggle, ShellLairs, ClayPitRegen. Each toggleable in F1.",
-      "fileNotes": "New in 1.3.1: select a bunker/tower with a mortar weapon, right-click a revealed lair, and it shells the lair on its own cooldown until destroyed (toggle [ShellLairs] Bunkers). Also fixes BuildingIconToggle so it hides structure icons again.",
+      "fileNotes": "1.3.2: reads game controllers via IFZ Mod API instead of re-patching them, and drops dead duplicate patches (fixes a Linux/Proton double-patch crash with other IFZ mods). Requires IFZ Mod API 1.2.1+.",
       "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- HeightAdvantage: squads in tall buildings get a fight-range bonus scaled by building height.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.\n- ClayPitRegen: depleted clay pits regenerate production to ~50% after a configurable number of days, and a depleted pit can be demolished to reclaim the land.",
       "category": "Miscellaneous",
       "tags": [
@@ -263,7 +264,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.3.1"
+      "version": "1.3.2"
     },
     {
       "key": "LocaleFix",
@@ -292,7 +293,7 @@
       "dllPath": "../../plugins/PerfPack.dll",
       "name": "Performance Pack",
       "summary": "Late-game FPS fixes. Headline: hideout patrol spawn-point LOD ~doubles night FPS on old saves — same horde, no gameplay change.",
-      "fileNotes": "1.4.1: Hideout patrol spawn-point LOD - ~2x late-game night FPS (deep save ~13 -> ~28), full swarm intact. Off-screen patrol movement staggered + inert debug colliders disabled. Fixes a 1.4.0 bug that suppressed off-screen attacks.",
+      "fileNotes": "1.5.1: reads shared controllers via IFZ Mod API instead of re-patching them (fixes a Linux/Proton double-patch crash). Includes the in-game performance HUD (toggle F10). Requires IFZ Mod API 1.2.1+.",
       "description": "A bundle of safe, measured late-game performance patches. Headline fix (1.4.0):\n\n- **Hideout patrol spawn-point LOD** — old/large maps accumulate tens of thousands of dormant patrol spawn points (the game's lightweight 'virtual' form of a patrol). The base game updates EVERY one every frame (path-move + terrain raycast + fog) and leaves a debug-only physics collider live on each — at ~19k points that was the single biggest night-time cost (measured ~50ms/frame of it). PerfPack distance-LODs them: off-screen points update less often with time-compensated movement (roaming/despawn stay accurate), near-camera points are untouched, and the inert debug colliders are disabled. **Horde size is unchanged** — same number of patrols, they just stop burning the CPU while off-screen. Roughly **doubled night FPS** on a deep save (12-13 -> 26-28) with no perceptible gameplay change.\n\nAlso included:\n\n- **A\\* graph-update throttle** — spreads navmesh rebuilds (build/demolish/wall-damage) across frames instead of one fat main-thread stall.\n- **Enemy 'nearest building' AI cache** — the raid/siege AI re-scans a group's entire in-range building set every behaviour tick; cached per group for a short TTL.\n- **Billboard throttle** — refreshes each `Billboard.Update` every Nth frame, staggered.\n- **Blood-decay throttle** — clamps `SetBloodPuddleValue` writes to once every IntervalSec per body.\n- **PerfScheduler** — frame-budget drain queue + stagger foundation.\n- **Opt-in diagnostics** (off by default) — frame-spike profiler + per-method CPU sampler for diagnosing hitches.\n\nAll patches are config-gated and reversible. Safe defaults — no rendering or logic regressions.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`, per-feature toggles under each section.",
       "category": "Miscellaneous",
       "tags": [
@@ -305,7 +306,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.4.1"
+      "version": "1.5.1"
     },
     {
       "key": "SaveUnlock",
@@ -380,7 +381,7 @@
       "dllPath": "../../plugins/SquadAutoBehavior.dll",
       "name": "Squad Auto Behavior",
       "summary": "Auto-medbay when wounded, auto-resupply ammo, auto-return to the nearest ammo source when dry.",
-      "fileNotes": "1.1.1: debug logging now defaults OFF (was on) - no more per-squad log spam every 8s during normal play. No gameplay change. (1.1.0: dry squads route to the nearest ammo building, HQ as fallback.)",
+      "fileNotes": "1.1.2: reads game controllers via IFZ Mod API instead of re-patching them (fixes a Linux/Proton double-patch crash when other IFZ mods are installed). Requires IFZ Mod API 1.2.1+.",
       "description": "Every TickSeconds (default 8) the mod sweeps player squads:\n\n- **Auto-return when wounded** — wounded squad outside HQ moves to nearest building with a soldiers-treatment module and available beds.\n- **Auto-resupply** — squad inside a HQ-zone enterable auto-grabs ammo from the stockroom when below LowAmmoFraction.\n- **Auto-return when dry** — squad outside HQ with avg ammo below ReturnAmmoFraction is sent to the NEAREST reachable building holding ammo (a closer warehouse beats the HQ); falls back to HQ if none is reachable.\n\nDaylight-only by default (configurable). Per-squad cooldowns prevent order spam.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Each behaviour individually toggleable.",
       "category": "Miscellaneous",
       "tags": [
@@ -394,7 +395,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.1.1"
+      "version": "1.1.2"
     },
     {
       "key": "SquadMerge",
@@ -415,7 +416,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.1.0"
+      "version": "1.1.2",
+      "fileNotes": "1.1.2: now coexists with Vehicle Squad Size - both register with IFZ Mod API's shared squad hooks instead of double-patching the same methods (fixes a Linux/Proton crash when both are installed). Requires IFZ Mod API 1.2.1+."
     },
     {
       "key": "VehicleSquadSize",
@@ -436,7 +438,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.1.0"
+      "version": "1.1.2",
+      "fileNotes": "1.1.2: now coexists with Squad Merge - both register with IFZ Mod API's shared squad hooks instead of double-patching the same methods (fixes a Linux/Proton crash when both are installed). Requires IFZ Mod API 1.2.1+."
     },
     {
       "key": "Surrounded",
@@ -464,7 +467,7 @@
       "dllPath": "../../plugins/Hives.dll",
       "name": "Hives - infected hive seeding (experimental)",
       "summary": "Seeds extra infected hideouts across the map on a new game; they grow into lairs. Pairs with Surrounded.",
-      "fileNotes": "Fixed in 0.1.5: clearing a hive/lair then entering or standing by it no longer crashes. Lairs on ordinary buildings hit two game-side null crashes (scavenging it; squads reacting) that spammed crash logs - both now guarded. Includes 0.1.4 fix.",
+      "fileNotes": "0.1.6: reads the hideouts controller via IFZ Mod API instead of re-patching its constructor (fixes a Linux/Proton double-patch crash when Raider Escalation is also installed). Requires IFZ Mod API 1.2.1+.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
@@ -477,7 +480,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.1.5"
+      "version": "0.1.6"
     },
     {
       "key": "RaiderEscalation",
@@ -497,7 +500,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.2.4"
+      "version": "1.2.5",
+      "fileNotes": "1.2.5: reads the hideouts controller via IFZ Mod API instead of re-patching its constructor (fixes a Linux/Proton crash when Hives is also installed). Same raid features as 1.2.4. Requires IFZ Mod API 1.2.1+."
     },
     {
       "key": "MassDeconstruct",
@@ -545,7 +549,7 @@
       "dllPath": "../../plugins/Flares.dll",
       "name": "Flares - mortar illumination (experimental)",
       "summary": "At night, mortars autonomously lob illumination flares at dark infected clusters, revealing fog-of-war.",
-      "fileNotes": "0.1.9: brighter, more vivid flare glow - intensity 8->12, reach 60->66m, colour nudged toward amber (more illumination, less deep-red). Existing configs keep old values: delete the [Flare] lines or raise them in F1 for the new look.",
+      "fileNotes": "0.2.0: finalised flare look - brighter amber illumination light, native smoke plume, and a soft additive glow. Requires IFZ Mod API 1.2.1+.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay"
@@ -557,7 +561,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.1.9"
+      "version": "0.2.0"
     },
     {
       "key": "SwarmFix",
