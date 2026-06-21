@@ -40,7 +40,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
       },
-      "fileNotes": "1.2.1: now the sole patcher of shared game controllers plus shared Explosion and squad-order hooks, so dependent IFZ mods never double-patch the same method (fixes a Linux/Proton/Steam Deck crash). Update your IFZ mods alongside this library.",
+      "fileNotes": "1.2.1: now the sole patcher of shared game systems, so IFZ mods never double-patch (fixes Linux/Proton/Steam Deck crashes). IMPORTANT: update ALL your IFZ mods to their latest versions together - older mod versions crash with this API.",
       "version": "1.2.1"
     },
     {
