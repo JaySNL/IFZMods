@@ -6,6 +6,16 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-23 — API 1.4.2 + Surrounded 0.4.1 (expedition day-counter)
+
+### Fixed
+- **IFZ Mod API 1.4.2 — expedition day-counter restore.** On load the game restores Day/Month/Year but **not** `DaysFromPreviousGames`, so a run continued from an expedition collapsed its day read-out (e.g. "182 (8)" → "182") and spiked day-scaled systems as if the base were 182 days old. The API now mirrors and restores that field on load and exposes **`Time.RunDay`** (this run's own age, inherited days stripped) for day-scaled mods. Patch over 1.4.1. Update from 1.4.1.
+
+### Changed
+- **Surrounded 0.4.1.** The difficulty ease-in ramp and the F1 status read-out now use **run-day** (`Time.RunDay`) instead of absolute day, so a continued expedition eases in over the current run instead of jumping straight to the inherited day count (which previously triggered a heavy siege on load). **Now requires IFZ Mod API 1.4.2.**
+
+---
+
 ## 2026-06-23 — Lighting wave + Quality-of-Life split
 
 **Update all of these together — they require IFZ Mod API 1.4.1.** Older mod versions crash with the new API.

@@ -40,8 +40,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
       },
-      "fileNotes": "1.4.1: adds shared cinematic bloom/glow + light-shaft helpers, pause-aware timing, and an event-driven tower/antenna registry for lights. Still the sole patcher of shared game systems. IMPORTANT: update ALL your IFZ mods together - older versions crash with this API.",
-      "version": "1.4.1"
+      "fileNotes": "1.4.2: fixes the expedition day-counter on load (run-day no longer collapses to the total) and adds Time.RunDay for day-scaled systems. Plus the 1.4.x bloom/glow + light-shaft helpers and tower/antenna registry. IMPORTANT: update ALL your IFZ mods together - older versions crash with this API.",
+      "version": "1.4.2"
     },
     {
       "key": "ArmyBackup",
@@ -451,6 +451,8 @@
       "dllPath": "../../plugins/Surrounded.dll",
       "name": "Surrounded - siege mode",
       "summary": "Vanilla swarms attack far more often and bigger; scavenge loot multiplied so you push out between waves.",
+      "requires": ["IFZModAPI"],
+      "fileNotes": "0.4.1: the difficulty ease-in ramp and the F1 read-out now use run-day (Time.RunDay) instead of absolute day, so an expedition eases in over THIS run instead of jumping to the parent run's day count. Requires IFZ Mod API 1.4.2+.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
@@ -463,7 +465,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.4.0"
+      "version": "0.4.1"
     },
     {
       "key": "Hives",
