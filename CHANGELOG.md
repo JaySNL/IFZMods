@@ -6,6 +6,25 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-23 — Lighting wave + Quality-of-Life split
+
+**Update all of these together — they require IFZ Mod API 1.4.1.** Older mod versions crash with the new API.
+
+### Added
+- **High Ground 1.0.0 — new mod.** The height/elevation features split out of the QoL bundle into their own mod: **TallBuildings** (raise the custom-building height cap to build high-rises), **ElevatedFiring** (garrisoned units fire from the top floor, over your walls), **HeightAdvantage** (fight-range bonus scaled by building height). Standalone — no API required.
+- **Clay Pit Fixes 1.0.0 — new mod.** The clay-pit features split out of the QoL bundle: depleted clay pits **regenerate** production after a delay (default 14 days, ~50% output) and a depleted pit can be **demolished** to reclaim the land. Standalone — no API required.
+
+### Changed
+- **IFZ Mod API 1.4.1.** Adds shared cinematic bloom/glow + volumetric light-shaft helpers, pause-aware timing, and an event-driven tower/antenna registry that replaces a per-frame scene scan. Still the sole patcher of shared game systems.
+- **GunfireLights 1.4.8.** Cinematic bloom/glow on muzzle flashes, explosions and tower lamps; Kelvin-tinted searchlights with volumetric light-shafts; pause-aware VFX (flashes/sweeps freeze with the game).
+- **IFZ Quality of Life 1.5.1.** Height/elevation and clay-pit features moved out to the new **High Ground** and **Clay Pit Fixes** mods (install those if you want them). Remaining in the bundle: TowerHMG, VehicleAmmoFix, BuildingIconToggle, ShellLairs.
+- **DarkerNights 1.1.7, CinematicFX 1.1.3.** Rebuilt against IFZ Mod API 1.4.1.
+
+### Fixed
+- **GunfireLights tower searchlights.** Towers no longer emit light while still under construction — the lamp lights only once the tower is finished. Lamp height is now recomputed live, so AnchorHeightOffset / LowStructureLift / the new SingleTowerExtraLift apply in real time from F1. Single-gun towers (wooden/metal/fortified) mount their gun mid-body, so they now get a dedicated extra lift to crown the tower; double towers and bunkers are unaffected.
+
+---
+
 ## 2026-06-21 — HouseRebalance 1.1.0 + MassDeconstruct 1.2.0
 
 ### Added

@@ -40,8 +40,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
       },
-      "fileNotes": "1.2.1: now the sole patcher of shared game systems, so IFZ mods never double-patch (fixes Linux/Proton/Steam Deck crashes). IMPORTANT: update ALL your IFZ mods to their latest versions together - older mod versions crash with this API.",
-      "version": "1.2.1"
+      "fileNotes": "1.4.1: adds shared cinematic bloom/glow + light-shaft helpers, pause-aware timing, and an event-driven tower/antenna registry for lights. Still the sole patcher of shared game systems. IMPORTANT: update ALL your IFZ mods together - older versions crash with this API.",
+      "version": "1.4.1"
     },
     {
       "key": "ArmyBackup",
@@ -89,7 +89,7 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "1.1.3: explosion impact dust now uses IFZ Mod API's shared explosion hook, so it no longer crashes on Linux/Proton when GunfireLights is also installed. Requires IFZ Mod API 1.2.1+.",
+      "fileNotes": "1.1.3: explosion impact dust now uses IFZ Mod API's shared explosion hook, so it no longer crashes on Linux/Proton when GunfireLights is also installed. Requires IFZ Mod API 1.4.1+ - update all your IFZ mods together.",
       "version": "1.1.3"
     },
     {
@@ -133,7 +133,8 @@
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "version": "1.1.7",
-      "fileNotes": "1.1.7: reads the weather and colour controllers via IFZ Mod API instead of re-patching them (fixes a Linux/Proton double-patch crash with other IFZ mods). Requires IFZ Mod API 1.2.1+."
+      "requires": ["IFZModAPI"],
+      "fileNotes": "1.1.7: reads the weather and colour controllers via IFZ Mod API instead of re-patching them (fixes a Linux/Proton double-patch crash with other IFZ mods). Requires IFZ Mod API 1.4.1+ - update all your IFZ mods together."
     },
     {
       "key": "DeconstructCancel",
@@ -197,8 +198,9 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "fileNotes": "1.3.32: explosion lights now use IFZ Mod API's shared explosion hook, so it no longer crashes on Linux/Proton when CinematicFX is also installed. Requires IFZ Mod API 1.2.1+.",
-      "version": "1.3.32"
+      "requires": ["IFZModAPI"],
+      "fileNotes": "1.4.8: cinematic bloom/glow on muzzle flashes, explosions and tower lamps; Kelvin-tinted searchlights with volumetric light-shafts; pause-aware VFX. Tower fixes: lights only on finished towers, live-tunable lamp height, correct single-tower mounting. Requires IFZ Mod API 1.4.1+.",
+      "version": "1.4.8"
     },
     {
       "key": "HousePower",
@@ -249,9 +251,10 @@
       "nexusModId": 33,
       "dllPath": "../../plugins/IFZQualityOfLife.dll",
       "name": "IFZ Quality of Life Bundle",
-      "summary": "Bundle of small QoL tweaks: TowerHMG, VehicleAmmoFix, HeightAdvantage, BuildingIconToggle, ShellLairs, ClayPitRegen. Each toggleable in F1.",
-      "fileNotes": "1.3.2: reads game controllers via IFZ Mod API instead of re-patching them, and drops dead duplicate patches (fixes a Linux/Proton double-patch crash with other IFZ mods). Requires IFZ Mod API 1.2.1+.",
-      "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- HeightAdvantage: squads in tall buildings get a fight-range bonus scaled by building height.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.\n- ClayPitRegen: depleted clay pits regenerate production to ~50% after a configurable number of days, and a depleted pit can be demolished to reclaim the land.",
+      "summary": "Bundle of small QoL tweaks: TowerHMG, VehicleAmmoFix, BuildingIconToggle, ShellLairs. Each toggleable in F1. (Height and clay-pit features moved to the new HighGround and ClayPitFixes mods.)",
+      "requires": ["IFZModAPI"],
+      "fileNotes": "1.5.1: the height/elevation features moved to the new HighGround mod and clay-pit regen/demolish to the new ClayPitFixes mod - install those if you want them. Remaining here: TowerHMG, VehicleAmmoFix, BuildingIconToggle, ShellLairs. Requires IFZ Mod API 1.4.1+.",
+      "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.",
       "category": "Miscellaneous",
       "tags": [
         "Quality of Life",
@@ -259,13 +262,13 @@
         "Gameplay"
       ],
       "sections": {
-        "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- HeightAdvantage: squads in tall buildings get a fight-range bonus scaled by building height.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.\n- ClayPitRegen: depleted clay pits regenerate production to ~50% after a configurable number of days, and a depleted pit can be demolished to reclaim the land.",
+        "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.",
         "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- TowerHMG: towers accept Heavy MGs after carworkshop_hcal research\n- VehicleAmmoFix: vehicles refill ammo from their own trunk when stockroom path fails\n- HeightAdvantage: fight-range bonus for squads in tall buildings\n- BuildingIconToggle: hotkey to hide/show all building icons (persists)\n- ShellLairs: right-click a revealed infected lair with mortar squads to shell it\n- ClayPitRegen: depleted clay pits regenerate (~50%) after N days; depleted pits demolishable",
+        "mainFeatures": "- TowerHMG: towers accept Heavy MGs after carworkshop_hcal research\n- VehicleAmmoFix: vehicles refill ammo from their own trunk when stockroom path fails\n- BuildingIconToggle: hotkey to hide/show all building icons (persists)\n- ShellLairs: right-click a revealed infected lair with mortar squads to shell it\n- (Height features moved to HighGround; clay-pit features moved to ClayPitFixes)",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.3.2"
+      "version": "1.5.1"
     },
     {
       "key": "LocaleFix",
@@ -585,6 +588,49 @@
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "version": "1.1.0"
+    },
+    {
+      "key": "HighGround",
+      "nexusModId": 64,
+      "dllPath": "../../plugins/HighGround.dll",
+      "name": "High Ground",
+      "summary": "Height matters: build true high-rises, garrisoned units fire from the top floor over your walls, and shooters in tall buildings get a range bonus. Each feature toggleable in F1.",
+      "fileNotes": "1.0.0 - first release. The height/elevation features that used to live in the IFZ Quality of Life Bundle, now standalone: TallBuildings, ElevatedFiring, HeightAdvantage. Standalone - no other mods required.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Makes building height a real tactical dimension in Infection Free Zone. Three independent features, each toggleable in F1 ConfigurationManager.\n\nMain features:\n- TallBuildings: raises the custom-building height-slider cap so you can build proper high-rises (default new cap 90m, ~25-30 storeys; set via MaxHeight).\n- ElevatedFiring: garrisoned units shoot from near the top floor instead of the ground, so their shots clear your walls instead of clipping through them. FloorHeight sets how far below the roof the firing line sits (default 13m); MinBuildingHeight skips shacks (default 6m).\n- HeightAdvantage: units shooting from tall buildings get a fight-range bonus that scales with building height, with an orange field-of-view overlay showing the boosted range.\n\nStandalone - does not require IFZ Mod API or any other mod.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- TallBuildings: raise the custom-building height cap to build high-rises (default 90m)\n- ElevatedFiring: garrisoned units fire from the top floor, over your walls\n- HeightAdvantage: fight-range bonus scaled by building height, with FoV overlay\n- Each feature individually toggleable in F1",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 - runs on Windows / macOS (Crossover) / Steam Deck (Proton). Standalone - no other mods required.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals - nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.0.0"
+    },
+    {
+      "key": "ClayPitFixes",
+      "nexusModId": 65,
+      "dllPath": "../../plugins/ClayPitFixes.dll",
+      "name": "Clay Pit Fixes",
+      "summary": "Depleted clay pits regenerate production after a delay instead of being dead forever, and a depleted pit can be demolished to reclaim the land. Tunable in F1.",
+      "fileNotes": "1.0.0 - first release. The clay-pit features that used to live in the IFZ Quality of Life Bundle, now standalone: regen-after-delay and demolish-to-reclaim. Standalone - no other mods required.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Quality of Life",
+        "Bug Fixes",
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "Fixes the dead-end feel of exhausted clay pits in Infection Free Zone.\n\nMain features:\n- Regeneration: a depleted clay pit recovers its production after a configurable number of game days (default 14), back to a fraction of its original output (default 0.5, with diminishing returns on repeat depletion). Tune via RegenDays and RegenFraction.\n- Demolish to reclaim: a depleted clay pit can be demolished so you get the land back instead of leaving a permanent dead tile.\n\nStandalone - does not require IFZ Mod API or any other mod.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Depleted clay pits regenerate production after N game days (default 14)\n- Regenerate to a tunable fraction of original output (default 50%)\n- Depleted pits can be demolished to reclaim the land\n- Tunable live in F1 (RegenDays, RegenFraction)",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 - runs on Windows / macOS (Crossover) / Steam Deck (Proton). Standalone - no other mods required.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals - nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.0.0"
     }
   ]
 }
