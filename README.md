@@ -6,7 +6,7 @@ BepInEx mod pack for **Infection Free Zone**.
 
 > 🆕 **Never modded before? → [Read the super-easy install guide (INSTALL.md)](INSTALL.md)** — no commands, ~2 minutes.
 
-24 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
+26 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
 > 🍎 **macOS (CrossOver/Wine) users:** the included `IFZMacFix.dll` fixes the new-game crash and the
 > save-load crash caused by macOS-Wine filesystem quirks. It auto-activates only on macOS and is
@@ -81,19 +81,21 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 
 | Mod | What it does |
 |---|---|
-| **000_IFZModAPI** | Shared library (loads first). Controller cache, time/night helpers, VFX + reflection utilities used by other mods. Required by ArmyBackup, SmartWorkerRedist, CinematicFX. Keep it in `plugins/`. |
+| **000_IFZModAPI** | Shared library (loads first). Controller cache, time/night helpers, VFX + reflection utilities used by other mods. Required by many of the mods below (each one notes it). Keep it in `plugins/`. |
 | **ArmyBackup** | Fixes "Request Backup" tanks — they now actively engage hostiles near your base instead of idling. *(Requires 000_IFZModAPI.)* |
 | **CinematicFX** | Buffed blood/tracers, demolish dust, impact craters, night thunderstorms. (Burning-structures smoke/fire pinned — see CHANGELOG.) *(Requires 000_IFZModAPI.)* |
+| **ClayPitFixes** | Depleted **clay pits regenerate** production after a delay (default 14 days, ~50% output) instead of being dead forever, and a depleted pit can be **demolished** to reclaim the land. Tunable in F1. Standalone. |
 | **ConstructionETA** | Shows time-remaining on build / repair / deconstruct panels. |
 | **DarkerNights** | Actually dark nights, with live tuning. Night brightness is controlled by **NightSunFactor** (Lighting) — raise to brighten, lower to darken. Full-moon bonus, smooth dawn/dusk, day tone-shaping. |
 | **DeconstructCancel** | Cancel paused deconstruction tasks (game won't normally let you). |
 | **ExplosivesUnlock** | Unlocks explosives crafting earlier. |
 | **Flares** | ⚠️ *v0.1.3 — experimental.* Mortar **illumination flares**. At night, bunker/squad mortars auto-lob a flare at dark infected clusters in range — it arcs up, airbursts, **parachutes down** (red light + thin smoke trail) and **reveals the fog-of-war** so your mortars can shell the lit horde. Flares are a **separate mod-tracked stack**, crafted from HE ammo (1 → 5) via a draggable native-styled panel. Pairs with **DarkerNights**. *(Requires 000_IFZModAPI.)* |
-| **GunfireLights** | Real-time point lights for muzzle flashes, explosions, vehicle headlights, tower searchlights, antenna aviation beacons. |
+| **GunfireLights** | Real-time point lights for muzzle flashes, explosions, vehicle headlights, tower searchlights, antenna aviation beacons. Now with cinematic bloom/glow, Kelvin-tinted searchlights and volumetric light-shafts. *(Requires 000_IFZModAPI.)* |
+| **HighGround** | Height-based combat. **TallBuildings** raises the custom-building height cap so you can build proper high-rises; **ElevatedFiring** makes garrisoned units shoot from the top floor, over your walls; **HeightAdvantage** gives a fight-range bonus that scales with building height. Each toggleable in F1. Standalone. |
 | **Hives** | ⚠️ *v0.1.2 — experimental.* Seeds extra **infected hives** into buildings scattered across the map on a **new game** (they grow into lairs) — more scattered objectives + siege pressure. Hives go into the **biggest** buildings (bigger building = bigger hive), **far** from HQ, and **spaced apart** so they scatter instead of clumping. **Nest type now varies per hive** (no longer all-dogs). Uses the game's own hideout spawn (engine-valid); seeded **once per save** (never re-stacks on reload). Tune `HiveCount` (12) / `MinBuildingVolume` / `MinDistanceFromHQ` / `MinSpacingBetweenHives` in F1. Pairs with **Surrounded**. *(Requires 000_IFZModAPI.)* |
 | **HousePower** | Powered homes get a separate `+mood` bonus; chimneys emit smoke. |
 | **HouseRebalance** | Citizens auto-migrate to higher-priority housing when capacity exists — no more "want better housing" complaints with empty mansions. |
-| **IFZQualityOfLife** | Misc QoL toggles, incl. a **building-icon hide/show hotkey** (default **I**) to declutter the map view without touching the HUD (persists), **ShellLairs** (select squad, hover a revealed infected lair, press **B** to order mortars to shell it — vanilla blocks attacking lairs), plus TowerHMG / VehicleAmmoFix / HeightAdvantage. |
+| **IFZQualityOfLife** | Misc QoL toggles: a **building-icon hide/show hotkey** (default **I**) to declutter the map view without touching the HUD (persists), **ShellLairs** (select squad, hover a revealed infected lair, press **B** to order mortars to shell it — vanilla blocks attacking lairs), **TowerHMG** and **VehicleAmmoFix**. *(As of 1.5.1 the height features moved to **HighGround** and clay-pit regen/demolish to **ClayPitFixes** — install those separately.)* *(Requires 000_IFZModAPI.)* |
 | **LocaleFix** | Forces InvariantCulture so ConfigurationManager can edit `.` decimal floats on comma-locale systems (nl-NL, de-DE, fr-FR, etc.). |
 | **MassDeconstruct** | Drag-box mass deconstruction. Press **K** (configurable), drag a rectangle over your base, confirm, and every qualifying building inside is queued at once — vanilla only lets you deconstruct one at a time. Mirrors the game's own deconstruct rules (skips the HQ, non-deconstructable, and already-queued buildings). *(Requires 000_IFZModAPI.)* |
 | **PerfPack** | Billboard / blood-decay throttle, AI building cache, and an A\* graph-update throttle (spreads navmesh rebuilds from build/demolish bursts across frames). Helps the CPU-bound lategame. |
