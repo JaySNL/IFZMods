@@ -6,6 +6,14 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-23 — Surrounded 0.4.2 (hotfix) + CinematicFX 1.1.4
+
+### Fixed
+- **Surrounded 0.4.2 — runaway horde hotfix.** On long saves the game's own `HordeSizeMultiplier` (normally a small difficulty setting) comes back corrupted and massively inflated (~2.9×10⁸ around day 250), which pinned every swarm to its maximum size and compounded aggro into endless max-tier hordes — the "way too much infected in one spot" megablob. A new **`MaxHordeMultiplier`** (default 3, set 0 to disable) clamps that value at the source so all swarm logic sees a sane number. The clamp runs even with the siege boost turned off. Requires IFZ Mod API 1.4.2.
+- **CinematicFX 1.1.4 — tracers glow again.** The tracer buff was a silent no-op: it targeted a `LineRenderer`, but bullet tracers actually render through a `TrailRenderer`. It now widens the trail renderers, so tracers are thick and HDR-bright again and feed the night bloom. Requires IFZ Mod API 1.4.2.
+
+---
+
 ## 2026-06-23 — WindowGlow 1.0.0 (new) + GunfireLights 1.4.9 + HousePower 1.1.0
 
 ### Added
