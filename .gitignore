@@ -9,3 +9,6 @@ Thumbs.db
 **/.env
 **/.env.*
 decompiled/
+
+# internal Nexus release tooling — local only, not for the public dist repo
+tools/nexus-publish/
