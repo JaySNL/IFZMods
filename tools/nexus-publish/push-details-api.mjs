@@ -94,7 +94,7 @@ for (const mod of targets) {
   const payload = {
     modId: mod.nexusModId, gameId: GAME_ID, name: mod.name,
     summary: (mod.summary || '').slice(0, 350), description: bb(mod),
-    categoryId: CATEGORY_ID, author: AUTHOR, version: CFG.common.version,
+    categoryId: CATEGORY_ID, author: AUTHOR, version: mod.version || CFG.common.version,
     type: '1', languageId: 0,
     tags: resolved.map((t) => ({ id: String(t.id), selected: true })),
     classtags: resolved.map((t) => String(t.id)), saveAllTags: true,
