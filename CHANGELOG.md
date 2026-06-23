@@ -6,6 +6,17 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-23 — WindowGlow 1.0.0 (new) + GunfireLights 1.4.9 + HousePower 1.1.0
+
+### Added
+- **WindowGlow (Night Lights) 1.0.0 — new mod.** Warm amber window lights on buildings at night. It reconstructs the game's exact window placement and draws a second additive, moonlight-immune emissive pass on top, with a patchy `LitFraction` so only some windows light (a realistic lived-in look). Ships as a single self-contained DLL — the shader bundle is embedded, no loose asset to install. Standalone (no API required).
+
+### Fixed
+- **GunfireLights 1.4.9.** Searchlights no longer attach to radio masts or supporter statues — those carry a defence module but no weapon, so they were wrongly treated as towers; a real tower is now detected by its gun hardware. Cinematic defaults (warm 3000K cone, slow sweep, subtle shaft) are baked in so a fresh or reset config no longer reverts to a harsh white cone. Requires IFZ Mod API 1.4.2.
+- **HousePower 1.1.0.** The powered-homes mood bonus is now a real, visible effect — it shows as a green `+X% Powered homes` row (default +10% at full power, scaled by the powered-resident share). Previously it was applied at a microscopic value and never actually moved mood, and an older path could compound it; the write is now idempotent. Wood fuel scales per resident (a packed high-rise burns more than a shack). Requires IFZ Mod API 1.4.2.
+
+---
+
 ## 2026-06-23 — API 1.4.2 + Surrounded 0.4.1 (expedition day-counter)
 
 ### Fixed

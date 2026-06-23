@@ -6,7 +6,7 @@ BepInEx mod pack for **Infection Free Zone**.
 
 > 🆕 **Never modded before? → [Read the super-easy install guide (INSTALL.md)](INSTALL.md)** — no commands, ~2 minutes.
 
-26 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
+27 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
 > 🍎 **macOS (CrossOver/Wine) users:** the included `IFZMacFix.dll` fixes the new-game crash and the
 > save-load crash caused by macOS-Wine filesystem quirks. It auto-activates only on macOS and is
@@ -107,6 +107,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **SquadMerge** | Right-click one of *your own* squads with another selected → merges their members into one squad (soft cap 8). This is how you get a bigger squad **on foot**. Skips merging during combat by default. |
 | **SquadMoveFire** | ⚠️ *v0.1.2 — testing.* Squads **fire while moving** instead of halting — **on foot and in vehicles** (needs Fire-at-Will + Move-at-Will stances). **Hold Your Ground** now *truly* anchors a squad — it fires in-range targets but won't advance to engage. Adds an "accuracy = damage" model: penalties for walking/running/driving and a **hard** penalty while swimming; confidence **bonus** firing from inside buildings, **penalty** when swarmed in the open. All tunable in F1. |
 | **Surrounded** | "Surrounded" siege mode. Makes the vanilla swarm attack **more often and bigger** (`SwarmFrequencyBoost`, `HordeSizeBoost`), with a **day-1→30 ease-in ramp** (`RampDays`) so you're not run over on day 1, and multiplies **scavenge + expedition loot** (`Loot.Multiplier`) so you're pushed out to forage between assaults. Drives the game's own swarm system — no performance-killing custom spawns. A read-only **Status** section in F1 shows live exactly what it's changing for spawn frequency, horde size, and lair formation; an optional opt-in lever tunes lair-formation speed. *(Requires 000_IFZModAPI.)* |
+| **WindowGlow** | Warm amber **window lights** on buildings at night — only some windows lit, for a lived-in city after dark. Reconstructs the game's window placement and adds a moonlight-immune emissive glow on top. Single self-contained DLL (shader bundle embedded). Standalone. |
 | **VehicleSquadSize** | A squad gains seats **only while inside a vehicle** (capacity = `4 + floor(cargoSlots / 4)` → Pickup 5, Van 6, Truck 8, Bus 9). The extra panel slots are vehicle passenger seats — on foot the game still caps at 4, so they stay empty until you board. For a bigger **foot** squad, use **SquadMerge**. |
 | **ConfigurationManager** | Press **F1** in-game → tweak every mod's config live. |
 
