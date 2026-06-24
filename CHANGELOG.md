@@ -6,6 +6,20 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-24 — Buildable Bridges (new) + API 1.4.3 + Surrounded 0.4.3 + CinematicFX 1.2.0
+
+### Added
+- **Buildable Bridges (Experimental) 0.1.0 — new mod.** Drag-build a walkable bridge across water using the wall tool (hotkey **B**). It reuses the game's own wall pipeline (drag, snap, cost, save/load) and per segment lays the wall flat, lifts it to bank height, drops its collider, suppresses its navmesh cut, and stamps a walkable road deck that links shore to shore. Bridges persist across save/load. **Experimental:** units visually clip through the flat panels (the deck is the real walking surface), uneven banks snap to the higher side, and it borrows the wall build UI/costs. Standalone-ish: requires IFZ Mod API 1.4.3.
+
+### Fixed
+- **IFZ Mod API 1.4.3.** Fixes the clock briefly showing day `0` (e.g. "0 July") right after loading a base-game save — the day-counter restore fired an engine event that vanilla paints as the day, even when the value hadn't changed; it now skips that no-op. Gameplay day was always correct (this was the clock label only). Internal change with no public API surface change — older mods are unaffected.
+- **Surrounded 0.4.3 — late-game swarmpile FPS fix.** On very long saves, tens of thousands of infected could pile up live at the HQ (swarms stranded at sunrise, plus the game de-virtualising a swarm's whole roster at once) and drop the game to ~1 FPS. A new SiegeRelief system throttles how many infected are made "live" at once (the surplus stays cheap and drip-feeds in), culls the roaming overflow, caps concurrent swarms, and throttles the radio spam; the HUD now shows the real live count. FPS went from ~1 to ~25–40 on the day-253 test save. Requires IFZ Mod API 1.4.3.
+
+### Changed
+- **CinematicFX 1.2.0.** Tracers reworked onto a shared additive material so they actually glow under the night bloom instead of clamping to a flat white line — warm tint, tail-fade, uniform width — plus a PauseFreeze that holds in-flight tracers still while the game is paused for screenshots. Requires IFZ Mod API 1.4.3.
+
+---
+
 ## 2026-06-23 — Surrounded 0.4.2 (hotfix) + CinematicFX 1.1.4
 
 ### Fixed

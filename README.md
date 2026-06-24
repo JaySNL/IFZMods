@@ -6,7 +6,7 @@ BepInEx mod pack for **Infection Free Zone**.
 
 > 🆕 **Never modded before? → [Read the super-easy install guide (INSTALL.md)](INSTALL.md)** — no commands, ~2 minutes.
 
-27 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
+28 mods + ConfigurationManager. All pure-managed `netstandard2.1` — runs on Windows, macOS (Crossover/Wine), Steam Deck / Linux (Proton).
 
 > 🍎 **macOS (CrossOver/Wine) users:** the included `IFZMacFix.dll` fixes the new-game crash and the
 > save-load crash caused by macOS-Wine filesystem quirks. It auto-activates only on macOS and is
@@ -83,6 +83,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 |---|---|
 | **000_IFZModAPI** | Shared library (loads first). Controller cache, time/night helpers, VFX + reflection utilities used by other mods. Required by many of the mods below (each one notes it). Keep it in `plugins/`. |
 | **ArmyBackup** | Fixes "Request Backup" tanks — they now actively engage hostiles near your base instead of idling. *(Requires 000_IFZModAPI.)* |
+| **BridgeProto** | ⚠️ *v0.1.0 — experimental.* Drag-build a **walkable bridge across water** with the wall tool (hotkey **B**). Reuses the game's wall pipeline (drag/snap/cost/save-load), lays each segment flat at bank height, and stamps a road deck that links shore to shore. Bridges survive save/load. Rough edges: units visually clip through the panels (the deck is the real surface), uneven banks snap to the higher side. *(Requires 000_IFZModAPI.)* |
 | **CinematicFX** | Buffed blood/tracers, demolish dust, impact craters, night thunderstorms. (Burning-structures smoke/fire pinned — see CHANGELOG.) *(Requires 000_IFZModAPI.)* |
 | **ClayPitFixes** | Depleted **clay pits regenerate** production after a delay (default 14 days, ~50% output) instead of being dead forever, and a depleted pit can be **demolished** to reclaim the land. Tunable in F1. Standalone. |
 | **ConstructionETA** | Shows time-remaining on build / repair / deconstruct panels. |
