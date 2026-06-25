@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-26 — NoPath - YesPath (new mod)
+
+### Added
+- **NoPath - YesPath 0.2.0 — new mod.** Demolish the **"no path" buildings along the water** that you normally can't get rid of. When you order a demolish on one, the mod opens the building's own footprint to pathing and **injects a reachable work position onto it**, so a real worker walks in and tears it down under normal vanilla rules (real worker, normal timing — no instant teardown). It also logs a per-building diagnostic: buildings on a land ledge are **fixable**; buildings sitting literally on water are flagged as true isolates (no worker can ever reach those — an engine limit, not fixable without breaking vanilla rules). Zero Harmony (Zenject signal + reflection), Wine/Proton-safe. Requires IFZ Mod API 1.4.3. Thanks to Meefstick (GZW) for the report and the "demolish from the inside" idea, and for in-game testing.
+
+---
+
 ## 2026-06-24 — Buildable Bridges (new) + API 1.4.3 + Surrounded 0.4.3 + CinematicFX 1.2.0
 
 ### Added
