@@ -6,6 +6,11 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-26 — Squad Grenades (new mod) + Surrounded 0.4.5
+
+### Added
+- **Squad Grenades 1.0.0 — new mod.** Your squads stop wasting grenades sitting in their pockets. Idle squads that carry grenades **automatically lob them at clusters of infected or raiders that are already within range** — they never advance toward the horde, they just use what's in reach. Mortar teams auto-fire too. It works **from inside buildings and from a moving vehicle** (the squad keeps driving while passengers throw), which makes it especially handy on expeditions, where vanilla squads would never throw on their own. **Friendly-fire safe:** a throw is cancelled if the blast would catch your own squad, another player squad, or any friendly — rescued survivors, civilians, vendors, allied army. Everything is tunable in F1 (blast radius, minimum cluster size, cooldown, safety margins). Requires IFZ Mod API 1.4.2+.
+
 ## 2026-06-26 — Surrounded 0.4.5 (lair-wave early-game easing)
 
 ### Fixed
