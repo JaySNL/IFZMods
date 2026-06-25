@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-26 — Surrounded 0.4.5 (lair-wave early-game easing)
+
+### Fixed
+- **Surrounded 0.4.5 — lairs no longer swarm a brand-new base.** After the 0.4.4 lair-wave fix, a fresh base (or a new expedition) could be hit by a full lair wave on day 1 from pre-existing or seeded lairs. Lair waves now ease in: a **grace period** (no waves before day 5 by default), a **ramp** to full strength by ~day 25, and a **cooldown** so lairs strike in spaced waves instead of a constant drip. All measured by run-day, so an expedition eases in from its own day 1, not the parent save's day. Self-correcting and tunable in F1. Requires IFZ Mod API 1.4.2+.
+
+---
+
 ## 2026-06-26 — NoPath - YesPath (new mod)
 
 ### Added
