@@ -1,0 +1,17 @@
+name: Feature / mod request
+description: Suggest an improvement or a new mod
+title: "[Request] <short summary>"
+labels: ["enhancement"]
+body:
+  - type: input
+    id: mod
+    attributes:
+      label: Related mod (if any)
+      placeholder: "Surrounded (55), or 'new mod'"
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+      description: What it does, and why it's useful.
+    validations:
+      required: true

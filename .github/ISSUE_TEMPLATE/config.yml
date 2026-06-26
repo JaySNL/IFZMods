@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Status & bug tracker
+    url: https://github.com/JaySNL/IFZMods/blob/main/STATUS.md
+    about: See live mod versions, known bugs, and WIP before filing.
+  - name: Nexus Mods page
+    url: https://www.nexusmods.com/infectionfreezone
+    about: Downloads, endorsements, and Nexus comments.

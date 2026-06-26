@@ -1,0 +1,62 @@
+name: Bug report
+description: Report a bug in an IFZ mod
+title: "[Bug] <mod name>: <short summary>"
+labels: ["bug"]
+body:
+  - type: input
+    id: mod
+    attributes:
+      label: Which mod?
+      description: Name and/or Nexus mod ID (see STATUS.md).
+      placeholder: "Surrounded (55)"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Mod version
+      placeholder: "0.4.5"
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Windows
+        - Steam Deck / Proton
+        - Linux / Proton
+        - macOS (Crossover)
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What went wrong, and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Load save at day ...
+        2. ...
+        3. ...
+  - type: input
+    id: day
+    attributes:
+      label: Save day / map
+      placeholder: "Day 253, expedition"
+  - type: textarea
+    id: mods
+    attributes:
+      label: Other IFZ mods installed
+      description: Helps spot conflicts. List mods + versions, or paste your plugins folder.
+  - type: textarea
+    id: log
+    attributes:
+      label: Log (optional)
+      description: Paste relevant lines from BepInEx/LogOutput.log, or attach the file.
+      render: text

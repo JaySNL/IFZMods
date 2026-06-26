@@ -2,7 +2,7 @@
 
 BepInEx mod pack for **Infection Free Zone**.
 
-> See [CHANGELOG.md](CHANGELOG.md) for what's new.
+> See [CHANGELOG.md](CHANGELOG.md) for what's new · [STATUS.md](STATUS.md) for live mod status & known bugs.
 
 > 🆕 **Never modded before? → [Read the super-easy install guide (INSTALL.md)](INSTALL.md)** — no commands, ~2 minutes.
 
@@ -104,7 +104,7 @@ Without this, Proton/Wine loads its own `winhttp.dll` instead of BepInEx's loade
 | **RaiderEscalation** | Raider camps that dynamically grow when ignored, weaken when you fight them off, recoup, occasionally raid your base, and drop loot when wiped. Also pays out on cleared swarm nests. Fully tunable. *(Requires 000_IFZModAPI.)* |
 | **SaveUnlock** | Bypasses the "Unsupported save file" version check. Loads older saves on newer game builds. Schema-breaking saves may still fail mid-load — back up first. |
 | **SmartWorkerRedist** | Smarter worker redistribution. *(Requires 000_IFZModAPI.)* |
-| **SplitUnlock** | Bypasses "Building parts contain too narrow or too complex elements" on splits. Lets you cut up castles, cathedrals, and other irregular generated shapes. Also exposes the **custom-building size limits** (`MaxBuildingSurface` / `MinBuildingSurface`, vanilla 1000 / 5 m²) — raise the max to draw bigger custom buildings — and **`AllowShortWalls`** (default on) to bypass the "at least one of the walls is too short" rejection on tight/irregular hand-drawn footprints. |
+| **Unlocked Buildings** | Bypasses "Building parts contain too narrow or too complex elements" on splits. Lets you cut up castles, cathedrals, and other irregular generated shapes. Also lifts the **custom-building restrictions**: size limits (`MaxBuildingSurface` / `MinBuildingSurface`, vanilla 1000 / 5 m²) — raise the max to draw bigger custom buildings — and **`AllowShortWalls`** (default on) to bypass the "at least one of the walls is too short" rejection on tight/irregular hand-drawn footprints. |
 | **SquadAutoBehavior** | Auto-return squads to HQ at low ammo, auto-resupply, auto-hospital when wounded. |
 | **SquadMerge** | Right-click one of *your own* squads with another selected → merges their members into one squad (soft cap 8). This is how you get a bigger squad **on foot**. Skips merging during combat by default. *(Requires 000_IFZModAPI.)* |
 | **SquadMoveFire** | ⚠️ *v0.1.2 — testing.* Squads **fire while moving** instead of halting — **on foot and in vehicles** (needs Fire-at-Will + Move-at-Will stances). **Hold Your Ground** now *truly* anchors a squad — it fires in-range targets but won't advance to engage. Adds an "accuracy = damage" model: penalties for walking/running/driving and a **hard** penalty while swimming; confidence **bonus** firing from inside buildings, **penalty** when swarmed in the open. All tunable in F1. |
