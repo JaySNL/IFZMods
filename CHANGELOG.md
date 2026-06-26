@@ -6,6 +6,20 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-26 — Unlocked Buildings 1.3.0 (per-building capacity uncap)
+
+### Added
+- **Unlocked Buildings 1.3.0 — lift the ~2000-per-building wall.** Vanilla clamps every building's effective volume to `AdaptConfig.BuildingsMaxVolume` (~50000 m³), and that one clamped volume drives storage capacity, population / gathering-place capacity, max HP, and deconstruction yield — so a 90 m highrise hits the same ~2000 ceiling as a 30 m block (splitting only works around it because each piece gets its own volume). New opt-in `[BuildingCapacity]` section: turn on `UncapBuildingCapacity` and set `VolumeMultiplier` (default 3) to raise the ceiling so bigger buildings actually hold, house, and yield more without splitting. **Off by default** — every feature in the mod is an independent toggle, pick only what you want. Note: population scales too, so very high multipliers cost late-game FPS; HP and full-adapt construction cost scale as well. No new dependencies.
+
+---
+
+## 2026-06-26 — Buildable Bridges 0.1.1 (destructable bridges)
+
+### Fixed
+- **Buildable Bridges 0.1.1 — bridges are now destructable.** Placed bridges took no damage and couldn't be removed: to let vehicles cross, the deck step was fully disabling each segment's collider, which also made it invisible to shelling/explosions and to the deconstruct tool. The collider is now a non-blocking trigger instead — traffic still crosses, but the bridge takes area damage and can be deconstructed normally. Existing bridges in old saves heal on load. Requires IFZ Mod API 1.4.2+.
+
+---
+
 ## 2026-06-26 — Squad Grenades (new mod) + Surrounded 0.4.5
 
 ### Added
