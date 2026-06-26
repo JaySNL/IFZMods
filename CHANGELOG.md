@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-26 — IFZ Mod API 1.4.4 (Harmony compatibility fix)
+
+### Fixed
+- **IFZ Mod API 1.4.4 — Harmony __args compatibility fix.** Removes dependency on newer HarmonyX `__args` injection, so patches apply cleanly on old BepInEx (5.4.5.0). Fixes GiveOrder patch failure on Chinese-repo old versions where SquadMerge merge hook never ran. Public-surface unchanged; backward-compat audited.
+
+---
+
 ## 2026-06-26 — Unlocked Buildings 1.3.0 (per-building capacity uncap)
 
 ### Added

@@ -14,7 +14,7 @@ _Last updated: 2026-06-26_
 
 | ID | Mod | Version | State | Requires | Page |
 |----|-----|---------|-------|----------|------|
-| 42 | IFZ Mod API | 1.4.3 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
+| 42 | IFZ Mod API | 1.4.4 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
 | 24 | Army Backup AI Fix | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/24) |
 | 25 | Cinematic FX | 1.2.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/25) |
 | 26 | Construction ETA | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/26) |
@@ -43,7 +43,7 @@ _Last updated: 2026-06-26_
 | 64 | High Ground | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
 | 65 | Clay Pit Fixes | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |
 | 66 | Night Lights (WindowGlow) | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/66) |
-| 67 | Buildable Bridges | 0.1.1 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
+| 67 | Buildable Bridges | 0.1.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
 | 68 | NoPath - YesPath | 0.2.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
 | 69 | Squad Grenades | 1.0.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/69) |
 
@@ -55,9 +55,9 @@ _Last updated: 2026-06-26_
 
 | Mod | Issue | Severity | Status | Notes |
 |-----|-------|----------|--------|-------|
-| Buildable Bridges 67 | Placed bridge was indestructible (disabled collider invisible to shell/deconstruct queries) | High | 🟠 In progress | Fixed in 0.1.1 (`isTrigger=true`), VERIFIED in-game, **staged — push pending** (`publish-all.mjs --send BridgeProto`) |
+| Buildable Bridges 67 | Placed bridge was indestructible (disabled collider invisible to shell/deconstruct queries) | High | 🟢 Fixed | Shipped 0.1.1 (`isTrigger=true`) — bridges take shell/explosion damage + deconstruct, traffic still crosses |
 
-_No other confirmed-open bugs on shipped mods. Add a row when a player reports one (or it comes in via [Issues](https://github.com/JaySNL/IFZMods/issues))._
+_No confirmed-open bugs on shipped mods. Add a row when a player reports one (or it comes in via [Issues](https://github.com/JaySNL/IFZMods/issues))._
 
 ---
 
