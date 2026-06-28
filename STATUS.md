@@ -21,7 +21,7 @@ _Last updated: 2026-06-28_
 | 27 | Darker Nights | 1.1.7 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/27) |
 | 28 | Cancel Paused Deconstruction | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/28) |
 | 29 | Explosives Planting Unlock | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/29) |
-| 30 | Gunfire Lights | 1.4.9 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/30) |
+| 30 | Gunfire Lights | 1.4.10 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/30) |
 | 31 | House Power | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/31) |
 | 32 | House Rebalance | 1.2.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/32) |
 | 33 | IFZ Quality of Life Bundle | 1.5.2 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |

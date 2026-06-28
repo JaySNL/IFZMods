@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-28 — GunfireLights 1.4.10
+
+### Changed
+- **GunfireLights 1.4.10.** Baked the cinematic showcase look in as the new shipped defaults: muzzle flash intensity 5.5 → 115.5, glow MuzzleSize 0.8 → 1.1, glow ExplosionSize 3.5 → 4.5, and per-barrel searchlights on by default (OneLightPerTower false — one real-time light per gun barrel instead of one per tower, heavier on FPS but the full cinematic look). No code or logic change; only default values changed. Existing users who have already run the mod keep their saved .cfg values — delete the relevant lines or reset in F1 to pick up the new defaults. Requires IFZ Mod API 1.4.1+.
+
+---
+
 ## 2026-06-28 — Squad Auto Behavior 1.1.3
 
 ### Fixed
