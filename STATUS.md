@@ -6,7 +6,7 @@ Players: spot a bug? **[Open an issue](https://github.com/JaySNL/IFZMods/issues/
 **Legend** — Release state: 🟢 Live (on Nexus) · 🟡 Staged (built/verified, not yet pushed) · 🔬 Experimental · 🛠 WIP (unreleased)
 Bug status: 🔴 Open · 🟠 In progress · 🟢 Fixed (shipped) · ⚪ Won't fix / vanilla limit
 
-_Last updated: 2026-06-26_
+_Last updated: 2026-06-28_
 
 ---
 
@@ -24,9 +24,9 @@ _Last updated: 2026-06-26_
 | 30 | Gunfire Lights | 1.4.9 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/30) |
 | 31 | House Power | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/31) |
 | 32 | House Rebalance | 1.2.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/32) |
-| 33 | IFZ Quality of Life Bundle | 1.5.1 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |
+| 33 | IFZ Quality of Life Bundle | 1.5.2 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |
 | 34 | Locale Fix | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/34) |
-| 35 | Performance Pack | 1.5.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/35) |
+| 35 | Performance Pack | 1.5.2 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/35) |
 | 36 | Save File Version Unlock | 1.0.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/36) |
 | 37 | Smart Worker Redistribution | 1.1.1 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/37) |
 | 38 | Unlocked Buildings | 1.3.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/38) |
@@ -41,10 +41,10 @@ _Last updated: 2026-06-26_
 | 59 | Squad Move and Fire | 0.1.3 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/59) |
 | 63 | Swarm Fix | 1.1.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/63) |
 | 64 | High Ground | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
-| 65 | Clay Pit Fixes | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |
+| 65 | Clay Pit Fixes | 1.1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |
 | 66 | Night Lights (WindowGlow) | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/66) |
-| 67 | Buildable Bridges | 0.1.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
-| 68 | NoPath - YesPath | 0.2.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
+| 67 | Buildable Bridges | 0.2.0.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
+| 68 | NoPath - YesPath | 0.3.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
 | 69 | Squad Grenades | 1.0.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/69) |
 
 > "Requires: API" = needs **IFZ Mod API** (mod 42). Match API version to the mod's requirement; always update API + mods together.
