@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-28 — Squad Auto Behavior 1.1.3
+
+### Fixed
+- **Squad Auto Behavior 1.1.3.** Squads that were dry on ammo or wounded while being targeted by an enemy were wrongly pinned in place: `Group.OpponentsContainer.IsTargeted()` read as "player issued a combat order," blocking the auto-return logic. Fix: while targeted, a squad still falls back to rearm (HQ/warehouse) or hospital if the nearest such building is within the new `[General] OverrideNearCoverMeters` (default 80 m; 0 = never override). Squads too far from cover hold position as before. Applies to both the rearm and hospital paths. Requires IFZ Mod API.
+
+---
+
 ## 2026-06-28 — Mortar shelling + HUD diagnostics + bridge textures
 
 ### Added
