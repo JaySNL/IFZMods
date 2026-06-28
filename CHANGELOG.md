@@ -6,6 +6,20 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-28 — Mortar shelling + HUD diagnostics + bridge textures
+
+### Added
+- **IFZ Quality of Life 1.5.2 (beta).** Mortar squads and bunkers now shell infected lairs — and buildings with infected holed up inside — by right-clicking them with mortars selected. Uses the game's native attack-ground fire (real ammo, low-ammo warning, retreat-to-resupply, auto-routing into range); squads auto-exit a vehicle or building first; right-click elsewhere cancels. Known caveats: may fire a few rounds after the target is cleared (the shot is queued before the unit "knows" it's clear); squads exit a vehicle prematurely — command the vehicle into position first, then right-click; if a squad runs dry, keep an eye on it while it returns for ammo.
+- **Perf Pack 1.5.2.** In-game HUD adds the active lair count and, on low FPS, a "why" cause line (`[category]:[reason]`, e.g. `swarm:inf 27000`) held briefly so it stays readable. Reads existing engine counters only; no cost when hidden.
+- **BridgeProto 0.2.0.1 (beta).** Native bridge builder — real road/deck/railing textures and per-span deformation.
+- **NoPath - YesPath 0.3.0.** Denser demolish footprint sampling + reachability checks so workers aren't assigned unreachable spots; new config (max work positions, sample spacing, inside-only).
+
+### Fixed
+- **IFZ Quality of Life 1.5.2.** Vehicle Heavy-MG no longer drains the whole ammo stock on the first shot (trunk refill now rate-matches vanilla, only when the stockroom path didn't already top up). Worker-update reflection handles cached — removes a per-frame cost spike.
+- **Clay Pit Fixes 1.1.0.0.** Demolished clay-pit area regenerates production over time and persists across save/reload.
+
+---
+
 ## 2026-06-26 — IFZ Mod API 1.4.4 (Harmony compatibility fix)
 
 ### Fixed
