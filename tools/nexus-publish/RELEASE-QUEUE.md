@@ -25,11 +25,14 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-- **Squad Auto Behavior (SquadAutoBehavior) -> 1.1.4-beta** (mod 39) -- BUILT, upload pending. Idle-gate fix: auto-behavior tick skips squads with an active player order; prevents stutter during deconstruct. NOTE: in-game verification still PENDING (Wine JIT + save-load) -- shipping as beta for community testing. Requires IFZModAPI.
+_(empty)_
 
 ---
 
 ## Pushed (recent — prune after a few cycles)
+
+### 2026-06-30 (cycle 10)
+- **Squad Auto Behavior (SquadAutoBehavior) -> 1.1.4-beta** (mod 39, file 7598132, API req set [204]) -- PUSHED. Idle-gate fix: auto-behavior tick skips squads with an active player order (CurrentOrder != null); prevents 8s-tick from inserting rearm/hospital order at front of queue mid-player-drive, eliminating stutter during mass-deconstruct. NOTE: in-game Wine/save-load verification still PENDING -- shipped as beta for community testing. Requires IFZModAPI >=1.4.4.
 
 - **Gunfire Lights → 1.4.10** (mod 30, file 7593788) — PUSHED 2026-06-28. Cinematic defaults baked in as shipped: muzzle intensity 5.5 → 115.5, MuzzleSize 0.8 → 1.1, ExplosionSize 3.5 → 4.5, OneLightPerTower false (per-barrel searchlights). No code change. Requires API ≥1.4.4.
 

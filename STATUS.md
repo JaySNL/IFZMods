@@ -30,7 +30,7 @@ _Last updated: 2026-06-29_
 | 36 | Save File Version Unlock | 1.0.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/36) |
 | 37 | Smart Worker Redistribution | 1.1.1 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/37) |
 | 38 | Unlocked Buildings | 1.3.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/38) |
-| 39 | Squad Auto Behavior | 1.1.4-beta | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/39) |
+| 39 | Squad Auto Behavior | 1.1.4-beta | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/39) |
 | 40 | Squad Merge (right-click) | 1.1.2 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/40) |
 | 41 | Better Vehicle Squad Size | 1.1.2 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/41) |
 | 54 | Flares — mortar illumination | 0.2.0 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/54) |
