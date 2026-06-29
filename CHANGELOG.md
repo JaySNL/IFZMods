@@ -6,6 +6,14 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-29 — MassDeconstruct 1.4.0-beta
+
+### Changed
+- **MassDeconstruct 1.4.0-beta — live selection highlight + camera fix (BETA).** Every building inside the CTRL+drag box now shows a bold translucent red fill over its footprint, so you can see exactly what you are about to deconstruct (previously the selection was invisible). Drag now uses the native game-camera world-point path (same mechanism as the vanilla CTRL+drag squad-select) — fixes the selection landing on the wrong plane or axis on elevated and real-world-tile maps. Requires IFZ Mod API 1.2.1+.
+- **MassDeconstruct 1.3.0 (unshipped as standalone, included here).** Paced deconstruction: at most 50 buildings tear down concurrently, preventing the partial-building backlog that corrupted the navmesh and caused saves to crash on reload after a large mass-clear.
+
+---
+
 ## 2026-06-28 — GunfireLights 1.4.10
 
 ### Changed

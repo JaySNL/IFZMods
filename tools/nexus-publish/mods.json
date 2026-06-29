@@ -1,0 +1,758 @@
+{
+  "game": {
+    "slug": "infectionfreezone",
+    "displayName": "Infection Free Zone"
+  },
+  "common": {
+    "version": "1.0.0",
+    "category": "Miscellaneous",
+    "tags": [
+      "Gameplay"
+    ],
+    "requirementsText": "BepInEx 5.4.23.2. IFZ Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton). Steam Deck / Proton: launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+    "permissions": {
+      "modifyForBugfixOk": true,
+      "modifyForImprovementOk": true,
+      "useAssetsOk": true,
+      "uploadToOtherSiteWithCredit": true,
+      "convertToOtherGameOk": false
+    },
+    "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+    "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+    "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+  },
+  "mods": [
+    {
+      "key": "IFZModAPI",
+      "nexusModId": 42,
+      "dllPath": "../../plugins/000_IFZModAPI.dll",
+      "name": "IFZ Mod API",
+      "summary": "Shared library other IFZMods depend on. Controller cache, time/night helpers, VFX + reflection utilities. Install if a mod lists it as required.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "isLibrary": true,
+      "sections": {
+        "description": "Shared helper library for Infection Free Zone BepInEx mods. Loads first (filename 000_IFZModAPI.dll). Provides a cached game-controller registry (Buildings / Groups / Squads / Stockrooms / Work / ColorSwitcher / Weather / Light), time + night-blend helpers, VFX helpers (real smoke prefab clone, pooled point lights), cached reflection, and a PostProcessing FloatParameter shim.\n\nYou only need this if another mod lists it as a requirement. It does nothing on its own.",
+        "installation": "Drop 000_IFZModAPI.dll into <game>/BepInEx/plugins/. Nothing to configure. Required by ArmyBackup, Cinematic FX, and Smart Worker Redistribution (and possibly others over time).",
+        "mainFeatures": "- Loads before all other IFZMods (alphabetical + BepInDependency)\n- Shared controller-instance cache\n- Time / sunrise / sunset / NightBlend helpers\n- VFX: real Smoke prefab clone, pooled point-light flashes\n- Cached reflection + FloatParameter shim",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
+      },
+      "fileNotes": "1.4.4: Harmony __args compatibility fix — removes dependency on newer HarmonyX __args injection (which old BepInEx 5.4.5.0 can't emit), so patches apply cleanly on old BepInEx. Fixes GiveOrder patch failure on Chinese-repo old versions (SquadMerge merge hook never ran). Public-surface unchanged; backward-compat audited. 1.4.3: fixes the clock showing day '0' (e.g. '0 JULY') after loading a base-game save - the day-counter restore fired the clock-repaint event redundantly and the UI painted the wrong number; now it only fires when the value actually changes. Gameplay day was always correct. Builds on 1.4.2's expedition day-counter fix + Time.RunDay. IMPORTANT: update ALL your IFZ mods together - older versions crash with this API.",
+      "version": "1.4.4"
+    },
+    {
+      "key": "ArmyBackup",
+      "nexusModId": 24,
+      "dllPath": "../../plugins/ArmyBackup.dll",
+      "name": "Army Backup AI Fix",
+      "summary": "Request Backup Army tanks actually engage hostiles near your base instead of idling.",
+      "description": "Fixes the broken \"Request Backup\" AI. Vanilla Army tanks spawn and sit. With this mod they sweep player buildings on a configurable tick, find the nearest Infected or Bandit threat inside BaseDefenceRadius, and issue an AttackGroupOrder via the game's own OrdersHandlers. Includes hysteresis (ReassignDistance) so they don't dither between targets, separate toggles for Infected vs Bandits, configurable engagement range, and verbose logging.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled toggle in `[General]`. Tickrate, radii, target faction filter, hysteresis distance all live-tunable.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Bug Fixes"
+      ],
+      "sections": {
+        "description": "Fixes the broken \"Request Backup\" AI. Vanilla Army backup tanks spawn and sit. With this mod, every 4 seconds (configurable) the mod walks all Army groups, finds the nearest Infected or Bandit threat inside the player base radius, and issues an AttackGroupOrder via the game's own OrdersHandlers.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Auto-engage hostiles near player base\n- Hysteresis (ReassignDistance) prevents target dithering\n- Separate toggles for Infected vs Bandits\n- Configurable engagement range, tick rate, base defence radius\n- F1 ConfigurationManager support, master Enabled toggle",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "version": "1.1.0"
+    },
+    {
+      "key": "CinematicFX",
+      "nexusModId": 25,
+      "dllPath": "../../plugins/CinematicFX.dll",
+      "name": "Cinematic FX",
+      "summary": "Buffed blood and tracers, demolish dust, impact craters, night thunderstorms.",
+      "description": "Visual polish pass. Five independent subsystems, each toggleable:\n\n- **Burning Structures** — buildings below configurable HP threshold emit cloned in-game smoke from their roof.\n- **Buffed Blood** — scales blood splash particle size and emission rate.\n- **Buffed Tracers** — widens bullet tracer LineRenderer.\n- **Demolish Dust** — dust burst on deconstruct completion.\n- **Impact Craters** — extra smoke puff on explosion sites.\n- **Night Storms** — thunder rolls during night after configurable game day.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`, per-feature toggles under each subsystem section.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Visual polish pass: burning structures, buffed blood and tracers, demolish dust, impact craters, night thunderstorms. Five independent subsystems, each individually toggleable.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Burning Structures: smoke from damaged buildings below HP threshold\n- Buffed Blood: scales splash particle size and emission\n- Buffed Tracers: wider tracer LineRenderer\n- Demolish Dust: dust burst on deconstruct completion\n- Impact Craters: smoke puff on explosion sites\n- Night Storms: thunder rolls after configurable game day",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "1.2.0: tracers reworked into a uniform-width glowing streak on an additive material so they glow under the night Bloom (was clamping to a flat white line); warm tint, tail-fade. New PauseFreeze holds in-flight tracers still while the game is paused for screenshots. All live-tunable in F1. Requires IFZ Mod API 1.4.2+.",
+      "version": "1.2.0"
+    },
+    {
+      "key": "ConstructionETA",
+      "nexusModId": 26,
+      "dllPath": "../../plugins/ConstructionETA.dll",
+      "name": "Construction ETA",
+      "summary": "Shows time-remaining on build, repair, and deconstruct panels.",
+      "description": "Adds an estimated time-to-completion label to every active construction, repair, and deconstruction work panel. Reads from the same work-progress fields the game uses internally; no balance change. Useful for planning when crews will free up.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`.",
+      "category": "Miscellaneous",
+      "tags": [
+        "User Interface",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Adds an estimated time-to-completion label to every active construction, repair, and deconstruction work panel. Reads the same work-progress fields the game uses internally. Zero balance change, pure UI overlay.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- ETA on Build / Repair / Deconstruct panels\n- Pulls live from the game's own progress data\n- Useful for planning when crews free up",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.0.0"
+    },
+    {
+      "key": "DarkerNights",
+      "nexusModId": 27,
+      "dllPath": "../../plugins/DarkerNights.dll",
+      "name": "Darker Nights",
+      "summary": "Actually-dark nights, full-moon brightness bonus, smooth dawn/dusk, day tone-shaping.",
+      "description": "Owns the day/night lighting curve. Patches the game's ColorSwitcher source fields (`saturation_Day_PP`, `contrast_Day_PP`, `blue_Day_PP`) so the per-tick lerp uses our values as the basis — outputs don't get clobbered by the game.\n\n- **Night** — configurable sun-intensity factor (0 = pitch black, 1 = vanilla), absolute ambient color + intensity, AutoExposure clamp. Full-moon nights apply a brightness multiplier on top.\n- **Day** — saturation / contrast / warmth / post-exposure boost so daylight doesn't feel flat. Tunable per slider.\n- **Smooth transitions** — configurable TransitionHours fade window around sunrise / sunset. Pair with GunfireLights' matching value for synchronized tower-light fade-in.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Owns the day/night lighting curve. Patches the game's ColorSwitcher source fields (saturation_Day_PP, contrast_Day_PP, blue_Day_PP) so the per-tick lerp uses our values as the basis — outputs don't get clobbered by the game.\n\nNights are actually dark. Days don't feel flat. Transitions are smooth.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Configurable night sun-intensity factor (0 = pitch black, 1 = vanilla)\n- Forced night ambient colour + intensity + AutoExposure clamp\n- Full-moon nights apply a brightness multiplier\n- Day tone-shaping: saturation / contrast / warmth / post-exposure\n- Smooth dawn/dusk via configurable TransitionHours\n- Pairs with GunfireLights for synchronised tower-light fade-in",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.1.7",
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "1.1.7: reads the weather and colour controllers via IFZ Mod API instead of re-patching them (fixes a Linux/Proton double-patch crash with other IFZ mods). Requires IFZ Mod API 1.4.1+ - update all your IFZ mods together."
+    },
+    {
+      "key": "DeconstructCancel",
+      "nexusModId": 28,
+      "dllPath": "../../plugins/DeconstructCancel.dll",
+      "name": "Cancel Paused Deconstruction",
+      "summary": "Cancel paused deconstruction tasks — vanilla blocks the delete button on partial demolitions.",
+      "description": "Vanilla hides the delete button on deconstructions once they're paused (partial demolition). This mod keeps the button visible and forces a clean delete on click — state machine reverts to pre-deconstruct, work entry is cleared, structure remains.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`.",
+      "category": "Miscellaneous",
+      "tags": [
+        "User Interface",
+        "Quality of Life",
+        "Bug Fixes"
+      ],
+      "sections": {
+        "description": "Vanilla hides the delete button on deconstructions once they're paused (partial demolition), so you can't cancel them. This mod keeps the button visible and forces a clean delete on click — state machine reverts to pre-deconstruct, work entry is cleared, structure remains intact.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Delete button stays visible on paused deconstructions\n- Forces clean delete (state machine reverts, work entry cleared)\n- No leftover state on the structure",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.0.0"
+    },
+    {
+      "key": "ExplosivesUnlock",
+      "nexusModId": 29,
+      "dllPath": "../../plugins/ExplosivesUnlock.dll",
+      "name": "Explosives Planting Unlock",
+      "summary": "Force-unlocks explosives_planting so the open-beta demolition feature actually works.",
+      "description": "The beta exposes explosives planting in the UI but the content flag is locked, so the planting action no-ops. This mod calls `UnlockContentById(\"explosives_planting\")` after the game's ContentStateController validates missing content. Single Harmony postfix, zero side effects.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Bug Fixes"
+      ],
+      "sections": {
+        "description": "The IFZ open beta exposes explosives planting in the UI but the content flag is locked, so the planting action no-ops. This mod unlocks the explosives_planting content flag after the game's ContentStateController validates missing content.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Single Harmony postfix, zero side effects\n- Unlocks explosives planting in current and new saves\n- No balance change otherwise",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.0.0"
+    },
+    {
+      "key": "GunfireLights",
+      "nexusModId": 30,
+      "dllPath": "../../plugins/GunfireLights.dll",
+      "name": "Gunfire Lights",
+      "summary": "Real-time point lights for muzzle flashes, explosions, headlights, tower searchlights, antenna beacons.",
+      "description": "Adds dynamic lighting to combat and infrastructure:\n\n- **Muzzle flashes** — pooled point light per gun, weapon-specific color tint (heavy / shotgun warmer).\n- **Explosions** — orange flash with configurable range and intensity.\n- **Vehicle headlights** — forward-facing spot light on moving vehicles at night.\n- **Tower searchlights** — slow-sweeping spot light on defensive towers, holds on last-attacked target.\n- **Antenna aviation beacons** — real-world FAA-style red/green blinking lights on antenna towers, 24/7 or night-only.\n\nAll lights fade in/out across a configurable TransitionHours window around sunrise / sunset. Pair with DarkerNights' matching value for synchronized lighting.\n\nLight pool of 32 reused across all flashes. No shadow casting (cheap).\n\n**Defaults are now the cinematic showcase look** — punchy muzzle flashes (`[Muzzle] Intensity = 115`), fat glow (`[Glow] MuzzleSize = 1.1` / `ExplosionSize = 4.5`), and a real searchlight per gun barrel (`[Performance] OneLightPerTower = false`). **For more FPS** with many towers, set `OneLightPerTower = true` (one searchlight per tower instead of per barrel) — the heaviest setting; dial it back first if your FPS drops.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Real-time dynamic lighting for combat and infrastructure. Muzzle flashes on every gun, explosion flashes, vehicle headlights at night, tower searchlights that sweep and lock on, red/green aviation beacons on antenna towers.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Muzzle flashes: pooled point light per gun, warmer for heavy / shotgun\n- Explosions: orange flash with configurable range\n- Vehicle headlights: forward spot light on moving vehicles at night\n- Tower searchlights: slow-sweeping spot, holds on last-attacked target\n- Antenna beacons: real-world FAA-style red/green blinking, 24/7 or night-only\n- Smooth fade-in/out around sunrise / sunset via TransitionHours\n- 32-light pool, no shadow casting (cheap)",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "1.4.10: baked the cinematic showcase look in as the default — punchy muzzle flashes (Muzzle Intensity 115.5), fatter glow (MuzzleSize 1.1 / ExplosionSize 4.5), and a real searchlight per gun barrel (OneLightPerTower off). Fresh installs match the showcase out of the box; set OneLightPerTower = true in F1 for more FPS on tower-heavy bases. Requires IFZ Mod API 1.4.1+.",
+      "version": "1.4.10"
+    },
+    {
+      "key": "HousePower",
+      "nexusModId": 31,
+      "dllPath": "../../plugins/HousePower.dll",
+      "name": "House Power",
+      "summary": "Powered homes get a +mood bonus, chimneys emit smoke, entrance lights at night.",
+      "requires": [
+        "IFZModAPI"
+      ],
+      "description": "Residential buildings auto-install a power generator that consumes wood on a configurable tick. While powered:\n\n- **+mood bonus** — separate row in the mood panel, scales with the fraction of residents in powered homes. Live UI update.\n- **Chimney smoke** — clones the in-game worksite smoke at chimney prop, falls back to roof centre if no chimney prop. High-rises without chimneys skipped.\n- **Entrance / window lights** — small warm point lights at door and window props, brighter at night, dimmer at day. Throttled to 2 Hz to keep cost down across hundreds of buildings.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Wood-per-tick, tick interval, mood bonus magnitude, light range and intensity all tunable.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Powered homes get a separate +mood bonus, chimneys emit smoke, entrance lights glow at night. Residential buildings auto-install a generator that burns wood on a configurable tick. While powered, residents are happier and the house actually looks lived-in.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- +mood bonus shown in the mood panel, scales with fraction of residents in powered homes\n- Chimney smoke on powered houses (or roof centre fallback, skips high-rises without chimneys)\n- Entrance / window lights on at night, dimmer during day\n- Throttled to 2 Hz across hundreds of buildings for low perf cost\n- Tunable wood-per-tick and tick interval",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "fileNotes": "1.1.0: mood bonus now a real, visible boost — up to +10% of the mood bar at full power, scaling with the powered-resident share, shown as a \"+X% Powered homes\" row. Wood fuel now scales per resident. Requires IFZ Mod API 1.2.1+.",
+      "version": "1.1.0"
+    },
+    {
+      "key": "HouseRebalance",
+      "nexusModId": 32,
+      "dllPath": "../../plugins/HouseRebalance.dll",
+      "name": "House Rebalance",
+      "summary": "Citizens auto-migrate to higher-priority housing when capacity exists.",
+      "description": "Vanilla citizens stay assigned to whatever house they got first. With this mod, every TickSeconds (default 30) each citizen re-evaluates housing via the game's own `FindBestHouse` ranking — they walk to a better house if one has slots. No more \"want better housing\" mood penalty while empty mansions sit unused.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Tick interval tunable.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Vanilla citizens stay assigned to whatever house they got first. With this mod, every TickSeconds (default 30) each citizen re-evaluates housing using the game's own FindBestHouse ranking and migrates to a better house if slots exist.\n\nResult: no more \"want better housing\" mood penalty while empty mansions sit unused.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Periodic citizen re-housing sweep\n- Uses the game's native FindBestHouse priority\n- Eliminates \"want better housing\" complaints with empty premium housing\n- Tick interval tunable in F1",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.2.0",
+      "fileNotes": "1.2.0: adds PreferShortCommute (Commute section, OFF by default) - among houses of a worker's best-attainable tier, prefer the one closest to their workplace. Housing tier stays the hard rule (never moved to a worse house, so no 'want better housing' mood penalty). ImprovementMeters hysteresis (def 15m) stops tick-to-tick bouncing between near-equal homes."
+    },
+    {
+      "key": "IFZQualityOfLife",
+      "nexusModId": 33,
+      "dllPath": "../../plugins/IFZQualityOfLife.dll",
+      "name": "IFZ Quality of Life Bundle",
+      "summary": "Bundle of small QoL tweaks: TowerHMG, VehicleAmmoFix, BuildingIconToggle, ShellLairs. Each toggleable in F1. (Height and clay-pit features moved to the new HighGround and ClayPitFixes mods.)",
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "1.5.2 BETA - Mortar squads/bunkers shell infected lairs + occupied buildings via right-click (real ammo + retreat); exits vehicle/building first. HMG vehicle ammo-drain fixed. Caveats: few rounds post-clear; exit vehicle first; mind low-ammo squads.",
+      "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Quality of Life",
+        "Bug Fixes",
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- TowerHMG: towers accept Heavy MGs after carworkshop_hcal research\n- VehicleAmmoFix: vehicles refill ammo from their own trunk when stockroom path fails\n- BuildingIconToggle: hotkey to hide/show all building icons (persists)\n- ShellLairs: right-click a revealed infected lair with mortar squads to shell it\n- (Height features moved to HighGround; clay-pit features moved to ClayPitFixes)",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.5.2"
+    },
+    {
+      "key": "LocaleFix",
+      "nexusModId": 34,
+      "dllPath": "../../plugins/LocaleFix.dll",
+      "name": "Locale Fix (ConfigurationManager floats)",
+      "summary": "Forces InvariantCulture so ConfigurationManager can edit decimal floats on comma-locale systems.",
+      "description": "Required if you're on a comma-decimal Windows locale (nl-NL, de-DE, fr-FR, etc.) and you've seen `FormatException: Input string was not in a correct format` when editing float fields in the F1 ConfigurationManager UI.\n\nForces `CultureInfo.InvariantCulture` on the main thread and `DefaultThreadCurrentCulture`. A Sentinel MonoBehaviour re-pins every frame in case Unity / game subsystems reset it on scene loads.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Note: the Awake-time pin applies once at process start regardless of toggle. Off-during-session stops the per-frame Sentinel re-pin but doesn't undo the initial pin.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Bug Fixes",
+        "Utilities for Players"
+      ],
+      "sections": {
+        "description": "Required on comma-decimal Windows locales (nl-NL, de-DE, fr-FR, etc.) where editing float fields in BepInEx ConfigurationManager throws FormatException (\"Input string was not in a correct format\").\n\nForces CultureInfo.InvariantCulture on the main thread + DefaultThreadCurrentCulture. A Sentinel MonoBehaviour re-pins every frame in case Unity / game subsystems reset it on scene loads.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- One-time culture pin on Awake\n- Per-frame Sentinel re-pin (cheap branch + pointer compare)\n- Fixes float-parse FormatException in ConfigurationManager UI\n- Caveat: the Awake-time pin applies once at process start regardless of toggle",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.0.0"
+    },
+    {
+      "key": "PerfPack",
+      "nexusModId": 35,
+      "dllPath": "../../plugins/PerfPack.dll",
+      "name": "Performance Pack",
+      "summary": "Late-game FPS fixes. Headline: hideout patrol spawn-point LOD ~doubles night FPS on old saves — same horde, no gameplay change.",
+      "fileNotes": "1.5.2 - HUD now shows active lair count and a low-fps 'why' cause line (sticky). Reads existing engine counters only; no cost when the HUD is hidden.",
+      "description": "A bundle of safe, measured late-game performance patches. Headline fix (1.4.0):\n\n- **Hideout patrol spawn-point LOD** — old/large maps accumulate tens of thousands of dormant patrol spawn points (the game's lightweight 'virtual' form of a patrol). The base game updates EVERY one every frame (path-move + terrain raycast + fog) and leaves a debug-only physics collider live on each — at ~19k points that was the single biggest night-time cost (measured ~50ms/frame of it). PerfPack distance-LODs them: off-screen points update less often with time-compensated movement (roaming/despawn stay accurate), near-camera points are untouched, and the inert debug colliders are disabled. **Horde size is unchanged** — same number of patrols, they just stop burning the CPU while off-screen. Roughly **doubled night FPS** on a deep save (12-13 -> 26-28) with no perceptible gameplay change.\n\nAlso included:\n\n- **A\\* graph-update throttle** — spreads navmesh rebuilds (build/demolish/wall-damage) across frames instead of one fat main-thread stall.\n- **Enemy 'nearest building' AI cache** — the raid/siege AI re-scans a group's entire in-range building set every behaviour tick; cached per group for a short TTL.\n- **Billboard throttle** — refreshes each `Billboard.Update` every Nth frame, staggered.\n- **Blood-decay throttle** — clamps `SetBloodPuddleValue` writes to once every IntervalSec per body.\n- **PerfScheduler** — frame-budget drain queue + stagger foundation.\n- **Opt-in diagnostics** (off by default) — frame-spike profiler + per-method CPU sampler for diagnosing hitches.\n\nAll patches are config-gated and reversible. Safe defaults — no rendering or logic regressions.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`, per-feature toggles under each section.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Performance Optimization"
+      ],
+      "sections": {
+        "description": "Safe, measured late-game performance patches. Headline (1.4.0): hideout patrol spawn-point LOD roughly doubles night FPS on old saves with no gameplay change (same horde). Plus A* graph-update throttle, enemy nearest-building AI cache, billboard/blood throttles, and opt-in diagnostics.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Hideout patrol spawn-point LOD (1.4.0): off-screen dormant patrols updated less often with time-compensated movement; near-camera untouched; inert debug colliders disabled. Same horde size, ~2x night FPS on deep saves.\n- A* graph-update throttle: spreads navmesh rebuilds across frames\n- Enemy nearest-building AI cache: short-TTL cache of the raid/siege building scan\n- Billboard throttle: refreshes each billboard every Nth frame, staggered\n- Blood decay throttle: clamps SetBloodPuddleValue writes per body\n- Opt-in diagnostics (off by default): frame-spike profiler + per-method CPU sampler",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.5.2"
+    },
+    {
+      "key": "SaveUnlock",
+      "nexusModId": 36,
+      "dllPath": "../../plugins/SaveUnlock.dll",
+      "name": "Save File Version Unlock",
+      "summary": "Bypasses the Unsupported save file version check. Load older saves on newer game builds.",
+      "description": "Patches `VersionValidator.ValidatePlayedVersions` and `ValidateMinPlayableVersion` to always return true. Lets you load saves from older game builds on a newer build without the \"Unsupported save file\" gate.\n\n**Caveat:** schema-breaking saves may still fail mid-load. Back up your save before trying. This mod removes the gate, not the underlying schema differences.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Utilities for Players",
+        "Bug Fixes"
+      ],
+      "sections": {
+        "description": "Bypasses the \"Unsupported save file version\" gate. Loads older saves on newer game builds. Patches VersionValidator.ValidatePlayedVersions and ValidateMinPlayableVersion to always return true.\n\nCaveat: schema-breaking saves may still fail mid-load. Back up your save before trying.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Two-line Harmony patch, no behaviour change beyond the gate\n- Works across beta version bumps\n- Master Enabled toggle in F1 if you want vanilla checks back",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "fileNotes": "1.0.1: the per-load 'Verbose' diagnostic log now defaults OFF (was on) - no log line on every save load during normal play. No gameplay change. Existing configs keep their value; flip [General] Verbose off in F1 if you want it quiet.",
+      "version": "1.0.1"
+    },
+    {
+      "key": "SmartWorkerRedist",
+      "nexusModId": 37,
+      "dllPath": "../../plugins/SmartWorkerRedist.dll",
+      "name": "Smart Worker Redistribution",
+      "summary": "Stalled construction sites auto-pull workers from idle jobs.",
+      "description": "Every TickSeconds (default 20), scans all active works. Counts vacancies on unsuspended works that can execute. Frees an equal number of workers from suspended works (e.g. waiting on resources) — WorkController auto-reassigns them to live jobs.\n\nResult: no more workers sitting idle at a stalled construction while another site needs them.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Tick interval tunable.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "When construction stalls because resources are missing but workers are still parked there, this mod frees them. Every TickSeconds (default 20) it counts vacancies on unsuspended works that can execute, then frees an equal number of workers from suspended works — WorkController auto-reassigns them to live jobs.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Periodic redistribution sweep\n- Frees idle workers from stalled construction\n- Live jobs pick them up via vanilla WorkController paths\n- Tunable verbosity for debugging",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "version": "1.1.1"
+    },
+    {
+      "key": "SplitUnlock",
+      "nexusModId": 38,
+      "dllPath": "../../plugins/SplitUnlock.dll",
+      "name": "Unlocked Buildings",
+      "summary": "Bypass \"too narrow / too complex\" on splits, lift the custom-building restrictions (size + wall-length), and uncap the per-building storage / population / deconstruct-yield ceiling.",
+      "description": "Lets you cut up castles, cathedrals, and other irregular generated shapes that the vanilla split validator rejects — and lifts the restrictions on the draw-your-own custom buildings.\n\n**Splits.** The game's `BuildingSplitHandler.CheckWrongDimensions` enforces three thresholds via `SplitConfig`:\n- polygon surface ≤ MinSplitSurface × 3 → SmallSurface\n- offset-polygon shrink by WrongDimensionDelta produces ≠1 sub-poly → WrongDimensions\n- any source node further than MaxDistanceFromOffsetPolygon from the shrunk poly → WrongDimensions\n\nThis mod flips a denied result to None when you opt in. Two independent toggles: `AllowWrongDimensions` (the narrow/complex check) and `AllowSmallSurface` (the size check), both default on.\n\n**Custom buildings (`[BuildingSize]`).** Also lifts the restrictions on the draw-your-own buildings:\n- `OverrideBuildingSize` + `MaxBuildingSurface` / `MinBuildingSurface` — vanilla caps custom buildings at 1000 m² (min 5); raise the max to draw bigger. Defaults match vanilla, so the size change is opt-in. Construction cost scales with area, so big footprints get expensive.\n- `AllowShortWalls` — bypasses the \"at least one of the walls is too short\" rejection (vanilla `MinWallLength`), so you can draw tight/irregular footprints.\n\n**Caveat:** splits or builds along genuinely degenerate geometry may produce ugly or partially-walkable parts. The mod doesn't make them better — it lets them happen.\n\n**Per-building capacity (`[BuildingCapacity]`, opt-in).** Vanilla clamps every building's effective volume to `AdaptConfig.BuildingsMaxVolume` (~50000 m³), and that single clamped volume drives storage capacity, population / gathering-place capacity, max HP, and deconstruction yield. The result: a 90 m highrise hits the same ~2000-per-building wall as a 30 m block (splitting works around it because each piece gets its own volume). Turn on `UncapBuildingCapacity` and set `VolumeMultiplier` (default 3) to lift that ceiling so bigger buildings actually hold, house, and yield more — no splitting required. WARNING: population scales too, so very high multipliers mean far more residents/workers and a late-game FPS cost; 2-3 is a safe start. HP and full-adapt construction cost scale as well, so giant buildings get tougher and pricier.\n\n**Configurable in F1 ConfigurationManager.** Master split toggle is `[General] Enabled`; the building-size override is independent in `[BuildingSize]`; the capacity uncap is independent in `[BuildingCapacity]` (off by default). Pick only the features you want.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Bypasses \"Building parts contain too narrow or too complex elements\" on building splits. Lets you cut up castles, cathedrals, and irregular generated shapes that the vanilla split validator rejects.\n\nCaveat: splits along genuinely degenerate geometry may produce ugly or partially-walkable parts. The mod doesn't make those splits better — it lets them happen.\n\nAlso lifts the draw-your-own custom-building restrictions in the [BuildingSize] section:\n- Size limits: MaxBuildingSurface / MinBuildingSurface (vanilla 1000 / 5 m²). Defaults match vanilla, so it's opt-in — raise the max to build bigger.\n- Short walls: AllowShortWalls bypasses the \"a wall is too short\" rejection (vanilla MinWallLength), so tight/irregular footprints are allowed.\n\nAngle / slope / intersection checks still apply.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Two split toggles: AllowWrongDimensions (narrow/complex) and AllowSmallSurface (size), both default on\n- Custom-building size override — MaxBuildingSurface (vanilla 1000 m²) and MinBuildingSurface (vanilla 5 m²); raise the max to draw bigger custom buildings\n- AllowShortWalls — bypasses the vanilla minimum wall-length gate so you can draw tight/irregular custom footprints\n- NEW: UncapBuildingCapacity (BuildingCapacity section, opt-in/off by default) — lifts the ~2000-per-building wall on storage, population/gathering capacity, HP and deconstruct yield via VolumeMultiplier (default 3)\n- Every feature is an independent toggle — pick only what you want\n- All tunable in F1 ConfigurationManager",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.3.0",
+      "fileNotes": "1.3.0: NEW per-building capacity uncap (BuildingCapacity section, opt-in/off by default). Vanilla clamps every building to AdaptConfig.BuildingsMaxVolume (~50000 m³), capping storage, population/gathering capacity, HP and deconstruct yield at the same ~2000-per-building wall regardless of real size. UncapBuildingCapacity + VolumeMultiplier (default 3) lift it so bigger buildings hold/house/yield more without splitting. Population scales too — high values cost late-game FPS; 2-3 is safe. Split + size toggles unchanged."
+    },
+    {
+      "key": "SquadAutoBehavior",
+      "nexusModId": 39,
+      "dllPath": "../../plugins/SquadAutoBehavior.dll",
+      "name": "Squad Auto Behavior",
+      "summary": "Auto-medbay when wounded, auto-resupply ammo, auto-return to the nearest ammo source when dry.",
+      "fileNotes": "1.1.3: dry/wounded squads under fire now fall back to rearm/heal when near base cover (new OverrideNearCoverMeters, default 80m); the old combat guard wrongly pinned them in place at 0 ammo. Requires IFZ Mod API 1.2.1+.",
+      "description": "Every TickSeconds (default 8) the mod sweeps player squads:\n\n- **Auto-return when wounded** — wounded squad outside HQ moves to nearest building with a soldiers-treatment module and available beds.\n- **Auto-resupply** — squad inside a HQ-zone enterable auto-grabs ammo from the stockroom when below LowAmmoFraction.\n- **Auto-return when dry** — squad outside HQ with avg ammo below ReturnAmmoFraction is sent to the NEAREST reachable building holding ammo (a closer warehouse beats the HQ); falls back to HQ if none is reachable.\n\nDaylight-only by default (configurable). Per-squad cooldowns prevent order spam.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Each behaviour individually toggleable.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Reduces babysitting. Every TickSeconds (default 8) the mod sweeps player squads and issues smart orders: wounded squads go to medbay, indoor squads grab ammo from stockrooms, dry squads head to the nearest building that holds ammo (HQ as a fallback).",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Auto-medbay when wounded near HQ\n- Auto-resupply ammo from stockroom indoors\n- Auto-return to the NEAREST building with ammo when dry (HQ as fallback)\n- Daylight-only by default (configurable)\n- Per-squad cooldowns prevent order spam",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "version": "1.1.3"
+    },
+    {
+      "key": "SquadMerge",
+      "nexusModId": 40,
+      "dllPath": "../../plugins/SquadMerge.dll",
+      "name": "Squad Merge (right-click)",
+      "summary": "Right-click your own squad with another selected → merge into target squad.",
+      "description": "Right-click an own-faction squad while another is selected → members transfer into the target (vanilla would have issued a follow order). Soft-cap merged squad size to configurable max (default 8 — above vanilla 4).\n\nLong-distance: source squad follows the target first, auto-merges when within MergeRange (default 10m).\n\n**Notes:**\n- Vehicle merges are handled by VehicleSquadSize, not this mod.\n- RequireShift exists but is off by default — vanilla hijacks Shift to switch the cursor to area-scavenge before the click registers, so it rarely works in practice.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. SoftCap, MergeRange tunable.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Right-click your own squad while another is selected to merge them. Vanilla would have issued a follow order. Soft-caps merged squad size to configurable max (default 8 — above vanilla 4).\n\nNote: vehicle merges are handled by VehicleSquadSize, not this mod.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Right-click squad-to-squad merge for own faction\n- Configurable soft-cap (default 8)\n- Long-distance follow-then-merge inside MergeRange (default 10m)\n- RequireShift toggle exists but is off by default (vanilla hijacks Shift before the click)",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "version": "1.1.2",
+      "fileNotes": "1.1.2: now coexists with Vehicle Squad Size - both register with IFZ Mod API's shared squad hooks instead of double-patching the same methods (fixes a Linux/Proton crash when both are installed). Requires IFZ Mod API 1.2.1+."
+    },
+    {
+      "key": "VehicleSquadSize",
+      "nexusModId": 41,
+      "dllPath": "../../plugins/VehicleSquadSize.dll",
+      "name": "Better Vehicle Squad Size",
+      "summary": "Vehicle capacity scales with cargo slots: 4 + floor(cargoSlots/4). Pickup 5, Van 6, Truck 8, Bus 9.",
+      "description": "Vehicles carry their actual seat count instead of vanilla's flat 4. Formula: `4 + floor(cargoSlots / CARGO_SLOTS_PER_PERSON)` where CARGO_SLOTS_PER_PERSON = 4. Result: Pickup 5, Van 6, Truck 8, Bus 9.\n\n- **Merge into vehicle** — right-click an owned vehicle with another squad selected → squad members transfer in (vanilla would just follow). Long-distance: follow first, merge inside 10m.\n- **Split on exit** — when a vehicle squad with merged passengers disembarks, the extras become their own fully-functional squad, auto-named with a unique squad number, movable like any other squad.\n- **UI patch** — squad panel shows `members / vehicleCap` while in vehicle.\n- **Save / reload tested** — merged state persists without crash.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Vehicles carry their actual seat count instead of vanilla's flat 4. Formula: 4 + floor(cargoSlots / 4). Result: Pickup 5, Van 6, Truck 8, Bus 9.\n\nIncludes merge-into-vehicle, split-on-exit, and a UI patch so the seat counter shows members / vehicleCap.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Vehicle capacity scales with cargo slots\n- Right-click vehicle with squad selected = merge members into vehicle\n- Long-distance: follow first, auto-merge inside 10m\n- Split on exit: merged passengers become their own functional squad with unique name\n- UI shows members / vehicleCap while in vehicle\n- Save / reload tested",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.1.2",
+      "fileNotes": "1.1.2: now coexists with Squad Merge - both register with IFZ Mod API's shared squad hooks instead of double-patching the same methods (fixes a Linux/Proton crash when both are installed). Requires IFZ Mod API 1.2.1+."
+    },
+    {
+      "key": "Surrounded",
+      "nexusModId": 55,
+      "dllPath": "../../plugins/Surrounded.dll",
+      "name": "Surrounded - siege mode",
+      "summary": "Vanilla swarms attack far more often and bigger; scavenge loot multiplied so you push out between waves.",
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "0.4.5: Early-game easing for lair waves — no longer dump on day 1 of a fresh base or new expedition. Grace period (default day 5), ramp to full by ~day 25, and a cooldown so lairs strike in spaced waves. Run-day based. Requires API 1.4.2+.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Difficulty"
+      ],
+      "sections": {
+        "description": "\"Surrounded\" siege mode. Day is the calm window; night is the assault.\n\nIt does NOT hand-spawn units (that produces engine-invalid groups that crash the game). Instead it steers the game's OWN swarm system — the swarms are 100% vanilla-built (correct pathing/targeting, no perf landmines), there are just a lot more of them, a lot more often.\n\nIncludes a day-1→30 ease-in ramp so a fresh base isn't run over instantly, and a read-only F1 Status panel that shows live exactly what it's changing for spawn frequency, horde size, and lair formation.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Siege: vanilla swarms attack much more frequently and bigger (SwarmFrequencyBoost, HordeSizeBoost)\n- Difficulty ease-in ramp (RampDays, default 30) so day 1 isn't an instant loss\n- Loot pull: scavenge + expedition yield multiplied (Loot.Multiplier) so you forage between assaults\n- Read-only F1 Status panel: live effective spawn-frequency / horde-size / lair-formation numbers\n- Optional opt-in lair-formation lever\n- Everything live-tunable in F1; master toggle if it gets too brutal",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "0.4.5"
+    },
+    {
+      "key": "SquadGrenades",
+      "nexusModId": 69,
+      "dllPath": "../../plugins/SquadGrenades.dll",
+      "name": "Squad Grenades",
+      "summary": "Idle squads automatically throw grenades and fire mortars at hostile clusters already in range - including from inside buildings and moving vehicles. Friendly-fire safe.",
+      "description": "**Stop micro-managing grenades.** Idle squads that carry grenades automatically lob them at clusters of infected or raiders that are *already within throwing range* - they never advance toward the horde, they just use what is in reach.\n\nVanilla never auto-throws grenades (you have to hand-aim every one), so this is pure quality-of-life: squads holding the line, garrisoned in a building, or rolling in a vehicle will pitch grenades at the right moment on their own. Mortar teams auto-fire too.\n\n**Friendly-fire safe:** a throw is cancelled if the blast would catch your own squad, another player squad, or any friendly - rescued survivors, civilians, vendors, allied army. Hostiles only.\n\n**Works everywhere the squad does:**\n- From inside buildings\n- From a moving vehicle - the squad keeps driving while it throws (passengers lob, the driver drives)\n- On expeditions, where auto-grenades really shine against the loot-zone hordes\n\n**Tunable in F1 (ConfigurationManager):** master toggle, grenades vs mortars, blast radius, minimum cluster size before it bothers, per-squad cooldown, and the self/friendly safety margins.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "Idle squads auto-throw grenades (and auto-fire mortars) at hostile clusters ALREADY within range - never advancing, just using what is in reach. Works from inside buildings and from moving vehicles (the squad keeps driving while passengers throw). Friendly-fire safe: a throw is cancelled if it would catch your own squads or any friendly (rescued survivors, civilians, allied army). Vanilla never auto-throws grenades, so this removes the micro. Tunable in F1.",
+        "installation": "Drop SquadGrenades.dll into <game>/BepInEx/plugins/. Requires IFZ Mod API (000_IFZModAPI.dll). Launch the game. Press F1 (ConfigurationManager) to tune toggles, blast radius, cluster size, cooldown and safety margins live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Idle squads auto-lob grenades at in-range hostile clusters (never advances - in-range only)\n- Auto-fires mortars / ground-attack explosives too\n- Works from inside buildings AND from moving vehicles (keeps driving while throwing)\n- Friendly-fire safe: cancels if the blast would catch your squads or any friendly (survivors, civilians, allied army)\n- Great on expeditions, where vanilla squads would never throw on their own\n- Fully tunable in F1: toggles, blast radius, min cluster size, cooldown, safety margins",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.2+. Pure-managed netstandard2.1 - Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tune live).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "1.0.0: First release. Idle squads auto-lob grenades and mortars at hostile clusters already in range - from buildings AND moving vehicles, never advancing. Friendly-fire safe (won't blast your squads, survivors, or allies). Requires IFZ Mod API 1.4.2+.",
+      "version": "1.0.0"
+    },
+    {
+      "key": "Hives",
+      "nexusModId": 56,
+      "dllPath": "../../plugins/Hives.dll",
+      "name": "Hives - infected hive seeding (experimental)",
+      "summary": "Seeds extra infected hideouts across the map on a new game; they grow into lairs. Pairs with Surrounded.",
+      "fileNotes": "0.1.6: reads the hideouts controller via IFZ Mod API instead of re-patching its constructor (fixes a Linux/Proton double-patch crash when Raider Escalation is also installed). Requires IFZ Mod API 1.2.1+.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Difficulty"
+      ],
+      "sections": {
+        "description": "EXPERIMENTAL (v0.1.0). On a new game, seeds N buildings scattered across the map (away from your HQ) as infected hideouts using the game's OWN hideout spawn (engine-valid, not a hand-spawn). They mature into lairs over time, breeding local pressure — more scattered objectives to push out toward.\n\nSeeds once per save (per-save flag, never re-stacks on reload). Loading a pre-Hives save seeds it fresh with your current settings. Pairs naturally with Surrounded (waves) — Hives gives you the map full of nests between them.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Seeds infected hives into buildings across the map on a new game\n- Kept away from your start (MinDistanceFromHQ) so there's room to find them\n- HiveCount (default 50), PlacePerTick tunable in F1\n- Once per save — never re-stacks on reload\n- Uses the engine's own hideout spawn (no crash-prone hand-spawns)",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "0.1.6"
+    },
+    {
+      "key": "RaiderEscalation",
+      "nexusModId": 57,
+      "dllPath": "../../plugins/RaiderEscalation.dll",
+      "name": "Raider Escalation",
+      "summary": "Raider camps grow when ignored, weaken when fought, raid your base, and drop loot when wiped.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Difficulty"
+      ],
+      "sections": {
+        "description": "Makes bandit/raider camps dynamic. Camps grow in strength when you ignore them, weaken when you fight them off, recoup over time, occasionally raid your base, and drop loot when wiped. Also pays out on cleared swarm nests.\n\nRaiders spawn fully armed (they take the camp's own equipped weapon, with a guaranteed-armed floor). Fully tunable.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Camps dynamically grow when ignored, weaken when fought, then recoup\n- Camps occasionally raid your base\n- Loot drops when a camp is wiped; payouts on cleared swarm nests\n- Raiders spawn armed with real weapons\n- Fully tunable in F1",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "version": "1.2.6",
+      "fileNotes": "1.2.6: adds [Raids] GraceDays (default 7) — no base raids before in-game day 7, so a strong pre-existing camp can no longer wipe a fresh base on day 2-3. Set GraceDays=0 to restore old behaviour. Requires IFZ Mod API 1.2.1+."
+    },
+    {
+      "key": "MassDeconstruct",
+      "nexusModId": 58,
+      "dllPath": "../../plugins/MassDeconstruct.dll",
+      "name": "Mass Deconstruct - drag-box",
+      "summary": "Press K, drag a box over your base, confirm — every qualifying building inside is queued for deconstruction at once.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Vanilla only lets you deconstruct one building at a time. This adds drag-box mass deconstruction: press K (configurable) to arm, CTRL+drag a rectangle over your base, confirm, and every qualifying building inside is queued at once.\n\nMirrors the game's own deconstruct rules — skips the HQ, non-deconstructable buildings, and anything already being torn down.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Hotkey to arm (default K), CTRL+drag to box-select\n- Confirm dialog before queueing\n- Honors the game's own deconstruct eligibility (skips HQ, non-deconstructable, already-queued)\n- OwnedOnly and confirm toggles in F1",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "version": "1.4.0-beta",
+      "fileNotes": "1.4.0-beta: live red footprint highlight per building in the drag box. Drag now uses native game-camera world-point (fixes offset on elevated maps). 1.3.0: paced deconstruct (<=50 at once) prevents navmesh crash on mass-clear. Requires API 1.2.1+."
+    },
+    {
+      "key": "SquadMoveFire",
+      "nexusModId": 59,
+      "dllPath": "../../plugins/SquadMoveFire.dll",
+      "name": "Squad Move and Fire (experimental)",
+      "summary": "Squads fire while moving instead of halting — on foot and in vehicles. Hold Your Ground truly anchors.",
+      "fileNotes": "0.1.3: removed a stray debug log from the move-fire patch (it only fired with the experimental MoveAndFire toggle on; now gone). Zero overhead, no gameplay change.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "EXPERIMENTAL (v0.1.2). Squads fire WHILE moving instead of stopping to shoot — on foot and in vehicles (needs Fire-at-Will + Move-at-Will stances). Hold Your Ground now truly anchors a squad: it fires in-range targets but won't advance to engage.\n\nAdds an accuracy = damage model (IFZ has no hit-roll): penalties for walking/running/driving, a hard penalty while swimming, a confidence bonus firing from inside buildings, and a penalty when swarmed in the open. All tunable in F1.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Fire while moving, on foot and in vehicles\n- Hold Your Ground anchors (fires but won't advance)\n- Accuracy-as-damage: move/swim/drive penalties, indoor confidence bonus, open-field swarm penalty\n- All multipliers tunable in F1",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "0.1.3"
+    },
+    {
+      "key": "Flares",
+      "nexusModId": 54,
+      "dllPath": "../../plugins/Flares.dll",
+      "name": "Flares - mortar illumination (experimental)",
+      "summary": "At night, mortars autonomously lob illumination flares at dark infected clusters, revealing fog-of-war.",
+      "fileNotes": "0.2.0: finalised flare look - brighter amber illumination light, native smoke plume, and a soft additive glow. Requires IFZ Mod API 1.2.1+.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "EXPERIMENTAL (v0.1.3). At night, bunker- and squad-mounted mortars autonomously lob an illumination flare at dark infected clusters within range. It arcs up, airbursts, and parachutes down as a red light + thin smoke trail, revealing the fog-of-war beneath it so mortars can engage the lit horde.\n\nBuilt as a pure driver + reflection (no Harmony). Flare stack is per-save.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Mortars auto-fire illumination flares at dark infected clusters at night\n- Flare airbursts and parachutes down, revealing fog-of-war\n- Red light + thin smoke trail\n- Per-save flare stack; tunable in F1",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "0.2.0"
+    },
+    {
+      "key": "SwarmFix",
+      "nexusModId": 63,
+      "dllPath": "../../plugins/SwarmFix.dll",
+      "name": "Swarm Fix",
+      "summary": "Restores late-game infected night waves that silently stop. The swarm aggro overflows past the top tier (Infinity/NaN) so no wave ever spawns again while raiders keep attacking; this sanitises the tier lookup so the hordes come back.",
+      "fileNotes": "1.1.0 - first release. Fixes late-game infected swarms that stop spawning once swarm aggro overflows past the top tier (to Infinity, or NaN after a reload). Healthy saves unaffected. Corrupted-save horde size tunable in F1 (GarbageHordeScale).",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Bug Fixes"
+      ],
+      "sections": {
+        "description": "On long Infection Free Zone saves the nightly infected swarms quietly stop coming - while raiders keep attacking (the tell). Cause: the game's swarm 'aggro' value compounds every wave and eventually overflows past its largest swarm tier all the way to +Infinity; the save can't store Infinity, so after a reload it comes back as NaN. The wave picker (SwarmConfig.GetSwarm) only matches a tier where Min <= aggro <= Max, so once aggro is Infinity / NaN / past the top tier, nothing matches and no swarm is ever spawned again.\n\nSwarmFix adds a Harmony prefix that sanitises that lookup so a tier always resolves: healthy saves are untouched (normal scaling), legitimately high aggro clamps to the top tier, and corrupted aggro falls back to a tunable fraction of the top tier (GarbageHordeScale, default = max horde). It only touches the lookup - your saved aggro is never modified, so it's non-destructive and fully reversible.\n\nConfigurable in F1 ConfigurationManager.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Restores infected swarm waves that stop on long (~day 200+) saves\n- Fixes swarm aggro overflowing past the top tier (Infinity, or NaN after reload)\n- Healthy saves keep normal aggro-based horde scaling\n- Corrupted-save horde size tunable live in F1 (GarbageHordeScale)\n- Lookup-only: never edits your saved aggro; fully reversible",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 - runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals - nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.1.0"
+    },
+    {
+      "key": "HighGround",
+      "nexusModId": 64,
+      "dllPath": "../../plugins/HighGround.dll",
+      "name": "High Ground",
+      "summary": "Height matters: build true high-rises, garrisoned units fire from the top floor over your walls, and shooters in tall buildings get a range bonus. Each feature toggleable in F1.",
+      "fileNotes": "1.0.0 - first release. The height/elevation features that used to live in the IFZ Quality of Life Bundle, now standalone: TallBuildings, ElevatedFiring, HeightAdvantage. Standalone - no other mods required.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Makes building height a real tactical dimension in Infection Free Zone. Three independent features, each toggleable in F1 ConfigurationManager.\n\nMain features:\n- TallBuildings: raises the custom-building height-slider cap so you can build proper high-rises (default new cap 90m, ~25-30 storeys; set via MaxHeight).\n- ElevatedFiring: garrisoned units shoot from near the top floor instead of the ground, so their shots clear your walls instead of clipping through them. FloorHeight sets how far below the roof the firing line sits (default 13m); MinBuildingHeight skips shacks (default 6m).\n- HeightAdvantage: units shooting from tall buildings get a fight-range bonus that scales with building height, with an orange field-of-view overlay showing the boosted range.\n\nStandalone - does not require IFZ Mod API or any other mod.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- TallBuildings: raise the custom-building height cap to build high-rises (default 90m)\n- ElevatedFiring: garrisoned units fire from the top floor, over your walls\n- HeightAdvantage: fight-range bonus scaled by building height, with FoV overlay\n- Each feature individually toggleable in F1",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 - runs on Windows / macOS (Crossover) / Steam Deck (Proton). Standalone - no other mods required.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals - nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.0.0"
+    },
+    {
+      "key": "ClayPitFixes",
+      "nexusModId": 65,
+      "dllPath": "../../plugins/ClayPitFixes.dll",
+      "name": "Clay Pit Fixes",
+      "summary": "Depleted clay pits regenerate production after a delay instead of being dead forever, and a depleted pit can be demolished to reclaim the land. Tunable in F1.",
+      "fileNotes": "1.1.0.0 - Demolished clay-pit area now regenerates production over time and persists across save/reload.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Quality of Life",
+        "Bug Fixes",
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "Fixes the dead-end feel of exhausted clay pits in Infection Free Zone.\n\nMain features:\n- Regeneration: a depleted clay pit recovers its production after a configurable number of game days (default 14), back to a fraction of its original output (default 0.5, with diminishing returns on repeat depletion). Tune via RegenDays and RegenFraction.\n- Demolish to reclaim: a depleted clay pit can be demolished so you get the land back instead of leaving a permanent dead tile.\n\nStandalone - does not require IFZ Mod API or any other mod.",
+        "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Depleted clay pits regenerate production after N game days (default 14)\n- Regenerate to a tunable fraction of original output (default 50%)\n- Depleted pits can be demolished to reclaim the land\n- Tunable live in F1 (RegenDays, RegenFraction)",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 - runs on Windows / macOS (Crossover) / Steam Deck (Proton). Standalone - no other mods required.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals - nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "1.1.0.0"
+    },
+    {
+      "key": "WindowGlow",
+      "nexusModId": 66,
+      "dllPath": "../../plugins/WindowGlow.dll",
+      "name": "Night Lights",
+      "summary": "Warm amber window lights across the city at night. Reconstructs the game's own window placement and lights a realistic, patchy fraction of windows after dark.",
+      "description": "Brings the city to life after dark. At dusk, windows across occupied buildings warm up with amber light — a patchy, lived-in scatter rather than every pane blazing, so it reads like a real city at night.\n\n**How it works:** Night Lights reconstructs the game's *own* window layout (same UV mapping, same per-building window texture and slice) and draws a second, additive emissive pass on top — so the glow lands exactly on the painted windows and is immune to the moonlight wash that locks the native windows blue-white at night. It fades in/out around sunrise/sunset using the game's own day/night value.\n\n**Tunable in F1 (ConfigurationManager):** colour, intensity/bloom, the lit fraction (how many windows light up), night ramp timing, and a set of cleanup knobs. Master toggle in `[General] Enabled`.\n\n**Limitations (please read):**\n- Placement is pixel-accurate on standard apartment/house buildings. The game decides *which* windows exist per building through internal shader logic this mod does not fully replicate, so on some buildings a few extra cells can light up near roof edges or building corners where the game itself left brick. The patchy `[Lit] LitFraction` default is tuned so these read as just another occupied flat rather than an obvious error — but if you look closely at edges you may spot them. Cleanup knobs (`AlphaCutoff`, `RoofGate`, `BorderKill`) let you trim them further.\n- Lights only the game's standard adapted buildings; some special/decorative structures won't glow.\n\n**Performance:** Light. The mod adds one extra additive draw pass per adapted building (the window emission), with a simple fragment shader, no shadows, no extra real-time lights. CPU cost is a periodic re-scan of buildings (default every 1s) plus the extra draw calls; GPU cost is minor additive overdraw. On very large late-game cities the extra draw calls add some render-thread cost like any per-building visual mod — toggle it off in F1 if you're FPS-bound. The shader bundle is embedded in the DLL, so there's nothing extra to install.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Warm amber window lights across the city at night. Reconstructs the game's own window placement and lights a realistic, patchy fraction of windows after dark, with a moonlight-immune additive glow that fades in at dusk.",
+        "installation": "Drop WindowGlow.dll into <game>/BepInEx/plugins/. The shader is embedded in the DLL — no extra files. Launch the game; windows light up at night. Press F1 (ConfigurationManager) to tune colour, intensity and the lit fraction live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Warm amber window glow on buildings at night\n- Reconstructs the game's exact window placement (pixel-accurate on standard buildings)\n- Moonlight-immune additive emission (no blue-white night wash)\n- Realistic patchy lighting — only a fraction of windows lit, varies per building, stable (no flicker)\n- Fades in/out around sunrise/sunset on the game's own day/night value\n- Fully tunable in F1: colour, intensity/bloom, lit fraction, ramp, cleanup\n- Single self-contained DLL (shader bundle embedded), no dependencies",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton). No mod dependencies.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tune live)\n- LocaleFix (if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [],
+      "fileNotes": "1.0.0: initial release. Warm amber window lighting at night via a reconstructed, moonlight-immune additive emission pass on the game's own window placement. Patchy lit-fraction by default. Shader bundle embedded in the DLL.",
+      "version": "1.0.0"
+    },
+    {
+      "key": "BridgeProto",
+      "nexusModId": 67,
+      "dllPath": "../../plugins/BridgeProto.dll",
+      "name": "Buildable Bridges",
+      "summary": "Drag-build a walkable bridge across water with the wall tool. Real road, deck and railings; units and vehicles cross; survives save/load.",
+      "description": "Build real bridges over water.\n\nPress **B** in-game to enter bridge mode, then drag from one bank to the other exactly like placing a wall. The span builds as a proper bridge — road surface, deck and railings deformed per span — and becomes a walkable crossing: your units *and* vehicles route across it. Bridges cost wall materials by length and persist across save/load.\n\n**How it works:** it reuses the game's own wall placement (so drag, snap, cost and saving all come from vanilla) and the game's native bridge builder to lay real road/deck/railing geometry at bank height, then stamps a walkable road surface so pathfinding connects the two shores.\n\n**Tunable in F1 (ConfigurationManager):** hotkey, deck width, bank-overhang, height offset, and a debug routing-strip overlay (off by default).",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "Press B in-game and drag across water like placing a wall to build a real walkable bridge — road, deck and railings. Units and vehicles route across it; it costs wall materials by length and persists across save/load. Reuses the game's own wall pipeline and native bridge builder, lays real geometry at bank height, and stamps a walkable surface so pathfinding links both shores.",
+        "installation": "Drop BridgeProto.dll into <game>/BepInEx/plugins/. Requires IFZ Mod API (000_IFZModAPI.dll). Launch the game, press B, drag across water; right-click to exit. Press F1 (ConfigurationManager) to tune the hotkey, deck width and bank-overhang live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Drag-build a bridge across water with the wall tool (press B)\n- Real bridge geometry — road, deck and railings deformed per span\n- Walkable by units AND vehicles\n- Costs wall materials by length; snaps and validates like a wall\n- Lays at bank/ground height (not the river floor)\n- Survives save/load (bridges are re-stamped on load)\n- Wine/Proton-safe (no save-load crashes)\n- Tunable in F1: hotkey, deck width, overhang, debug overlay",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.2+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tune live)\n- LocaleFix (if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "0.2.0.1 BETA - Native bridge builder: real road/deck/railing textures and per-span deformation.",
+      "version": "0.2.0.1"
+    },
+    {
+      "key": "DemolishAnywhere",
+      "nexusModId": 68,
+      "dllPath": "../../plugins/DemolishAnywhere.dll",
+      "name": "NoPath - YesPath",
+      "summary": "Demolish the 'no path' buildings along the water that you normally can't get rid of. A real worker walks in and tears them down under normal rules — no instant teardown.",
+      "description": "Buildings placed along the water often end up stuck with a red **\"no path\"** — workers can't route to them, so you can never demolish them and they sit on your map forever.\n\nNoPath - YesPath fixes that. When you order a demolish on one of these buildings, the mod opens the building's own footprint to pathfinding and **injects a reachable work spot onto it**, so a real worker walks *into* the footprint and demolishes it from the inside — under full vanilla rules (real worker, normal teardown time). No instant removal, no cheats: it just makes the building reachable so the normal demolish can happen.\n\n**What it can and can't fix:**\n- **Buildings on a shore ledge** (the building sits on land, only its work spots spilled onto the water) — **fixed**. A worker now reaches it and demolishes it.\n- **Buildings sitting literally on the water** (no land under them at all) — these are true isolates. The engine can't put a walkable surface on water, so no worker can ever reach them under vanilla rules. The mod logs these so you know which is which, but it won't (and by design doesn't) force-remove them.\n\n**Tunable in F1 (ConfigurationManager):** master toggle, and whether a cancelled demolish re-blocks the footprint.\n\nZero Harmony patches (Zenject signal + reflection), Wine/Proton-safe.\n\nThanks to **Meefstick (GZW)** for the report, the \"demolish from the inside\" idea, and the in-game testing.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Demolish the 'no path' waterside buildings you normally can't remove. Ordering a demolish opens the building's footprint to pathing and injects a reachable work spot onto it, so a real worker walks in and tears it down under normal vanilla rules (real worker, normal timing — no instant teardown). Buildings on a land ledge are fixed; buildings sitting literally on water are true isolates the engine can't make reachable, and the mod logs which is which.",
+        "installation": "Drop DemolishAnywhere.dll into <game>/BepInEx/plugins/. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.3+. Launch the game and order a demolish on a stuck waterside building. Press F1 (ConfigurationManager) to toggle it or change the cancel-restore behaviour.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Demolish 'no path' buildings along the water that vanilla won't let you remove\n- A real worker walks in and demolishes under normal rules (no instant teardown, no cheats)\n- 'Demolish from the inside' — opens the footprint and injects a reachable work spot\n- Per-building diagnostic in the log: land-ledge (fixable) vs true water-isolate (engine limit)\n- Restores the footprint if you cancel the demolish\n- Zero Harmony patches; Wine/Proton-safe\n- Tunable in F1: master toggle, cancel-restore",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.3+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to toggle live)\n- LocaleFix (if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nThanks to Meefstick (GZW) for the report and in-game testing.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "0.3.0 - Denser footprint sampling + reachability checks (no workers assigned to unreachable spots). New config: max work positions, sample spacing, inside-only demolition.",
+      "version": "0.3.0"
+    }
+  ]
+}
