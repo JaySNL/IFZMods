@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-06-30 -- Squad Auto Behavior 1.1.4-beta
+
+### Changed
+- **Squad Auto Behavior 1.1.4-beta -- idle-gate fix (BETA).** Auto-behavior tick now skips any squad that has an active player order (`CurrentOrder != null`), so the 8s rearm/hospital sweep never pre-empts a move order the player just issued. Previously the tick called `AddFirstOrder` (insert-at-front), which displaced the player's drive order; if the rearm/hospital target briefly failed `CanGoToStructure` (e.g. building mid-deconstruct, navmesh churning), the inserted order ended instantly and the squad hitched before resuming -- a per-tick stutter during mass-deconstruct. Squads with no active order still auto-rearm/heal as before. Requires IFZ Mod API 1.2.1+.
+
+---
+
 ## 2026-06-29 — MassDeconstruct 1.4.0-beta
 
 ### Changed

@@ -25,7 +25,7 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-_(empty)_
+- **Squad Auto Behavior (SquadAutoBehavior) -> 1.1.4-beta** (mod 39) -- BUILT, upload pending. Idle-gate fix: auto-behavior tick skips squads with an active player order; prevents stutter during deconstruct. NOTE: in-game verification still PENDING (Wine JIT + save-load) -- shipping as beta for community testing. Requires IFZModAPI.
 
 ---
 

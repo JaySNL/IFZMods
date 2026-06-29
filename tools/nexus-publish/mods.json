@@ -395,7 +395,7 @@
       "dllPath": "../../plugins/SquadAutoBehavior.dll",
       "name": "Squad Auto Behavior",
       "summary": "Auto-medbay when wounded, auto-resupply ammo, auto-return to the nearest ammo source when dry.",
-      "fileNotes": "1.1.3: dry/wounded squads under fire now fall back to rearm/heal when near base cover (new OverrideNearCoverMeters, default 80m); the old combat guard wrongly pinned them in place at 0 ammo. Requires IFZ Mod API 1.2.1+.",
+      "fileNotes": "1.1.4-beta: idle-gate fix -- auto-behavior tick skips squads with an active player order; fixes stutter during deconstruct. 1.1.3: combat-guard fix, OverrideNearCoverMeters (default 80m). Requires IFZ Mod API 1.2.1+.",
       "description": "Every TickSeconds (default 8) the mod sweeps player squads:\n\n- **Auto-return when wounded** — wounded squad outside HQ moves to nearest building with a soldiers-treatment module and available beds.\n- **Auto-resupply** — squad inside a HQ-zone enterable auto-grabs ammo from the stockroom when below LowAmmoFraction.\n- **Auto-return when dry** — squad outside HQ with avg ammo below ReturnAmmoFraction is sent to the NEAREST reachable building holding ammo (a closer warehouse beats the HQ); falls back to HQ if none is reachable.\n\nDaylight-only by default (configurable). Per-squad cooldowns prevent order spam.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Each behaviour individually toggleable.",
       "category": "Miscellaneous",
       "tags": [
@@ -412,7 +412,7 @@
       "requires": [
         "IFZModAPI"
       ],
-      "version": "1.1.3"
+      "version": "1.1.4-beta"
     },
     {
       "key": "SquadMerge",
