@@ -6,7 +6,7 @@ Players: spot a bug? **[Open an issue](https://github.com/JaySNL/IFZMods/issues/
 **Legend** — Release state: 🟢 Live (on Nexus) · 🟡 Staged (built/verified, not yet pushed) · 🔬 Experimental · 🛠 WIP (unreleased)
 Bug status: 🔴 Open · 🟠 In progress · 🟢 Fixed (shipped) · ⚪ Won't fix / vanilla limit
 
-_Last updated: 2026-06-29_
+_Last updated: 2026-07-02_
 
 ---
 
@@ -14,7 +14,7 @@ _Last updated: 2026-06-29_
 
 | ID | Mod | Version | State | Requires | Page |
 |----|-----|---------|-------|----------|------|
-| 42 | IFZ Mod API | 1.4.4 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
+| 42 | IFZ Mod API | 1.4.5 | 🟡 Staged | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
 | 24 | Army Backup AI Fix | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/24) |
 | 25 | Cinematic FX | 1.2.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/25) |
 | 26 | Construction ETA | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/26) |
@@ -65,6 +65,7 @@ _No confirmed-open bugs on shipped mods. Add a row when a player reports one (or
 
 | Project | State | Blocker / next step |
 |---------|-------|---------------------|
+| BlitzHund (suicide-bomber infected dog, new mod) | 🟡 Staged 0.1.0, built+in-game verified | Awaiting Nexus page creation + push. Requires IFZ Mod API 1.4.5 (also staged) |
 | StackBuild proto (rooftop buildings) | 🛠 WIP, built+deployed | Save/load fix (ground-anchor restore) — awaiting in-game verify |
 | WorldEvents proto (dispatcher + events) | 🛠 WIP, code-complete | Awaiting in-game verify |
 | Black-Market Trader event | 🛠 WIP, E2E tested | Polish / ship decision |

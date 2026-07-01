@@ -25,7 +25,9 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-_(empty)_
+- **IFZ Mod API → 1.4.5** (mod 42) — BUILT + VERIFIED. New additive event `Cache.CharacterDied`, fired from sole Prefix on `Character.OnCharacterDeath`. Backward-compat audited: public-surface additions only, zero breaking changes; older mods unaffected. Enables event-driven mod integration (hard dependency for BlitzHund 0.1.0).
+
+- **BlitzHund → 0.1.0** (NEW PAGE, nexusModId TBD) — BUILT + VERIFIED. Suicide-bomber infected-dog variant: configurable fraction (default 15%, `BlitzChance`) of killed dogs detonate using native explosion, dealing area damage to player squads and structures. Config: `Enabled`, `BlitzChance`, `BlitzDamage` (0=clone native), `BlitzRadius` (0=clone native), `DogDraftName`, `DebugLog`. Sole-patcher of `Character.CustomFactory.Create`; IFZModAPI sole-patches `Character.OnCharacterDeath`. No collisions. Requires IFZModAPI 1.4.5+.
 
 ---
 
