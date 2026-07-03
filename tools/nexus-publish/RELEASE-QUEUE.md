@@ -25,13 +25,15 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-- **IFZ Mod API → 1.4.5** (mod 42) — BUILT + VERIFIED. New additive event `Cache.CharacterDied`, fired from sole Prefix on `Character.OnCharacterDeath`. Backward-compat audited: public-surface additions only, zero breaking changes; older mods unaffected. Enables event-driven mod integration (hard dependency for BlitzHund 0.1.0).
-
-- **BlitzHund → 0.1.0** (NEW PAGE, nexusModId TBD) — BUILT + VERIFIED. Suicide-bomber infected-dog variant: configurable fraction (default 15%, `BlitzChance`) of killed dogs detonate using native explosion, dealing area damage to player squads and structures. Config: `Enabled`, `BlitzChance`, `BlitzDamage` (0=clone native), `BlitzRadius` (0=clone native), `DogDraftName`, `Cascade` (chain-detonate nearby bombers; default on), `DebugLog`. Sole-patcher of `Character.CustomFactory.Create`; IFZModAPI sole-patches `Character.OnCharacterDeath`. No collisions. Requires IFZModAPI 1.4.5+.
+- (none)
 
 ---
 
 ## Pushed (recent — prune after a few cycles)
+
+- **IFZ Mod API → 1.4.5** (mod 42) — PUSHED 2026-07-02 (`publish-all --send`, all stages 200/204). New additive event `Cache.CharacterDied`, fired from sole Prefix on `Character.OnCharacterDeath`. Backward-compat audited: public-surface additions only, zero breaking changes; older mods unaffected. Hard dependency for BlitzHund 0.1.0.
+
+- **BlitzHund → 0.1.0** (mod 71, file 7613702, NEW PAGE — DRAFT, user publishes) — PUSHED 2026-07-02. Suicide-bomber infected-dog variant: configurable fraction (default 15%, `BlitzChance`) of killed dogs detonate using native explosion, dealing area damage to player squads and structures. Config: `Enabled`, `BlitzChance`, `BlitzDamage` (0=clone native), `BlitzRadius` (0=clone native), `DogDraftName`, `Cascade` (chain-detonate nearby bombers; default on), `DebugLog`. Sole-patcher of `Character.CustomFactory.Create`; IFZModAPI sole-patches `Character.OnCharacterDeath`. No collisions. Requires IFZModAPI 1.4.5+. Requirement [204], changelog + details [200], banner + 2 gallery images uploaded. User sets main image + publishes draft.
 
 ### 2026-06-30 (cycle 10)
 - **Squad Auto Behavior (SquadAutoBehavior) -> 1.1.4-beta** (mod 39, file 7598132, API req set [204]) -- PUSHED. Idle-gate fix: auto-behavior tick skips squads with an active player order (CurrentOrder != null); prevents 8s-tick from inserting rearm/hospital order at front of queue mid-player-drive, eliminating stutter during mass-deconstruct. NOTE: in-game Wine/save-load verification still PENDING -- shipped as beta for community testing. Requires IFZModAPI >=1.4.4.
