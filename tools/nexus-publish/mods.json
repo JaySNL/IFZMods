@@ -756,27 +756,27 @@
     },
     {
       "key": "BlitzHund",
-      "nexusModId": null,
+      "nexusModId": 71,
       "dllPath": "../../plugins/BlitzHund.dll",
       "name": "BlitzHund",
       "summary": "A suicide-bomber infected dog. When killed it detonates in a fiery blast that damages your squads and base structures — walls, towers and buildings.",
-      "description": "A fraction of infected dogs (`inf_dog`) are silently tagged as bombers. When a tagged dog is killed, it detonates using the game's OWN on-death explosion machinery — the exact call every native `ExplodeOnDeath` draft uses — so the blast fits right in visually and mechanically.\n\nThe explosion is real area damage: it hits **both your squads and your structures** (walls, towers, buildings), radius-scaled like a native detonation. No asset edits, no spawn-table changes — two sole-patched methods (tag-on-spawn, detonate-on-death) keep it clear of cross-mod Harmony collisions.\n\n**Tunable in F1 (ConfigurationManager):** master toggle, bomber chance (default 15%), damage and radius overrides (0 = clone the native explosion's own values), the draft name gate, and a debug log.",
+      "description": "*The infected ate my homework. I mean C4.*\n\nA fraction of infected dogs (`inf_dog`) are silently tagged as bombers. When a tagged dog is killed, it detonates using the game's OWN on-death explosion machinery — the exact call every native `ExplodeOnDeath` draft uses — so the blast fits right in visually and mechanically.\n\nThe explosion is real area damage: it hits **both your squads and your structures** (walls, towers, buildings), radius-scaled like a native detonation. No asset edits, no spawn-table changes — two sole-patched methods (tag-on-spawn, detonate-on-death) keep it clear of cross-mod Harmony collisions.\n\nBy default the blast **chains**: any other tagged bomber caught inside the blast radius detonates too, rippling outward through a pack (deterministic queue + dedup, always terminates). Turn off `Cascade` for isolated single detonations only.\n\n**Tunable in F1 (ConfigurationManager):** master toggle, bomber chance (default 15%), damage and radius overrides (0 = clone the native explosion's own values), chain-detonation toggle (`Cascade`, default on), the draft name gate, and a debug log.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
         "Difficulty"
       ],
       "sections": {
-        "description": "A suicide-bomber variant of the infected dog. A configurable fraction (default 15%) of spawned dogs are tagged as bombers; when killed, a tagged dog detonates using the game's own native on-death explosion, damaging both player squads and structures (walls/towers/buildings) as real area damage, radius-scaled. No asset edits — reuses the engine's own explosion machinery.",
+        "description": "The infected ate my homework. I mean C4.\n\nA suicide-bomber variant of the infected dog. A configurable fraction (default 15%) of spawned dogs are tagged as bombers; when killed, a tagged dog detonates using the game's own native on-death explosion, damaging both player squads and structures (walls/towers/buildings) as real area damage, radius-scaled. By default, other tagged bombers caught in the blast radius chain-detonate too, rippling outward through a pack (toggle: Cascade). No asset edits — reuses the engine's own explosion machinery.",
         "installation": "Drop BlitzHund.dll into <game>/BepInEx/plugins/. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.5+. Launch the game. Press F1 (ConfigurationManager) to tune bomber chance, damage, radius and logging live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- A configurable fraction of infected dogs become suicide bombers (BlitzChance, default 15%)\n- Detonates on death using the game's own native on-death explosion (visually and mechanically consistent)\n- Blast is real enemy area damage — hits player squads AND structures (walls/towers/buildings), radius-scaled\n- BlitzDamage / BlitzRadius overrides (0 = clone the native explosion's own values)\n- Sole-patches two distinct methods (spawn-tag, death-detonate) — no cross-mod patch collisions\n- Tunable in F1: Enabled, BlitzChance, BlitzDamage, BlitzRadius, DogDraftName, DebugLog",
+        "mainFeatures": "- A configurable fraction of infected dogs become suicide bombers (BlitzChance, default 15%)\n- Detonates on death using the game's own native on-death explosion (visually and mechanically consistent)\n- Blast is real enemy area damage — hits player squads AND structures (walls/towers/buildings), radius-scaled\n- Cascade (default ON): other tagged bombers caught in the blast radius chain-detonate too, rippling outward through a pack (deterministic queue-driven overlap check, always terminates)\n- BlitzDamage / BlitzRadius overrides (0 = clone the native explosion's own values)\n- Sole-patches two distinct methods (spawn-tag, death-detonate) — no cross-mod patch collisions\n- Tunable in F1: Enabled, BlitzChance, BlitzDamage, BlitzRadius, Cascade, DogDraftName, DebugLog",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.5+ (uses Cache.CharacterDied). Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tune live)\n- LocaleFix (if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "0.1.0: First release. A configurable fraction (default 15%) of infected dogs are suicide bombers; on death they detonate using the game's native on-death explosion, damaging squads and structures alike. Requires IFZ Mod API 1.4.5+.",
+      "fileNotes": "0.1.0: First release. A configurable fraction (default 15%) of infected dogs are suicide bombers; on death they detonate using the game's native on-death explosion, chaining to nearby tagged bombers (Cascade). Requires IFZ Mod API 1.4.5+.",
       "version": "0.1.0"
     }
   ]

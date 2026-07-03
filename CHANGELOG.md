@@ -12,7 +12,7 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ### Added
 - **IFZ Mod API 1.4.5.** New additive event `Cache.CharacterDied`, fired from a sole Prefix on `Character.OnCharacterDeath`, enables mods to react to infected kills. Backward-compat audited: public-surface additions only, zero breaking changes — older mods are unaffected.
-- **BlitzHund 0.1.0 — new suicide-bomber infected-dog variant.** A configurable fraction (default 15%, `BlitzChance`) of killed infected dogs detonate using the game's native on-death explosion, dealing area damage to both player squads and structures (walls/towers/buildings) as enemy area damage, with radius-scaled blast. Config: `Enabled`, `BlitzChance`, `BlitzDamage` (0=clone native), `BlitzRadius` (0=clone native), `DogDraftName`, `DebugLog`. Sole-patcher of `Character.CustomFactory.Create`. **Requires IFZ Mod API 1.4.5** (which provides the `Cache.CharacterDied` event). Verified in-game.
+- **BlitzHund 0.1.0 — new suicide-bomber infected-dog variant.** A configurable fraction (default 15%, `BlitzChance`) of killed infected dogs detonate using the game's native on-death explosion, dealing area damage to both player squads and structures (walls/towers/buildings) as enemy area damage, with radius-scaled blast. Config: `Enabled`, `BlitzChance`, `BlitzDamage` (0=clone native), `BlitzRadius` (0=clone native), `DogDraftName`, `Cascade` (chain-detonate nearby bombers; default on), `DebugLog`. Sole-patcher of `Character.CustomFactory.Create`. **Requires IFZ Mod API 1.4.5** (which provides the `Cache.CharacterDied` event). Verified in-game.
 
 ---
 
