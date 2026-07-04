@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jay's Desk — Infection Free Zone Mods</title>
+<style>
+:root {
+  --bg: #f6f7f9; --fg: #1a1c1f; --muted: #5c636e; --card: #ffffff;
+  --line: #e2e5ea; --tile: #d9dee6; --accent: #d1495b; --accent-fg: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a; --fg: #e8eaed; --muted: #9aa2ad; --card: #1e2127;
+    --line: #2c313a; --tile: #2c313a; --accent: #e0637a; --accent-fg: #14161a;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+a { color: inherit; }
+.hero { max-width: 1100px; margin: 0 auto; padding: 3rem 1.25rem 1.5rem; text-align: center; }
+.hero h1 { margin: 0 0 .25rem; font-size: 2.4rem; letter-spacing: -.02em; }
+.tagline { color: var(--muted); font-size: 1.15rem; margin: 0 0 1rem; }
+.install { color: var(--muted); font-size: .95rem; }
+.install code { background: var(--tile); padding: .1rem .35rem; border-radius: 4px; }
+.btn { display: inline-block; background: var(--accent); color: var(--accent-fg);
+  text-decoration: none; padding: .55rem 1rem; border-radius: 8px; font-weight: 600; }
+.btn.kofi { margin-top: 1rem; }
+.grid { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.25rem;
+  display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  overflow: hidden; display: flex; flex-direction: column; }
+.card .banner { width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  background: var(--tile); display: block; }
+.card .body { padding: .9rem 1rem 1.1rem; display: flex; flex-direction: column; gap: .5rem; flex: 1; }
+.card h3 { margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: .5rem; }
+.card p { margin: 0; color: var(--muted); font-size: .95rem; flex: 1; }
+.card .btn { align-self: flex-start; margin-top: .4rem; }
+.badge { font-size: .68rem; text-transform: uppercase; letter-spacing: .04em;
+  background: var(--tile); color: var(--muted); padding: .12rem .4rem; border-radius: 999px; }
+.donate { max-width: 1100px; margin: 2rem auto 0; padding: 1.5rem 1.25rem;
+  text-align: center; color: var(--muted); border-top: 1px solid var(--line); }
+footer { max-width: 1100px; margin: 1rem auto 3rem; padding: 0 1.25rem;
+  display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; color: var(--muted); }
+footer a { text-decoration: none; }
+footer a:hover, .donate a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>Jay's Desk</h1>
+  <p class="tagline">34 free mods for Infection Free Zone — performance, fixes, and gameplay expansions.</p>
+  <p class="install">Drop the DLL into <code>BepInEx/plugins/</code>. <a href="https://github.com/JaySNL/IFZMods/blob/main/INSTALL.md" target="_blank" rel="noopener">Full install guide</a>.</p>
+  <a class="btn kofi" href="https://ko-fi.com/jaymade88" target="_blank" rel="noopener">Support on Ko-fi</a>
+</header>
+<main class="grid">
+<article class="card">
+  <img class="banner" src="assets/banners/PerfPack.png" alt="Performance Pack banner" loading="lazy">
+  <div class="body">
+    <h3>Performance Pack</h3>
+    <p>Late-game FPS fixes. Headline: hideout patrol spawn-point LOD ~doubles night FPS on old saves — same horde, no gameplay change.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/35" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/IFZQualityOfLife.png" alt="IFZ Quality of Life Bundle banner" loading="lazy">
+  <div class="body">
+    <h3>IFZ Quality of Life Bundle</h3>
+    <p>Bundle of small QoL tweaks: TowerHMG, VehicleAmmoFix, BuildingIconToggle, ShellLairs. Each toggleable in F1. (Height and clay-pit features moved to the new HighGround and ClayPitFixes mods.)</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/33" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/GreenhouseGrow.png" alt="Expanded Farming (2x-4x) banner" loading="lazy">
+  <div class="body">
+    <h3>Expanded Farming (2x-4x)</h3>
+    <p>Build farms and greenhouses at a chosen size. Cycle x1/x2/x3/x4 tiers during placement — cost, max staff and daily production all scale with the footprint.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/72" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/SquadGrenades.png" alt="Squad Grenades banner" loading="lazy">
+  <div class="body">
+    <h3>Squad Grenades</h3>
+    <p>Idle squads automatically throw grenades and fire mortars at hostile clusters already in range - including from inside buildings and moving vehicles. Friendly-fire safe.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/69" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/BlitzHund.png" alt="BlitzHund banner" loading="lazy">
+  <div class="body">
+    <h3>BlitzHund</h3>
+    <p>A suicide-bomber infected dog. When killed it detonates in a fiery blast that damages your squads and base structures — walls, towers and buildings.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/71" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/ArmyBackup.png" alt="Army Backup AI Fix banner" loading="lazy">
+  <div class="body">
+    <h3>Army Backup AI Fix</h3>
+    <p>Request Backup Army tanks actually engage hostiles near your base instead of idling.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/24" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/VehicleSquadSize.png" alt="Better Vehicle Squad Size banner" loading="lazy">
+  <div class="body">
+    <h3>Better Vehicle Squad Size</h3>
+    <p>Vehicle capacity scales with cargo slots: 4 + floor(cargoSlots/4). Pickup 5, Van 6, Truck 8, Bus 9.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/41" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/BridgeProto.png" alt="Buildable Bridges banner" loading="lazy">
+  <div class="body">
+    <h3>Buildable Bridges</h3>
+    <p>Drag-build a walkable bridge across water with the wall tool. Real road, deck and railings; units and vehicles cross; survives save/load.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/67" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/DeconstructCancel.png" alt="Cancel Paused Deconstruction banner" loading="lazy">
+  <div class="body">
+    <h3>Cancel Paused Deconstruction</h3>
+    <p>Cancel paused deconstruction tasks — vanilla blocks the delete button on partial demolitions.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/28" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/CinematicFX.png" alt="Cinematic FX banner" loading="lazy">
+  <div class="body">
+    <h3>Cinematic FX</h3>
+    <p>Buffed blood and tracers, demolish dust, impact craters, night thunderstorms.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/25" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/ClayPitFixes.png" alt="Clay Pit Fixes banner" loading="lazy">
+  <div class="body">
+    <h3>Clay Pit Fixes</h3>
+    <p>Depleted clay pits regenerate production after a delay instead of being dead forever, and a depleted pit can be demolished to reclaim the land. Tunable in F1.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/65" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/ConstructionETA.png" alt="Construction ETA banner" loading="lazy">
+  <div class="body">
+    <h3>Construction ETA</h3>
+    <p>Shows time-remaining on build, repair, and deconstruct panels.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/26" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/DarkerNights.png" alt="Darker Nights banner" loading="lazy">
+  <div class="body">
+    <h3>Darker Nights</h3>
+    <p>Actually-dark nights, full-moon brightness bonus, smooth dawn/dusk, day tone-shaping.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/27" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/ExplosivesUnlock.png" alt="Explosives Planting Unlock banner" loading="lazy">
+  <div class="body">
+    <h3>Explosives Planting Unlock</h3>
+    <p>Force-unlocks explosives_planting so the open-beta demolition feature actually works.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/29" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/Flares.png" alt="Flares - mortar illumination (experimental) banner" loading="lazy">
+  <div class="body">
+    <h3>Flares - mortar illumination (experimental)</h3>
+    <p>At night, mortars autonomously lob illumination flares at dark infected clusters, revealing fog-of-war.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/54" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/GunfireLights.png" alt="Gunfire Lights banner" loading="lazy">
+  <div class="body">
+    <h3>Gunfire Lights</h3>
+    <p>Real-time point lights for muzzle flashes, explosions, headlights, tower searchlights, antenna beacons.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/30" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/HighGround.png" alt="High Ground banner" loading="lazy">
+  <div class="body">
+    <h3>High Ground</h3>
+    <p>Height matters: build true high-rises, garrisoned units fire from the top floor over your walls, and shooters in tall buildings get a range bonus. Each feature toggleable in F1.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/64" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/Hives.png" alt="Hives - infected hive seeding (experimental) banner" loading="lazy">
+  <div class="body">
+    <h3>Hives - infected hive seeding (experimental)</h3>
+    <p>Seeds extra infected hideouts across the map on a new game; they grow into lairs. Pairs with Surrounded.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/56" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/HousePower.png" alt="House Power banner" loading="lazy">
+  <div class="body">
+    <h3>House Power</h3>
+    <p>Powered homes get a +mood bonus, chimneys emit smoke, entrance lights at night.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/31" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/HouseRebalance.png" alt="House Rebalance banner" loading="lazy">
+  <div class="body">
+    <h3>House Rebalance</h3>
+    <p>Citizens auto-migrate to higher-priority housing when capacity exists.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/32" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/IFZModAPI.png" alt="IFZ Mod API banner" loading="lazy">
+  <div class="body">
+    <h3>IFZ Mod API<span class="badge">Library</span></h3>
+    <p>Shared library other IFZMods depend on. Controller cache, time/night helpers, VFX + reflection utilities. Install if a mod lists it as required.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/42" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/LocaleFix.png" alt="Locale Fix (ConfigurationManager floats) banner" loading="lazy">
+  <div class="body">
+    <h3>Locale Fix (ConfigurationManager floats)</h3>
+    <p>Forces InvariantCulture so ConfigurationManager can edit decimal floats on comma-locale systems.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/34" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/MassDeconstruct.png" alt="Mass Deconstruct - drag-box banner" loading="lazy">
+  <div class="body">
+    <h3>Mass Deconstruct - drag-box</h3>
+    <p>Press K, drag a box over your base, confirm — every qualifying building inside is queued for deconstruction at once.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/58" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/WindowGlow.png" alt="Night Lights banner" loading="lazy">
+  <div class="body">
+    <h3>Night Lights</h3>
+    <p>Warm amber window lights across the city at night. Reconstructs the game's own window placement and lights a realistic, patchy fraction of windows after dark.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/66" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/DemolishAnywhere.png" alt="NoPath - YesPath banner" loading="lazy">
+  <div class="body">
+    <h3>NoPath - YesPath</h3>
+    <p>Demolish the 'no path' buildings along the water that you normally can't get rid of. A real worker walks in and tears them down under normal rules — no instant teardown.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/68" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/RaiderEscalation.png" alt="Raider Escalation banner" loading="lazy">
+  <div class="body">
+    <h3>Raider Escalation</h3>
+    <p>Raider camps grow when ignored, weaken when fought, raid your base, and drop loot when wiped.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/57" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/SaveUnlock.png" alt="Save File Version Unlock banner" loading="lazy">
+  <div class="body">
+    <h3>Save File Version Unlock</h3>
+    <p>Bypasses the Unsupported save file version check. Load older saves on newer game builds.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/36" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/SmartWorkerRedist.png" alt="Smart Worker Redistribution banner" loading="lazy">
+  <div class="body">
+    <h3>Smart Worker Redistribution</h3>
+    <p>Stalled construction sites auto-pull workers from idle jobs.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/37" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/SquadAutoBehavior.png" alt="Squad Auto Behavior banner" loading="lazy">
+  <div class="body">
+    <h3>Squad Auto Behavior</h3>
+    <p>Auto-medbay when wounded, auto-resupply ammo, auto-return to the nearest ammo source when dry.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/39" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/SquadMerge.png" alt="Squad Merge (right-click) banner" loading="lazy">
+  <div class="body">
+    <h3>Squad Merge (right-click)</h3>
+    <p>Right-click your own squad with another selected → merge into target squad.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/40" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/SquadMoveFire.png" alt="Squad Move and Fire (experimental) banner" loading="lazy">
+  <div class="body">
+    <h3>Squad Move and Fire (experimental)</h3>
+    <p>Squads fire while moving instead of halting — on foot and in vehicles. Hold Your Ground truly anchors.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/59" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/Surrounded.png" alt="Surrounded - siege mode banner" loading="lazy">
+  <div class="body">
+    <h3>Surrounded - siege mode</h3>
+    <p>Vanilla swarms attack far more often and bigger; scavenge loot multiplied so you push out between waves.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/55" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/SwarmFix.png" alt="Swarm Fix banner" loading="lazy">
+  <div class="body">
+    <h3>Swarm Fix</h3>
+    <p>Restores late-game infected night waves that silently stop. The swarm aggro overflows past the top tier (Infinity/NaN) so no wave ever spawns again while raiders keep attacking; this sanitises the tier lookup so the hordes come back.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/63" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+<article class="card">
+  <img class="banner" src="assets/banners/SplitUnlock.png" alt="Unlocked Buildings banner" loading="lazy">
+  <div class="body">
+    <h3>Unlocked Buildings</h3>
+    <p>Bypass &quot;too narrow / too complex&quot; on splits, lift the custom-building restrictions (size + wall-length), and uncap the per-building storage / population / deconstruct-yield ceiling.</p>
+    <a class="btn" href="https://www.nexusmods.com/infectionfreezone/mods/38" target="_blank" rel="noopener">Get on Nexus</a>
+  </div>
+</article>
+</main>
+<section class="donate">
+  <p>Enjoying the mods? <a href="https://ko-fi.com/jaymade88" target="_blank" rel="noopener">Buy me a coffee</a>, or endorse them and enable Donation Points on Nexus.</p>
+</section>
+<footer>
+  <a href="https://www.nexusmods.com/profile/JaySNL" target="_blank" rel="noopener">Nexus</a>
+  <a href="https://github.com/JaySNL" target="_blank" rel="noopener">GitHub</a>
+  <a href="https://www.youtube.com/@jaysdesk" target="_blank" rel="noopener">YouTube</a>
+  <a href="https://discord.gg/habeKjNdN9" target="_blank" rel="noopener">Discord</a>
+</footer>
+</body>
+</html>
