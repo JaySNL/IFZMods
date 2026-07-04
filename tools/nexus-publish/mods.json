@@ -792,17 +792,15 @@
         "Quality of Life"
       ],
       "sections": {
-        "description": "Build farmland and greenhouses at a chosen size instead of the fixed vanilla footprint. During placement, `,` / `.` cycle whole size tiers x1 through x4, live-resizing the preview. Cost, max staff and daily production all scale with the footprint area (tier squared) so bigger farms are proportionally more expensive and more productive, never a free win. Works on open fields and greenhouses. Each farm's size is saved per game.",
-        "installation": "Drop GreenhouseGrow.dll into <game>/BepInEx/plugins/. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.5+. Launch the game, start placing a farm or greenhouse, and press `,` / `.` to size it before confirming.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- Cycle whole size tiers x1 / x2 / x3 / x4 during placement with `,` and `.`\n- Live preview resize — fields regenerate their plane, greenhouses scale transform\n- Cost, max staff and daily production all scale with footprint AREA (tier squared) — a 2x farm costs and yields ~4x\n- Works on both open-field farms and greenhouses\n- Per-farm size is recorded and persists across save/reload\n- Sole-patches every hooked method — no cross-mod patch collisions\n- Tunable in F1: Enabled, ScaleWorkers (turn off staff/production scaling, keep just the bigger footprint)",
-        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.5+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tune live)\n- LocaleFix (if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "description": "Build farmland and greenhouses at a chosen size instead of the fixed vanilla footprint. During placement, `,` / `.` cycle whole size tiers x1 through x4, live-resizing the preview. Cost, max staff and daily production all scale with the footprint area (tier squared) so bigger farms are proportionally more expensive and more productive, never a free win. Build and deconstruct crews scale the same way, so build time stays about the same at any size. Works on open fields and greenhouses. Each farm's size is saved per game and survives reloading on a later in-game day. Standalone — no other mods required.",
+        "installation": "Drop GreenhouseGrow.dll into <game>/BepInEx/plugins/. Standalone — no other mods required. Launch the game, start placing a farm or greenhouse, and press `,` / `.` to size it before confirming.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Cycle whole size tiers x1 / x2 / x3 / x4 during placement with `,` and `.`\n- Live preview resize — fields regenerate their plane, greenhouses scale transform\n- Cost, max staff and daily production all scale with footprint AREA (tier squared) — a 2x farm costs and yields ~4x\n- Build and deconstruct crews scale with footprint too, so wall-clock build time stays about the same at any size\n- Works on both open-field farms and greenhouses\n- Per-farm size is recorded and persists across save/reload (keyed on map coordinates, so it survives reloading on a later in-game day)\n- Sole-patches every hooked method — no cross-mod patch collisions\n- Tunable in F1: Enabled, ScaleWorkers (turn off staff/production scaling, keep just the bigger footprint)",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Standalone — no other mods required. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tune live)\n- LocaleFix (if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "requires": [
-        "IFZModAPI"
-      ],
-      "fileNotes": "0.1.0: First release (Experimental). Press , / . during placement to cycle farm/greenhouse size x1-x4. Cost, max staff and daily production scale with footprint area (tier squared). Works on open fields and greenhouses. Requires IFZModAPI 1.4.5+.",
-      "version": "0.1.0"
+      "requires": null,
+      "fileNotes": "0.1.2 - Build/demolition crews now scale with farm size, matching cost/staff/yield. Fixed: sizes could reset to x1 after reloading a save from a later in-game day; now persist reliably, existing saves auto-migrated. No longer requires IFZ Mod API.",
+      "version": "0.1.2"
     }
   ]
 }

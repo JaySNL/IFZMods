@@ -6,7 +6,7 @@ Players: spot a bug? **[Open an issue](https://github.com/JaySNL/IFZMods/issues/
 **Legend** — Release state: 🟢 Live (on Nexus) · 🟡 Staged (built/verified, not yet pushed) · 🔬 Experimental · 🛠 WIP (unreleased)
 Bug status: 🔴 Open · 🟠 In progress · 🟢 Fixed (shipped) · ⚪ Won't fix / vanilla limit
 
-_Last updated: 2026-07-04_
+_Last updated: 2026-07-05_
 
 ---
 
@@ -16,7 +16,7 @@ _Last updated: 2026-07-04_
 |----|-----|---------|-------|----------|------|
 | 42 | IFZ Mod API | 1.4.5 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
 | 71 | BlitzHund | 0.1.0 | 🟡 Draft | API | [link](https://www.nexusmods.com/infectionfreezone/mods/71) |
-| 72 | Expanded Farming (2x-4x) | 0.1.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/72) |
+| 72 | Expanded Farming (2x-4x) | 0.1.2 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/72) |
 | 24 | Army Backup AI Fix | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/24) |
 | 25 | Cinematic FX | 1.2.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/25) |
 | 26 | Construction ETA | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/26) |
@@ -58,10 +58,10 @@ _Last updated: 2026-07-04_
 | Mod | Issue | Severity | Status | Notes |
 |-----|-------|----------|--------|-------|
 | High Ground 64 | Elevated garrisoned units couldn't shoot over walls — the lifted shot origin was blocked by the unit's OWN building shell (native exempts the own building only on the return ray, not the forward origin→target ray), so ElevatedFiring looked dead | High | 🟢 Fixed | Shipped **1.0.1** (2026-07-04): `IgnoreOwnBuilding` exempts both rays + `ElevateFovCone` raises the on-screen cone to the firing floor |
-| Expanded Farming 72 | Save LOAD re-ran `AreaStructure.Place()` on every farm (with `LoadingData` already false) and overwrote each saved farm's size tier with the live cursor tier | High | 🟠 In progress | Fix code-complete → **0.1.1**: `CursorPlacing` guard records/applies size only during a genuine cursor placement, not a load re-spawn. Uncommitted in dev repo; awaiting verify |
+| Expanded Farming 72 | Farm sizes were lost on reload when the save was reloaded on a later in-game day than the farms were placed (sidecar save-key drifted — it was keyed on the save name, which embeds the in-game clock) | High | 🟢 Fixed | Shipped **0.1.2** — sidecar key now uses map coordinates (clock-independent), with a one-time auto-migration that recovers existing saves |
 | Buildable Bridges 67 | Placed bridge was indestructible (disabled collider invisible to shell/deconstruct queries) | High | 🟢 Fixed | Shipped 0.1.1 (`isTrigger=true`) — bridges take shell/explosion damage + deconstruct, traffic still crosses |
 
-_One fix (Expanded Farming 72) still code-complete in the dev repo, not yet built/verified/pushed. No new player-reported bugs on shipped mods. Add a row when one comes in via [Issues](https://github.com/JaySNL/IFZMods/issues)._
+_No player-reported bugs open on shipped mods. Add a row when one comes in via [Issues](https://github.com/JaySNL/IFZMods/issues)._
 
 ---
 

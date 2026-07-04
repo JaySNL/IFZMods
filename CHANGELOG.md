@@ -6,6 +6,18 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- Expanded Farming (2x-4x) 0.1.2
+
+**[Pushed to Nexus, mod 72]**
+
+### Changed
+- **Expanded Farming 0.1.2 —** build and deconstruct crews now scale with the farm's footprint area (tier squared), matching how cost/staff/yield already scale — a bigger farm gets proportionally more builders and a bigger demolition crew, while wall-clock build time stays about the same regardless of size. No longer requires IFZ Mod API — standalone BepInEx plugin now.
+
+### Fixed
+- **Expanded Farming 0.1.2 —** farm sizes were lost when a save was reloaded on a later in-game day than the farms were placed: the sidecar save-key was keyed on the save name, which embeds the in-game clock and drifts over a playthrough. Now keyed on map coordinates (clock-independent), with a one-time auto-migration that adopts the newest legacy clock-named file, recovering existing saves and keeping sizes persistent going forward.
+
+---
+
 ## 2026-07-04 -- High Ground 1.0.1
 
 **[Pushed to Nexus, mod 64]**
