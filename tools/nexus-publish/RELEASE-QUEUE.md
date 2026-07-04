@@ -25,11 +25,13 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-- **GreenhouseGrow → 0.1.0** (mod 72, NEW PAGE) — BUILT. Build farms and greenhouses at chosen size with `,`/`.` keys to cycle x1/x2/x3/x4 size tiers (live preview). Cost, staff capacity, and daily production scale with footprint area (tier squared), so a 2× farm costs and yields roughly 4×. Works on open-field farms and greenhouses; size persists per save. Requires IFZModAPI 1.4.5+.
+- (none)
 
 ---
 
 ## Pushed (recent — prune after a few cycles)
+
+- **GreenhouseGrow → 0.1.0** (mod 72, file 7616210, NEW PAGE — published) — PUSHED 2026-07-04 (`publish-all --send`, requirement + changelog + tags applied). New mod: build farms and greenhouses at a chosen size with `,`/`.` keys to cycle x1/x2/x3/x4 size tiers (live preview). Cost, staff capacity, and daily production scale with footprint area (tier squared), so a 2x farm costs and yields roughly 4x. Works on open-field farms and greenhouses; size persists per save. Verified live via Nexus API (status: published, v0.1.0, file size matches). Requires IFZModAPI 1.4.5+.
 
 - **IFZ Mod API → 1.4.5** (mod 42) — PUSHED 2026-07-02 (`publish-all --send`, all stages 200/204). New additive event `Cache.CharacterDied`, fired from sole Prefix on `Character.OnCharacterDeath`. Backward-compat audited: public-surface additions only, zero breaking changes; older mods unaffected. Hard dependency for BlitzHund 0.1.0.
 

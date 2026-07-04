@@ -67,7 +67,6 @@ _No confirmed-open bugs on shipped mods. Add a row when a player reports one (or
 
 | Project | State | Blocker / next step |
 |---------|-------|---------------------|
-| GreenhouseGrow (build farms/greenhouses at chosen size, new mod) | 🛠 WIP 0.1.0 — built + staged, not yet on Nexus (mod 72 page created) | Awaiting user confirmation to run publish-all.mjs --send GreenhouseGrow |
 | BlitzHund (suicide-bomber infected dog, new mod) | 🟡 Draft 0.1.0 — files + images pushed to mod 71 | Awaiting user: set main image + publish the draft. Requires IFZ Mod API 1.4.5 (live) |
 | ElderPop proto (citizen life-cycle: age/retire/die) | 🛠 WIP 0.1.0, built | Seed age-pyramid (v0.2 internal iteration, same 0.1.0 label) not yet playtested — awaiting in-game verify |
 | StackBuild proto (rooftop buildings) | 🛠 WIP, built+deployed | Save/load fix (ground-anchor restore) — awaiting in-game verify |
