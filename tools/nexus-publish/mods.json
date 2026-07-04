@@ -254,16 +254,44 @@
       "fileNotes": "1.2.0: adds PreferShortCommute (Commute section, OFF by default) - among houses of a worker's best-attainable tier, prefer the one closest to their workplace. Housing tier stays the hard rule (never moved to a worse house, so no 'want better housing' mood penalty). ImprovementMeters hysteresis (def 15m) stops tick-to-tick bouncing between near-equal homes."
     },
     {
+      "key": "IFZModPanels",
+      "nexusModId": 77,
+      "dllPath": "../../plugins/IFZModPanels.dll",
+      "name": "IFZ Mod Panels",
+      "summary": "Shared UI-panel library for IFZ mods. A dependency — install it only if another mod requires it. Gives mods draggable, closeable in-game windows (rows, values, bars, buttons, graphs) with no hand-rolled UI.",
+      "isLibrary": true,
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "0.1.0 - Initial release. Reusable in-game panel/window library other IFZ mods build on (e.g. IFZ Quality of Life 1.6.0). Install only if a mod lists it as a requirement. Needs IFZModAPI + BepInEx.",
+      "description": "IFZ Mod Panels is a shared library, not a standalone feature. Install it only if another mod lists it as a requirement (for example IFZ Quality of Life 1.6.0 uses it for its housing panel).\n\nWhat it does: gives IFZ mods a simple way to show draggable, closeable in-game windows — labelled value rows, bars, buttons, sliders, toggles, and graphs — without every mod hand-rolling its own UI. Window position, size, and open/closed state persist between sessions.\n\nFor modders: reference IFZModPanels.dll and call Panels.Register(id, build) once; see the API docs and the _TEMPLATE_PanelMod starter in the source repo.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Modders Resources",
+        "Utilities",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "IFZ Mod Panels is a shared library, not a standalone feature. Install it only if another mod lists it as a requirement (for example IFZ Quality of Life 1.6.0 uses it for its housing panel).\n\nWhat it does: gives IFZ mods a simple way to show draggable, closeable in-game windows — labelled value rows, bars, buttons, sliders, toggles, and graphs — without every mod hand-rolling its own UI. Window position, size, and open/closed state persist between sessions.\n\nFor modders: reference IFZModPanels.dll and call Panels.Register(id, build) once; see the API docs and the _TEMPLATE_PanelMod starter in the source repo.",
+        "installation": "Drop IFZModPanels.dll into <game>/BepInEx/plugins/. It does nothing on its own — it activates when a mod that depends on it is installed.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Reusable in-game panel/window API for IFZ mods\n- Draggable, closeable, collapsible windows; position/size/state persist\n- Building blocks: value rows, bars, buttons, sliders, toggles, graphs\n- Optional hotkey toggle per window\n- Used by IFZ Quality of Life (housing panel) and more to come",
+        "requirements": "BepInEx 5.4.23.2. IFZModAPI. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "version": "0.1.0"
+    },
+    {
       "key": "IFZQualityOfLife",
       "nexusModId": 33,
       "dllPath": "../../plugins/IFZQualityOfLife.dll",
       "name": "IFZ Quality of Life Bundle",
-      "summary": "Bundle of small QoL tweaks: TowerHMG, VehicleAmmoFix, BuildingIconToggle, ShellLairs. Each toggleable in F1. (Height and clay-pit features moved to the new HighGround and ClayPitFixes mods.)",
+      "summary": "Bundle of small QoL tweaks: TowerHMG, VehicleAmmoFix, BuildingIconToggle, ShellLairs. Each toggleable in F1. (Height and clay-pit features moved to the new HighGround and ClayPitFixes mods.) NEW 1.6.0: housing summary panel (click a house/shelter) + low-beds warning.",
       "requires": [
-        "IFZModAPI"
+        "IFZModAPI",
+        "IFZModPanels"
       ],
-      "fileNotes": "1.5.2 BETA - Mortar squads/bunkers shell infected lairs + occupied buildings via right-click (real ammo + retreat); exits vehicle/building first. HMG vehicle ammo-drain fixed. Caveats: few rounds post-clear; exit vehicle first; mind low-ammo squads.",
-      "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.",
+      "fileNotes": "1.6.0 - NEW Housing panel: click a house/shelter for a summary window (house/shelter counts, beds used/total, homeless, free beds). NEW low-beds radio warning below 25 free beds (configurable), re-arms after recovery. Needs IFZ Mod Panels.",
+      "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.\n- HousingPanel: click any house or shelter to open a summary window (house + shelter counts, beds used/total, homeless, free beds), built on IFZ Mod Panels. Closeable.\n- HousingWarning: a one-off blue radio message warns you when total free beds drop below a threshold (default 25); it re-arms only after beds recover (default back to 50), so it never spams.",
       "category": "Miscellaneous",
       "tags": [
         "Quality of Life",
@@ -271,13 +299,13 @@
         "Gameplay"
       ],
       "sections": {
-        "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.",
+        "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.\n- HousingPanel: click any house or shelter to open a summary window (house + shelter counts, beds used/total, homeless, free beds), built on IFZ Mod Panels. Closeable.\n- HousingWarning: a one-off blue radio message warns you when total free beds drop below a threshold (default 25); it re-arms only after beds recover (default back to 50), so it never spams.",
         "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- TowerHMG: towers accept Heavy MGs after carworkshop_hcal research\n- VehicleAmmoFix: vehicles refill ammo from their own trunk when stockroom path fails\n- BuildingIconToggle: hotkey to hide/show all building icons (persists)\n- ShellLairs: right-click a revealed infected lair with mortar squads to shell it\n- (Height features moved to HighGround; clay-pit features moved to ClayPitFixes)",
-        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "mainFeatures": "- TowerHMG: towers accept Heavy MGs after carworkshop_hcal research\n- VehicleAmmoFix: vehicles refill ammo from their own trunk when stockroom path fails\n- BuildingIconToggle: hotkey to hide/show all building icons (persists)\n- ShellLairs: right-click a revealed infected lair with mortar squads to shell it\n- HousingPanel: click a house/shelter for a summary window (counts, beds used/total, homeless, free)\n- HousingWarning: one-off low-free-beds radio warning, re-arms after recovery\n- (Height features moved to HighGround; clay-pit features moved to ClayPitFixes)",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton). IFZ Mod Panels.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.5.2"
+      "version": "1.6.0"
     },
     {
       "key": "LocaleFix",

@@ -26,7 +26,8 @@ _Last updated: 2026-07-05_
 | 30 | Gunfire Lights | 1.4.10 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/30) |
 | 31 | House Power | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/31) |
 | 32 | House Rebalance | 1.2.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/32) |
-| 33 | IFZ Quality of Life Bundle | 1.5.2 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |
+| 77 | IFZ Mod Panels | 0.1.0 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/77) |
+| 33 | IFZ Quality of Life Bundle | 1.6.0 | 🟡 Staged | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |
 | 34 | Locale Fix | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/34) |
 | 35 | Performance Pack | 1.5.2 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/35) |
 | 36 | Save File Version Unlock | 1.0.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/36) |
@@ -49,7 +50,7 @@ _Last updated: 2026-07-05_
 | 68 | NoPath - YesPath | 0.3.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
 | 69 | Squad Grenades | 1.0.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/69) |
 
-> "Requires: API" = needs **IFZ Mod API** (mod 42). Match API version to the mod's requirement; always update API + mods together.
+> "Requires: API" = needs **IFZ Mod API** (mod 42). "Panels" = needs **IFZ Mod Panels** (mod 77), a UI library — install only if a mod lists it as a requirement. Match API version to the mod's requirement; always update API + mods together.
 
 ---
 

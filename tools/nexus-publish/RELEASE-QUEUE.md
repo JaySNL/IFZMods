@@ -25,7 +25,8 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-- (none)
+- **IFZModPanels → 0.1.0** (mod 77, NEW PAGE — not yet uploaded) — VERIFIED in-game, staged in `plugins/`. New shared UI-panel library for other IFZ mods: draggable, closeable in-game windows (value rows, bars, buttons, sliders, toggles, graphs). Install only if another mod requires it. Requires IFZModAPI.
+- **IFZQualityOfLife → 1.6.0** (mod 33) — VERIFIED in-game, staged in `plugins/`. NEW Housing panel (click a house/shelter for a summary window: counts, beds used/total, homeless, free beds) built on IFZ Mod Panels. NEW low-beds radio warning below 25 free beds (configurable), re-arms after recovery. Now requires IFZModPanels in addition to IFZModAPI.
 
 ---
 

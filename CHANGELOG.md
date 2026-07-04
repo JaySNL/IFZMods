@@ -6,6 +6,18 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- IFZ Mod Panels 0.1.0 + IFZ Quality of Life 1.6.0
+
+**[Staged and verified — not yet pushed to Nexus]**
+
+### Added
+- **IFZ Mod Panels 0.1.0 — new shared UI-panel library** (mod 77). Gives IFZ mods a way to show draggable, closeable in-game windows — labelled value rows, bars, buttons, sliders, toggles, and graphs — without every mod hand-rolling its own UI. Window position, size, and open/closed state persist between sessions. A dependency only: install it if another mod lists it as required. Requires IFZModAPI.
+
+### Changed
+- **IFZ Quality of Life Bundle 1.6.0 —** new Housing panel: click any house or shelter to open a summary window showing house/shelter counts, beds used/total, homeless, and free beds — built on IFZ Mod Panels. Also adds a low-beds radio warning: a one-off blue message when total free beds drop below 25 (configurable), which re-arms only after beds recover back to 50, so it never spams. Now requires IFZ Mod Panels in addition to IFZModAPI.
+
+---
+
 ## 2026-07-05 -- Expanded Farming (2x-4x) 0.1.2
 
 **[Pushed to Nexus, mod 72]**
