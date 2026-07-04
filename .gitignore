@@ -12,3 +12,6 @@ decompiled/
 
 # internal Nexus release tooling — local only, not for the public dist repo
 tools/nexus-publish/
+
+# Local Claude Code config/agents — off git
+.claude/
