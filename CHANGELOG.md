@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-04 -- High Ground 1.0.1
+
+**[Pushed to Nexus, mod 64]**
+
+### Fixed
+- **High Ground 1.0.1 — ElevatedFiring now actually shoots over walls.** Garrisoned units had their fire origin lifted toward the top floor, but the outgoing shot was still blocked by the unit's own building shell: the game exempts the own building only on the return ray, not on the forward (origin→target) ray, so the shot check failed and elevation was effectively dead. The own building's shot-blocking collider is now exempted on both rays (new `IgnoreOwnBuilding`, default on). The on-screen field-of-view / range cone is also raised to the firing floor so it clears buildings shorter than the shooter instead of being cut off at ground level (`ElevateFovCone`, default on). Added a `Debug` toggle for diagnosing blocked shots. Standalone — no other mods required.
+
+---
+
 ## 2026-07-04 -- Expanded Farming (2x-4x) 0.1.0
 
 **[Pushed to Nexus, mod 72]**

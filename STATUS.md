@@ -42,7 +42,7 @@ _Last updated: 2026-07-04_
 | 58 | Mass Deconstruct — drag-box | 1.4.0-beta | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/58) |
 | 59 | Squad Move and Fire | 0.1.3 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/59) |
 | 63 | Swarm Fix | 1.1.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/63) |
-| 64 | High Ground | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
+| 64 | High Ground | 1.0.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
 | 65 | Clay Pit Fixes | 1.1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |
 | 66 | Night Lights (WindowGlow) | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/66) |
 | 67 | Buildable Bridges | 0.2.0.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
@@ -57,9 +57,11 @@ _Last updated: 2026-07-04_
 
 | Mod | Issue | Severity | Status | Notes |
 |-----|-------|----------|--------|-------|
+| High Ground 64 | Elevated garrisoned units couldn't shoot over walls — the lifted shot origin was blocked by the unit's OWN building shell (native exempts the own building only on the return ray, not the forward origin→target ray), so ElevatedFiring looked dead | High | 🟢 Fixed | Shipped **1.0.1** (2026-07-04): `IgnoreOwnBuilding` exempts both rays + `ElevateFovCone` raises the on-screen cone to the firing floor |
+| Expanded Farming 72 | Save LOAD re-ran `AreaStructure.Place()` on every farm (with `LoadingData` already false) and overwrote each saved farm's size tier with the live cursor tier | High | 🟠 In progress | Fix code-complete → **0.1.1**: `CursorPlacing` guard records/applies size only during a genuine cursor placement, not a load re-spawn. Uncommitted in dev repo; awaiting verify |
 | Buildable Bridges 67 | Placed bridge was indestructible (disabled collider invisible to shell/deconstruct queries) | High | 🟢 Fixed | Shipped 0.1.1 (`isTrigger=true`) — bridges take shell/explosion damage + deconstruct, traffic still crosses |
 
-_No confirmed-open bugs on shipped mods. Add a row when a player reports one (or it comes in via [Issues](https://github.com/JaySNL/IFZMods/issues))._
+_One fix (Expanded Farming 72) still code-complete in the dev repo, not yet built/verified/pushed. No new player-reported bugs on shipped mods. Add a row when one comes in via [Issues](https://github.com/JaySNL/IFZMods/issues)._
 
 ---
 
@@ -72,6 +74,7 @@ _No confirmed-open bugs on shipped mods. Add a row when a player reports one (or
 | StackBuild proto (rooftop buildings) | 🛠 WIP, built+deployed | Save/load fix (ground-anchor restore) — awaiting in-game verify |
 | WorldEvents proto (dispatcher + events) | 🛠 WIP, code-complete | Awaiting in-game verify |
 | Black-Market Trader event | 🛠 WIP, E2E tested | Polish / ship decision |
+| SquadTraits (procedural roguelite squad perks) | 🛠 Planned | Implementation plan committed (7 tasks, 3-mod release); not started |
 | Flamethrower revival | 🛠 idea | Revive cut weapon via Black-Market dealer; fire visual = main work |
 | Vast Field resizer (drag-to-size farm) | 🛠 deferred | Size not serialized → must persist; Adapt cursor Building-coupled |
 | Surrounded total-infected safety cap | 🛠 deferred | Build only if pop actually runs away (not yet observed) |
