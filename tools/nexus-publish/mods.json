@@ -778,6 +778,31 @@
       ],
       "fileNotes": "0.1.0: First release. A configurable fraction (default 15%) of infected dogs are suicide bombers; on death they detonate using the game's native on-death explosion, chaining to nearby tagged bombers (Cascade). Requires IFZ Mod API 1.4.5+.",
       "version": "0.1.0"
+    },
+    {
+      "key": "GreenhouseGrow",
+      "nexusModId": 72,
+      "dllPath": "../../plugins/GreenhouseGrow.dll",
+      "name": "Greenhouse Grow",
+      "summary": "Build farms and greenhouses at a chosen size. Cycle x1/x2/x3/x4 tiers during placement — cost, max staff and daily production all scale with the footprint.",
+      "description": "*Go big or go small.*\n\nDuring placement of any farm or greenhouse, press `,` and `.` to cycle whole size tiers **x1 / x2 / x3 / x4** — the preview live-resizes so you see exactly what you're about to build. Works on open-field farms and greenhouses alike.\n\nEverything scales with the footprint: build cost, max staff and daily production all scale with **area** (tier squared), so a 2x farm costs and yields roughly 4x, not 2x — no free lunch, no dead weight. Each farm's chosen size is recorded and persists across save/reload.\n\nNo asset edits — fields regenerate their procedural plane at the new size, greenhouses scale their transform (the model mesh isn't readable at runtime). Sole-patches every hooked method, so it stays clear of cross-mod Harmony collisions.\n\n**Config (F1 ConfigurationManager):** master toggle, and a switch to turn off staff/production scaling if you just want more land per plot.",
+      "category": "Buildings",
+      "tags": [
+        "Gameplay",
+        "Quality of Life"
+      ],
+      "sections": {
+        "description": "Build farmland and greenhouses at a chosen size instead of the fixed vanilla footprint. During placement, `,` / `.` cycle whole size tiers x1 through x4, live-resizing the preview. Cost, max staff and daily production all scale with the footprint area (tier squared) so bigger farms are proportionally more expensive and more productive, never a free win. Works on open fields and greenhouses. Each farm's size is saved per game.",
+        "installation": "Drop GreenhouseGrow.dll into <game>/BepInEx/plugins/. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.5+. Launch the game, start placing a farm or greenhouse, and press `,` / `.` to size it before confirming.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Cycle whole size tiers x1 / x2 / x3 / x4 during placement with `,` and `.`\n- Live preview resize — fields regenerate their plane, greenhouses scale transform\n- Cost, max staff and daily production all scale with footprint AREA (tier squared) — a 2x farm costs and yields ~4x\n- Works on both open-field farms and greenhouses\n- Per-farm size is recorded and persists across save/reload\n- Sole-patches every hooked method — no cross-mod patch collisions\n- Tunable in F1: Enabled, ScaleWorkers (turn off staff/production scaling, keep just the bigger footprint)",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Requires IFZ Mod API (000_IFZModAPI.dll) 1.4.5+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tune live)\n- LocaleFix (if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "0.1.0: First release (Experimental). Press , / . during placement to cycle farm/greenhouse size x1-x4. Cost, max staff and daily production scale with footprint area (tier squared). Works on open fields and greenhouses. Requires IFZModAPI 1.4.5+.",
+      "version": "0.1.0"
     }
   ]
 }

@@ -6,7 +6,7 @@ Players: spot a bug? **[Open an issue](https://github.com/JaySNL/IFZMods/issues/
 **Legend** — Release state: 🟢 Live (on Nexus) · 🟡 Staged (built/verified, not yet pushed) · 🔬 Experimental · 🛠 WIP (unreleased)
 Bug status: 🔴 Open · 🟠 In progress · 🟢 Fixed (shipped) · ⚪ Won't fix / vanilla limit
 
-_Last updated: 2026-07-03_
+_Last updated: 2026-07-04_
 
 ---
 
@@ -16,6 +16,7 @@ _Last updated: 2026-07-03_
 |----|-----|---------|-------|----------|------|
 | 42 | IFZ Mod API | 1.4.5 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
 | 71 | BlitzHund | 0.1.0 | 🟡 Draft | API | [link](https://www.nexusmods.com/infectionfreezone/mods/71) |
+| 72 | Greenhouse Grow | 0.1.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/72) |
 | 24 | Army Backup AI Fix | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/24) |
 | 25 | Cinematic FX | 1.2.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/25) |
 | 26 | Construction ETA | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/26) |
@@ -66,6 +67,7 @@ _No confirmed-open bugs on shipped mods. Add a row when a player reports one (or
 
 | Project | State | Blocker / next step |
 |---------|-------|---------------------|
+| GreenhouseGrow (build farms/greenhouses at chosen size, new mod) | 🛠 WIP 0.1.0 — built + staged, not yet on Nexus (mod 72 page created) | Awaiting user confirmation to run publish-all.mjs --send GreenhouseGrow |
 | BlitzHund (suicide-bomber infected dog, new mod) | 🟡 Draft 0.1.0 — files + images pushed to mod 71 | Awaiting user: set main image + publish the draft. Requires IFZ Mod API 1.4.5 (live) |
 | ElderPop proto (citizen life-cycle: age/retire/die) | 🛠 WIP 0.1.0, built | Seed age-pyramid (v0.2 internal iteration, same 0.1.0 label) not yet playtested — awaiting in-game verify |
 | StackBuild proto (rooftop buildings) | 🛠 WIP, built+deployed | Save/load fix (ground-anchor restore) — awaiting in-game verify |

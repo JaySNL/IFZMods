@@ -25,7 +25,7 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-- (none)
+- **GreenhouseGrow → 0.1.0** (mod 72, NEW PAGE) — BUILT. Build farms and greenhouses at chosen size with `,`/`.` keys to cycle x1/x2/x3/x4 size tiers (live preview). Cost, staff capacity, and daily production scale with footprint area (tier squared), so a 2× farm costs and yields roughly 4×. Works on open-field farms and greenhouses; size persists per save. Requires IFZModAPI 1.4.5+.
 
 ---
 

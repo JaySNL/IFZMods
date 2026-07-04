@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-04 -- GreenhouseGrow 0.1.0
+
+**[Built and staged — not yet pushed to Nexus]**
+
+### Added
+- **GreenhouseGrow 0.1.0 — new mod.** Build farms and greenhouses at a chosen size. During placement, press `,` and `.` to cycle whole size tiers x1 / x2 / x3 / x4 (preview live-resizes as you cycle). Everything scales with the footprint: build cost, max staff, and daily production all scale with area (tier squared), so a 2× farm costs and yields roughly 4×. Works on both open-field farms and greenhouses. Each farm's chosen size is saved per game (persists across save/reload). Requires IFZ Mod API 1.4.5.
+
+---
+
 ## 2026-07-02 -- BlitzHund 0.1.0 + IFZModAPI 1.4.5
 
 **[Staged and verified — not yet pushed to Nexus]**
