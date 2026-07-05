@@ -25,7 +25,7 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-- **IFZ Mod API → 1.6.1** (mod 42) — STAGED 2026-07-05. Critical fix: TypeLoadException crash on load (Nexus user report). IFZ Mod Panels 0.1.1 + IFZ Quality of Life 1.6.1 call `IFZModAPI.Radio`, but live Nexus API is still 1.4.5 (no `Radio` type). BepInEx threw `TypeLoadException: Could not resolve type 'IFZModAPI.Radio'` every frame → game force-quit. Push immediately to restore the game for affected users. Also bundles additive features from 1.5.0 onward (SicknessCoordinator, CombatDamageMultiplier, Radio.Announce, SaveStore) — all backward-compatible, zero breaking changes. Hard dependency for all mods (sole patcher of shared systems).
+- **IFZ Mod API → 1.6.1** (mod 42) — PUSHED 2026-07-05 (`publish-all --send`, all 4 stages 200; standalone so requirements N/A). Critical fix: TypeLoadException crash on load (Nexus user report). IFZ Mod Panels 0.1.1 + IFZ Quality of Life 1.6.1 call `IFZModAPI.Radio`, but live Nexus API is still 1.4.5 (no `Radio` type). BepInEx threw `TypeLoadException: Could not resolve type 'IFZModAPI.Radio'` every frame → game force-quit. Push immediately to restore the game for affected users. Also bundles additive features from 1.5.0 onward (SicknessCoordinator, CombatDamageMultiplier, Radio.Announce, SaveStore) — all backward-compatible, zero breaking changes. Hard dependency for all mods (sole patcher of shared systems).
 
 ---
 

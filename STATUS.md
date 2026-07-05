@@ -14,7 +14,7 @@ _Last updated: 2026-07-05_
 
 | ID | Mod | Version | State | Requires | Page |
 |----|-----|---------|-------|----------|------|
-| 42 | IFZ Mod API | 1.6.1 | 🟡 Staged | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
+| 42 | IFZ Mod API | 1.6.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
 | 71 | BlitzHund | 0.1.0 | 🟡 Draft | API | [link](https://www.nexusmods.com/infectionfreezone/mods/71) |
 | 72 | Expanded Farming (2x-4x) | 0.1.3 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/72) |
 | 24 | Army Backup AI Fix | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/24) |
@@ -62,7 +62,7 @@ _Last updated: 2026-07-05_
 | High Ground 64 | HeightAdvantage range bonus never reached the trigger-pull gate — only `Group.FightRange` was multiplied (drives the FoV cone + detection), but `CharacterFightHandler.IsInAttackRange` checks per-weapon reach, which never reads `FightRange`, so units still held fire at base range despite the bigger cone (reported by **weeman12321**) | High | 🟢 Fixed | Shipped **1.0.2** (2026-07-05): new sole Postfix on `GetWeaponAttackReach` applies the same height bonus per-unit; two-cone visual (green=base, orange ring=boost beyond it) |
 | Expanded Farming 72 | Farm sizes were lost on reload when the save was reloaded on a later in-game day than the farms were placed (sidecar save-key drifted — it was keyed on the save name, which embeds the in-game clock) | High | 🟢 Fixed | Shipped **0.1.2** — sidecar key now uses map coordinates (clock-independent), with a one-time auto-migration that recovers existing saves |
 | Buildable Bridges 67 | Placed bridge was indestructible (disabled collider invisible to shell/deconstruct queries) | High | 🟢 Fixed | Shipped 0.1.1 (`isTrigger=true`) — bridges take shell/explosion damage + deconstruct, traffic still crosses |
-| IFZ Mod API 42 | Nexus user reported a load crash: live API 1.4.5 has no `IFZModAPI.Radio` type, but Mod Panels 0.1.1 / QoL 1.6.1 (both live) call it — `TypeLoadException` fires every frame at load, game force-quits. Root cause: API dependency push was forgotten when Panels/QoL shipped; BepInDependency isn't version-pinned so BepInEx loads the stale API anyway | Critical | 🟠 In progress | Fix built: API **1.6.1** adds `Radio` (+ SicknessCoordinator, damage-mult registry, SaveStore, all additive). Staged in `RELEASE-QUEUE.md`, awaiting Nexus push |
+| IFZ Mod API 42 | Nexus user reported a load crash: live API 1.4.5 has no `IFZModAPI.Radio` type, but Mod Panels 0.1.1 / QoL 1.6.1 (both live) call it — `TypeLoadException` fires every frame at load, game force-quits. Root cause: API dependency push was forgotten when Panels/QoL shipped; BepInDependency isn't version-pinned so BepInEx loads the stale API anyway | Critical | 🟢 Fixed (shipped) | API **1.6.1** (adds `Radio` + SicknessCoordinator, damage-mult registry, SaveStore, all additive) PUSHED to Nexus 2026-07-05. Affected users update API to recover. |
 
 _Add a row when a new bug comes in via [Issues](https://github.com/JaySNL/IFZMods/issues)._
 
