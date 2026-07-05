@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- ===================================================================
+       IFZModPanels starter template.
+       To use: copy this folder, rename the folder + .csproj to your mod
+       name, change the GUID/name in Plugin.cs, then build with ./build.sh.
+       This template is EXCLUDED from build.sh's auto-glob (the underscore
+       prefix + an explicit exclusion) so it never ships as-is.
+       =================================================================== -->
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <NoWarn>$(NoWarn);MSB3277</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BepInEx">
+      <HintPath>$(GameDir)/BepInEx/core/BepInEx.dll</HintPath><Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(GameDir)/Infection Free Zone_Data/Managed/UnityEngine.dll</HintPath><Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(GameDir)/Infection Free Zone_Data/Managed/UnityEngine.CoreModule.dll</HintPath><Private>false</Private>
+    </Reference>
+    <!-- The panels library. Deployed by build.sh at $(GameDir)/BepInEx/plugins/IFZModPanels.dll. -->
+    <Reference Include="IFZModPanels">
+      <HintPath>$(GameDir)/BepInEx/plugins/IFZModPanels.dll</HintPath><Private>false</Private>
+    </Reference>
+    <!-- Only needed if you use the ModWindow.Body escape hatch (raw uGUI) or TMP directly:
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(GameDir)/Infection Free Zone_Data/Managed/UnityEngine.UI.dll</HintPath><Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(GameDir)/Infection Free Zone_Data/Managed/Unity.TextMeshPro.dll</HintPath><Private>false</Private>
+    </Reference>
+    -->
+  </ItemGroup>
+</Project>
