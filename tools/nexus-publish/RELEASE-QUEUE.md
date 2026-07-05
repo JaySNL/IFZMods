@@ -25,6 +25,8 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
+- **Squad Auto Behavior (SquadAutoBehavior) -> 1.1.5-beta** (mod 39) -- BUILT. Ammo-type fix: resupply now uses each weapon's actual ammunition type instead of hardcoding `ResourceID.res_ammo`, so mortars refill from their own shell stock (not bullets). Previously the system drained bullets into non-bullet weapons while refilling mortars "for free" (shell-wise) -- a wrong-currency dupe. Also changed early `return` to `continue` in the resupply loop so one squad member's empty ammo type doesn't abort resupply for the rest. NOTE: in-game Wine/save-load verification still PENDING -- shipped as beta for community testing. Requires IFZModAPI >=1.4.4.
+
 - **IFZ Mod API → 1.6.1** (mod 42) — PUSHED 2026-07-05 (`publish-all --send`, all 4 stages 200; standalone so requirements N/A). Critical fix: TypeLoadException crash on load (Nexus user report). IFZ Mod Panels 0.1.1 + IFZ Quality of Life 1.6.1 call `IFZModAPI.Radio`, but live Nexus API is still 1.4.5 (no `Radio` type). BepInEx threw `TypeLoadException: Could not resolve type 'IFZModAPI.Radio'` every frame → game force-quit. Push immediately to restore the game for affected users. Also bundles additive features from 1.5.0 onward (SicknessCoordinator, CombatDamageMultiplier, Radio.Announce, SaveStore) — all backward-compatible, zero breaking changes. Hard dependency for all mods (sole patcher of shared systems).
 
 ---

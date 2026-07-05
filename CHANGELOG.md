@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- Squad Auto Behavior 1.1.5-beta
+
+### Fixed
+- **Squad Auto Behavior 1.1.5-beta -- ammo-type fix (BETA).** The resupply system hardcoded `ResourceID.res_ammo` for all stock checks and ammo transfer, but each weapon's Ammunition crate carries its own `AmmoResourceType` (e.g., mortars use `res_explosives`/`res_grenades`, not `res_ammo`). This caused mortars to refill "for free" (shell-wise) whenever bullets existed in stock, while draining bullets into non-bullet weapons -- a wrong-currency dupe. Fix: checks and transfers now use `ammo.ResourceID` so each weapon refills only from its own stock. Also changed an early `return` to `continue` in the resupply loop, preventing one squad member's empty ammo type from aborting resupply for the rest. NOTE: in-game Wine/save-load verification still PENDING -- shipped as beta for community testing. Requires IFZ Mod API 1.4.4+.
+
+---
+
 ## 2026-07-05 -- IFZModAPI 1.6.1 (hotfix)
 
 ### Fixed
