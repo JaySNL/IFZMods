@@ -6,6 +6,19 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- BridgeProto 0.2.1.0
+
+**[Staged and verified — not yet pushed to Nexus]**
+
+### Fixed
+- **BridgeProto 0.2.1.0 — long and diagonal bridges are now walkable again.** Units couldn't cross long or angled bridge spans: the walkable navigation ribbon was too thin for the recast graph over long diagonal water spans — sub-voxel width caused recast to drop walkable cells (navigation holes), leaving those deck nodes tagged as water and blocking pathfinding. Fix: decouples the nav-ribbon width from the visual deck via a new configurable `NavWidth` (default 4 m) — tested with 3 m (produced holes), 8 m (routed but visually overhung the road), and 4 m (routes reliably and sits flush on the deck). Verified in-game by community tester Meefstick on both default-span and long/diagonal bridges. Requires IFZ Mod API 1.4.2+.
+
+### Added
+- **BridgeProto 0.2.1.0 — SequentialBuild config (default on).** Builds bridge sections shore-outward — both banks build inward toward the middle, holding mid-water sections via the game's public `BuildStructureWork.SetPauseState` API (no Harmony patch, no save/load cold-path touched). Builders may still swim to reach the active frontier work-site — this is cosmetic and doesn't block completion.
+- **BridgeProto 0.2.1.0 — NavLateralOffset config (default 0).** Knob to shift the walkable nav-ribbon sideways (e.g., to center it on the visual deck if needed).
+
+---
+
 ## 2026-07-05 -- Squad Auto Behavior 1.1.6-beta
 
 ### Fixed

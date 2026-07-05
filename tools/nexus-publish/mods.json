@@ -754,8 +754,8 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "0.2.0.1 BETA - Native bridge builder: real road/deck/railing textures and per-span deformation.",
-      "version": "0.2.0.1"
+      "fileNotes": "0.2.1.0 BETA - Fix: long/diagonal bridges walkable again (nav ribbon width decoupled from deck via NavWidth, default 4; too-thin ribbon dropped pathfinding cells so units could not cross). Adds shore-outward SequentialBuild + NavLateralOffset.",
+      "version": "0.2.1.0"
     },
     {
       "key": "DemolishAnywhere",

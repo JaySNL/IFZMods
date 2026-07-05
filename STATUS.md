@@ -46,7 +46,7 @@ _Last updated: 2026-07-05_
 | 64 | High Ground | 1.0.3 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
 | 65 | Clay Pit Fixes | 1.1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |
 | 66 | Night Lights (WindowGlow) | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/66) |
-| 67 | Buildable Bridges | 0.2.0.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
+| 67 | Buildable Bridges | 0.2.1.0 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
 | 68 | NoPath - YesPath | 0.3.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
 | 69 | Squad Grenades | 1.0.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/69) |
 
