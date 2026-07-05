@@ -6,13 +6,19 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- IFZ Mod Panels 0.1.1 + IFZ Quality of Life 1.6.1
+
+### Fixed
+- **IFZ Mod Panels 0.1.1 —** closing a panel no longer throws a NullReferenceException. The window's state-save ran on an already-destroyed window (`_root` gone), which surfaced the game's bug-report popup on close. Save now no-ops once the window is torn down. Fixes a crash every 0.1.0 user hit when closing a panel.
+- **IFZ Quality of Life Bundle 1.6.1 —** silenced diagnostic log spam during normal play. SmartWorkerRedistribution and ShellLairs logged per-tick/per-job activity unconditionally, flooding `LogOutput.log`. Now gated behind a new `Verbose` flag (default off); error logs unchanged. No gameplay change from 1.6.0.
+
 ## 2026-07-05 -- High Ground 1.0.3
 
 - **High Ground 1.0.3 —** fixed diagnostic log spam during normal play. The per-shot (`[ElevatedFiring] raised shot origin…`) and per-refresh (`[HeightAdvantage] range…`) log lines fired unconditionally, flooding `LogOutput.log` in combat. They're now gated behind the `ElevatedFiring/Debug` flag (default off), so a shipped game stays quiet. No gameplay change from 1.0.2.
 
 ## 2026-07-05 -- High Ground 1.0.2
 
-**[Staged and verified — not yet pushed to Nexus]**
+**[Pushed to Nexus, mod 64 — superseded by 1.0.3]**
 
 ### Fixed
 - **High Ground 1.0.2 —** height-advantage range boost now applies to the unit's actual firing range, not just the on-screen field-of-view cone. The boost previously multiplied `Group.FightRange`, which drives the visual cone and enemy detection, but the game checks whether a unit is in firing range using `CharacterFightHandler.IsInAttackRange`, which compares distance against the per-weapon `reach` and never reads `FightRange` — so garrisoned units could see farther but couldn't actually shoot farther. Fix: new Postfix on `CharacterFightHandler.GetWeaponAttackReach` applies the same height bonus per-unit, so the trigger gate matches the visual. Thanks weeman12321 for reporting.
@@ -24,7 +30,7 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-07-05 -- IFZ Mod Panels 0.1.0 + IFZ Quality of Life 1.6.0
 
-**[Staged and verified — not yet pushed to Nexus]**
+**[Pushed to Nexus — Panels mod 77, QoL mod 33 — superseded by 0.1.1 / 1.6.1]**
 
 ### Added
 - **IFZ Mod Panels 0.1.0 — new shared UI-panel library** (mod 77). Gives IFZ mods a way to show draggable, closeable in-game windows — labelled value rows, bars, buttons, sliders, toggles, and graphs — without every mod hand-rolling its own UI. Window position, size, and open/closed state persist between sessions. A dependency only: install it if another mod lists it as required. Requires IFZModAPI.

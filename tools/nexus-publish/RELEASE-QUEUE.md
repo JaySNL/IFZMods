@@ -25,13 +25,17 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-- **IFZModPanels → 0.1.0** (mod 77, NEW PAGE — not yet uploaded) — VERIFIED in-game, staged in `plugins/`. New shared UI-panel library for other IFZ mods: draggable, closeable in-game windows (value rows, bars, buttons, sliders, toggles, graphs). Install only if another mod requires it. Requires IFZModAPI.
-- **IFZQualityOfLife → 1.6.0** (mod 33) — VERIFIED in-game, staged in `plugins/`. NEW Housing panel (click a house/shelter for a summary window: counts, beds used/total, homeless, free beds) built on IFZ Mod Panels. NEW low-beds radio warning below 25 free beds (configurable), re-arms after recovery. Now requires IFZModPanels in addition to IFZModAPI.
-- **High Ground → 1.0.2** (mod 64) — VERIFIED in-game 2026-07-05, staged in `plugins/`. Range-boost fix: height advantage now applies to actual firing range (garrisoned units can shoot at the boosted range, not just see it). Applied via new Postfix on `CharacterFightHandler.GetWeaponAttackReach`. Visual: green cone shows base range, orange ring shows height-bonus extension (previously single recolored cone). Thanks weeman12321 for reporting. Standalone.
+- **IFZModPanels → 0.1.1** (mod 77) — BUILT, staged in `plugins/`. **NRE-on-close fix:** `ModWindow.Save()` ran `CaptureState()` reading a destroyed `_root` (Unity destroyed-but-non-null) → NRE + game bug-report when closing a panel after a scene reload / DestroyWindow. `Save()` now bails when `_root == null`. Fixes a bug LIVE 0.1.0 users hit. Requires IFZModAPI.
+- **IFZQualityOfLife → 1.6.1** (mod 33) — BUILT, staged in `plugins/`. **Log-spam fix:** added `Plugin.Verbose` (default off) + `LogDebug`; gated `SmartWorkerRedistribution` (auto 30-GTS timer) + all `ShellLairs` operational logs that LIVE 1.6.0 spams into `LogOutput.log`. No gameplay change from 1.6.0. Requires IFZModPanels + IFZModAPI.
+
+_(Reconciled 2026-07-05 vs Nexus API: 0.1.0 and 1.6.0 are ALREADY LIVE — pushed 2026-07-04 in a prior session; the old "not yet uploaded / staged" lines here were stale. See Pushed below.)_
 
 ---
 
 ## Pushed (recent — prune after a few cycles)
+
+- **High Ground → 1.0.3** (mod 64, file uploaded, stages 200) — PUSHED 2026-07-05 (`publish-all --send`). Log-spam hotfix: per-shot `[ElevatedFiring]` + per-refresh `[HeightAdvantage]` logs were unconditional → flooded LogOutput.log in combat; now gated behind `ElevatedFiring/Debug` (default off) via new `Plugin.LogDebug`. No gameplay change from 1.0.2.
+- **High Ground → 1.0.2** (mod 64, superseded by 1.0.3) — PUSHED 2026-07-05 (`publish-all --send`). Range-boost fix: height advantage now applies to actual firing range (garrisoned units shoot at the boosted range, not just see it) — root cause was boosting only `Group.FightRange` (cone + detection) while the real fire gate `CharacterFightHandler.IsInAttackRange` compares per-weapon reach; new sole Postfix on `CharacterFightHandler.GetWeaponAttackReach`. Visual: green cone = base range, orange ring = height-bonus extension (was a single recolored cone). Thanks weeman12321 for reporting. Standalone.
 
 - **GreenhouseGrow → 0.1.2** (mod 72) — PUSHED 2026-07-05 (`publish-all --send`). Build/deconstruct crews now scale with farm footprint area (tier squared), matching cost/staff/yield — bigger farms get proportionally more builders and demolition crew; build time stays about the same. Fixed: farm sizes were lost on reload when the save was reloaded on a later in-game day than the farms were placed (sidecar key was keyed on the save name, which embeds the in-game clock, and drifted) — now keyed on map coordinates (clock-independent), with a one-time auto-migration recovering existing saves. No longer requires IFZ Mod API — standalone now (no `requires` → requirements step N/A).
 

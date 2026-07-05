@@ -26,8 +26,8 @@ _Last updated: 2026-07-05_
 | 30 | Gunfire Lights | 1.4.10 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/30) |
 | 31 | House Power | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/31) |
 | 32 | House Rebalance | 1.2.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/32) |
-| 77 | IFZ Mod Panels | 0.1.0 | 🟢 Live | 2026-07-04 | [link](https://www.nexusmods.com/infectionfreezone/mods/77) |
-| 33 | IFZ Quality of Life Bundle | 1.6.0 | 🟢 Live | 2026-07-04 | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |
+| 77 | IFZ Mod Panels | 0.1.1 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/77) |
+| 33 | IFZ Quality of Life Bundle | 1.6.1 | 🟢 Live | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |
 | 34 | Locale Fix | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/34) |
 | 35 | Performance Pack | 1.5.2 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/35) |
 | 36 | Save File Version Unlock | 1.0.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/36) |
@@ -43,7 +43,7 @@ _Last updated: 2026-07-05_
 | 58 | Mass Deconstruct — drag-box | 1.4.0-beta | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/58) |
 | 59 | Squad Move and Fire | 0.1.3 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/59) |
 | 63 | Swarm Fix | 1.1.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/63) |
-| 64 | High Ground | 1.0.3 | 🟢 Live | 2026-07-05 | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
+| 64 | High Ground | 1.0.3 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
 | 65 | Clay Pit Fixes | 1.1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |
 | 66 | Night Lights (WindowGlow) | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/66) |
 | 67 | Buildable Bridges | 0.2.0.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |

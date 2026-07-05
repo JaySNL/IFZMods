@@ -263,7 +263,7 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "0.1.0 - Initial release. Reusable in-game panel/window library other IFZ mods build on (e.g. IFZ Quality of Life 1.6.0). Install only if a mod lists it as a requirement. Needs IFZModAPI + BepInEx.",
+      "fileNotes": "0.1.1 - Fix: closing a panel no longer throws a NullReferenceException (game bug-report popup on close); state-save now no-ops on a torn-down window. Reusable in-game panel/window library other IFZ mods build on. Install only if a mod lists it as a requirement. Needs IFZModAPI + BepInEx.",
       "description": "IFZ Mod Panels is a shared library, not a standalone feature. Install it only if another mod lists it as a requirement (for example IFZ Quality of Life 1.6.0 uses it for its housing panel).\n\nWhat it does: gives IFZ mods a simple way to show draggable, closeable in-game windows — labelled value rows, bars, buttons, sliders, toggles, and graphs — without every mod hand-rolling its own UI. Window position, size, and open/closed state persist between sessions.\n\nFor modders: reference IFZModPanels.dll and call Panels.Register(id, build) once; see the API docs and the _TEMPLATE_PanelMod starter in the source repo.",
       "category": "Miscellaneous",
       "tags": [
@@ -278,7 +278,7 @@
         "requirements": "BepInEx 5.4.23.2. IFZModAPI. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "key": "IFZQualityOfLife",
@@ -290,7 +290,7 @@
         "IFZModAPI",
         "IFZModPanels"
       ],
-      "fileNotes": "1.6.0 - NEW Housing panel: click a house/shelter for a summary window (house/shelter counts, beds used/total, homeless, free beds). NEW low-beds radio warning below 25 free beds (configurable), re-arms after recovery. Needs IFZ Mod Panels.",
+      "fileNotes": "1.6.1 - Fix: silenced diagnostic log spam during normal play (SmartWorker/ShellLairs now behind a Verbose flag, default off; no gameplay change). 1.6.0 added the Housing panel (click a house/shelter) + low-beds radio warning. Needs IFZ Mod Panels.",
       "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.\n- HousingPanel: click any house or shelter to open a summary window (house + shelter counts, beds used/total, homeless, free beds), built on IFZ Mod Panels. Closeable.\n- HousingWarning: a one-off blue radio message warns you when total free beds drop below a threshold (default 25); it re-arms only after beds recover (default back to 50), so it never spams.",
       "category": "Miscellaneous",
       "tags": [
@@ -305,7 +305,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton). IFZ Mod Panels.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.6.0"
+      "version": "1.6.1"
     },
     {
       "key": "LocaleFix",
@@ -673,7 +673,7 @@
       "dllPath": "../../plugins/HighGround.dll",
       "name": "High Ground",
       "summary": "Height matters: build true high-rises, garrisoned units fire from the top floor over your walls, and shooters in tall buildings get a range bonus. Each feature toggleable in F1.",
-      "fileNotes": "1.0.2 - HeightAdvantage fix: the range boost now applies to units' real firing range, not just the FoV cone. Two-cone visual: green = base range, orange ring = the boost beyond it. Thanks weeman12321 for the report.",
+      "fileNotes": "1.0.3 - Fixed diagnostic log spam during play: per-shot and per-refresh logs are now gated behind the ElevatedFiring/Debug flag (default off), so a normal game stays quiet. No gameplay change from 1.0.2 (the range-boost fix + two-cone visual).",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
@@ -686,7 +686,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 - runs on Windows / macOS (Crossover) / Steam Deck (Proton). Standalone - no other mods required.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals - nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.0.2"
+      "version": "1.0.3"
     },
     {
       "key": "ClayPitFixes",
