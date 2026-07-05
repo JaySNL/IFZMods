@@ -40,8 +40,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
       },
-      "fileNotes": "REQUIRED UPDATE - fixes a crash. Live 1.4.5 lacks IFZModAPI.Radio; Mod Panels 0.1.1/QoL 1.6.1 call it, throw TypeLoadException, force-quit. 1.6.1 adds Radio (announce hook), SicknessCoordinator, dmg-mult registry, SaveStore. Additive, back-compatible.",
-      "version": "1.6.1"
+      "fileNotes": "1.6.2 - Radio fix: mod messages no longer bleed colour onto vanilla radio events ('Horde spotted!' went dark). Colour is now per-message; vanilla styling untouched. Backward-compatible - QoL/Panels users get the fix automatically.",
+      "version": "1.6.2"
     },
     {
       "key": "ArmyBackup",
