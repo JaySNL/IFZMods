@@ -43,7 +43,7 @@ _Last updated: 2026-07-05_
 | 58 | Mass Deconstruct — drag-box | 1.4.0-beta | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/58) |
 | 59 | Squad Move and Fire | 0.1.3 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/59) |
 | 63 | Swarm Fix | 1.1.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/63) |
-| 64 | High Ground | 1.0.2 | 🟡 Staged | — | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
+| 64 | High Ground | 1.0.2 | 🟢 Live | 2026-07-05 | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
 | 65 | Clay Pit Fixes | 1.1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |
 | 66 | Night Lights (WindowGlow) | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/66) |
 | 67 | Buildable Bridges | 0.2.0.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
@@ -59,7 +59,7 @@ _Last updated: 2026-07-05_
 | Mod | Issue | Severity | Status | Notes |
 |-----|-------|----------|--------|-------|
 | High Ground 64 | Elevated garrisoned units couldn't shoot over walls — the lifted shot origin was blocked by the unit's OWN building shell (native exempts the own building only on the return ray, not the forward origin→target ray), so ElevatedFiring looked dead | High | 🟢 Fixed | Shipped **1.0.1** (2026-07-04): `IgnoreOwnBuilding` exempts both rays + `ElevateFovCone` raises the on-screen cone to the firing floor |
-| High Ground 64 | HeightAdvantage range bonus never reached the trigger-pull gate — only `Group.FightRange` was multiplied (drives the FoV cone + detection), but `CharacterFightHandler.IsInAttackRange` checks per-weapon reach, which never reads `FightRange`, so units still held fire at base range despite the bigger cone (reported by **weeman12321**) | High | 🟢 Fixed | Staged **1.0.2**: new sole Postfix on `GetWeaponAttackReach` applies the same height bonus per-unit; two-cone visual (green=base, orange ring=boost beyond it) — not yet pushed to Nexus |
+| High Ground 64 | HeightAdvantage range bonus never reached the trigger-pull gate — only `Group.FightRange` was multiplied (drives the FoV cone + detection), but `CharacterFightHandler.IsInAttackRange` checks per-weapon reach, which never reads `FightRange`, so units still held fire at base range despite the bigger cone (reported by **weeman12321**) | High | 🟢 Fixed | Shipped **1.0.2** (2026-07-05): new sole Postfix on `GetWeaponAttackReach` applies the same height bonus per-unit; two-cone visual (green=base, orange ring=boost beyond it) |
 | Expanded Farming 72 | Farm sizes were lost on reload when the save was reloaded on a later in-game day than the farms were placed (sidecar save-key drifted — it was keyed on the save name, which embeds the in-game clock) | High | 🟢 Fixed | Shipped **0.1.2** — sidecar key now uses map coordinates (clock-independent), with a one-time auto-migration that recovers existing saves |
 | Buildable Bridges 67 | Placed bridge was indestructible (disabled collider invisible to shell/deconstruct queries) | High | 🟢 Fixed | Shipped 0.1.1 (`isTrigger=true`) — bridges take shell/explosion damage + deconstruct, traffic still crosses |
 
