@@ -15,3 +15,6 @@ tools/nexus-publish/
 
 # Local Claude Code config/agents — off git
 .claude/
+
+# claude-mem data leaked into cwd via a Windows-style path (C:\Users\...) — never track
+C:\\Users\\Jooshua\\.claude-mem/
