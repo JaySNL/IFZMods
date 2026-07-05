@@ -25,15 +25,14 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
-- **IFZModPanels → 0.1.1** (mod 77) — BUILT, staged in `plugins/`. **NRE-on-close fix:** `ModWindow.Save()` ran `CaptureState()` reading a destroyed `_root` (Unity destroyed-but-non-null) → NRE + game bug-report when closing a panel after a scene reload / DestroyWindow. `Save()` now bails when `_root == null`. Fixes a bug LIVE 0.1.0 users hit. Requires IFZModAPI.
-- **IFZQualityOfLife → 1.6.1** (mod 33) — BUILT, staged in `plugins/`. **Log-spam fix:** added `Plugin.Verbose` (default off) + `LogDebug`; gated `SmartWorkerRedistribution` (auto 30-GTS timer) + all `ShellLairs` operational logs that LIVE 1.6.0 spams into `LogOutput.log`. No gameplay change from 1.6.0. Requires IFZModPanels + IFZModAPI.
-
-_(Reconciled 2026-07-05 vs Nexus API: 0.1.0 and 1.6.0 are ALREADY LIVE — pushed 2026-07-04 in a prior session; the old "not yet uploaded / staged" lines here were stale. See Pushed below.)_
+_(Nothing staged. Reconciled 2026-07-05 vs Nexus API: 0.1.0 and 1.6.0 were ALREADY LIVE — pushed 2026-07-04 in a prior session; the old "not yet uploaded / staged" lines here were stale. Their fix-versions 0.1.1 / 1.6.1 are now pushed — see below.)_
 
 ---
 
 ## Pushed (recent — prune after a few cycles)
 
+- **IFZModPanels → 0.1.1** (mod 77, file 7619132, all 4 stages 200/204) — PUSHED 2026-07-05 (`publish-all --send`). **NRE-on-close fix:** `ModWindow.Save()` ran `CaptureState()` reading a destroyed `_root` (Unity destroyed-but-non-null) → NRE + game bug-report when closing a panel after a scene reload / DestroyWindow. `Save()` now bails when `_root == null`. Fixes a bug every LIVE 0.1.0 user hit. Requires IFZModAPI.
+- **IFZQualityOfLife → 1.6.1** (mod 33, file 7619135, all 4 stages 200/204, now requires IFZ Mod Panels >= 0.1.1) — PUSHED 2026-07-05 (`publish-all --send`). **Log-spam fix:** added `Plugin.Verbose` (default off) + `LogDebug`; gated `SmartWorkerRedistribution` (auto 30-GTS timer) + all `ShellLairs` operational logs that LIVE 1.6.0 spammed into `LogOutput.log`. No gameplay change from 1.6.0. Requires IFZModPanels + IFZModAPI.
 - **High Ground → 1.0.3** (mod 64, file uploaded, stages 200) — PUSHED 2026-07-05 (`publish-all --send`). Log-spam hotfix: per-shot `[ElevatedFiring]` + per-refresh `[HeightAdvantage]` logs were unconditional → flooded LogOutput.log in combat; now gated behind `ElevatedFiring/Debug` (default off) via new `Plugin.LogDebug`. No gameplay change from 1.0.2.
 - **High Ground → 1.0.2** (mod 64, superseded by 1.0.3) — PUSHED 2026-07-05 (`publish-all --send`). Range-boost fix: height advantage now applies to actual firing range (garrisoned units shoot at the boosted range, not just see it) — root cause was boosting only `Group.FightRange` (cone + detection) while the real fire gate `CharacterFightHandler.IsInAttackRange` compares per-weapon reach; new sole Postfix on `CharacterFightHandler.GetWeaponAttackReach`. Visual: green cone = base range, orange ring = height-bonus extension (was a single recolored cone). Thanks weeman12321 for reporting. Standalone.
 
