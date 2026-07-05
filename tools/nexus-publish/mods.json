@@ -829,6 +829,76 @@
       "requires": null,
       "fileNotes": "0.1.3 - Bigger farms now turn over proportionally more: per-cycle output and storage both scale with footprint area (a 4x farm yields and stores ~16x). Fixes flat output where a huge greenhouse produced about the same as a small one.",
       "version": "0.1.3"
+    },
+    {
+      "key": "CamControl",
+      "nexusModId": 79,
+      "dllPath": "../../plugins/CamControl.dll",
+      "name": "CamControl",
+      "summary": "Smooth, eased camera motion for play and recording - continuous zoom, slow cinematic rotation, eased panning, plus a slow-motion key and a hide-HUD key.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "Makes the camera feel smooth and cinematic. Zoom, rotation and WASD panning all ease in and out instead of snapping or stepping - zoom is fully continuous (detached from the game's stepped wheel-zoom) and driven by how far you scroll. Adds a slow-motion toggle that also slows units (so combat plays in slow-mo, not just the world clock) and a hide-HUD toggle for clean screenshots and recordings. Everything is tunable live in F1.",
+        "installation": "Install IFZ Mod API (000_IFZModAPI.dll), then drop CamControl.dll into <game>/BepInEx/plugins/. Press F1 (ConfigurationManager) to tune glide/ramp times and rebind keys live.",
+        "mainFeatures": "- Continuous smooth zoom (no stepping), scaled to wheel amount\n- Eased slow rotation for cinematic pans\n- Eased WASD panning\n- Slow-motion toggle (F8) that slows UNITS too, not just the clock\n- Hide-HUD toggle (F7) for clean recording\n- Fully configurable + rebindable in F1",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Requires IFZ Mod API (000_IFZModAPI.dll). Pure-managed netstandard2.1 - Windows / macOS (Crossover) / Steam Deck (Proton).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "1.0.0 - Smooth eased camera: continuous zoom (no stepping), slow-ramp rotation + panning, slow-motion toggle (F8) that also slows units, and hide-HUD (F7) for clean recordings. Fully configurable in F1.",
+      "version": "1.0.0"
+    },
+    {
+      "key": "ExtendedHealth",
+      "nexusModId": 80,
+      "dllPath": "../../plugins/ExtendedHealth.dll",
+      "name": "Extended Health",
+      "summary": "Occupational health: harder jobs make workers fall sick, a round-the-clock hospital, and night-shift recovery.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "Adds occupational health to your settlement. The harder and more fatiguing a citizen's job, the more likely they are to fall sick; a hospital now runs around the clock, and a night shift helps the sick recover. Sickness is driven through the shared IFZ Mod API sickness coordinator (one capped daily roll shared across health mods), so it plays nicely alongside other lifecycle mods.\n\nEXPERIMENTAL first release - long-run night-shift and difficulty balance is still under community observation. Feedback welcome.",
+        "installation": "Install IFZ Mod API 1.6.2+ (000_IFZModAPI.dll), then drop ExtendedHealth.dll into <game>/BepInEx/plugins/. Tune difficulty/night-shift in F1.",
+        "mainFeatures": "- Job-difficulty + fatigue driven sickness\n- 24/7 hospital operation\n- Night-shift recovery for the sick\n- Shares the IFZ Mod API sickness driver (capped daily roll)\n- Tunable in F1",
+        "requirements": "BepInEx 5.4.23.2. Requires IFZ Mod API (000_IFZModAPI.dll) 1.6.2+. Pure-managed netstandard2.1 - Windows / macOS (Crossover) / Steam Deck (Proton).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
+      },
+      "requires": [
+        "IFZModAPI"
+      ],
+      "fileNotes": "0.1.0 experimental - Occupational health: job-difficulty + fatigue sickness, round-the-clock hospital, and night-shift recovery, sharing the IFZ Mod API sickness driver.",
+      "version": "0.1.0"
+    },
+    {
+      "key": "ElderPop",
+      "nexusModId": 81,
+      "dllPath": "../../plugins/ElderPop.dll",
+      "name": "Elder Population",
+      "summary": "Citizens age, retire, grow frail and eventually die of old age - a persistent population life-cycle with an anti-death-wave trickle.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "Gives your population a real life-cycle. Citizens carry a persistent human age (not day-count), grow older, retire from work, become frail and more sickness-prone, and eventually die of old age. Deaths and retirements are trickle-capped per day so you never get a sudden die-off wave. An F11 dashboard shows the age breakdown. Event-driven, no Harmony patches.\n\nEXPERIMENTAL first release - long-run lifecycle balance is still under community observation. Feedback welcome.",
+        "installation": "Install IFZ Mod API 1.6.2+ (000_IFZModAPI.dll). For the F11 dashboard also install IFZ Mod Panels (optional - degrades gracefully without it). Drop ElderPop.dll into <game>/BepInEx/plugins/. Tune aging/lifespan in F1.",
+        "mainFeatures": "- Citizens age -> retire -> frail -> die of old age\n- Persistent human-age model (survives save/load)\n- Anti-death-wave: trickle-capped deaths & retirements per day\n- Frailty raises sickness chance with age\n- F11 age-breakdown dashboard (needs IFZ Mod Panels)\n- Event-driven, no Harmony patches\n- Tunable in F1",
+        "requirements": "BepInEx 5.4.23.2. Requires IFZ Mod API (000_IFZModAPI.dll) 1.6.2+. Optional: IFZ Mod Panels (F11 dashboard). Pure-managed netstandard2.1 - Windows / macOS (Crossover) / Steam Deck (Proton).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
+      },
+      "requires": [
+        "IFZModAPI",
+        "IFZModPanels"
+      ],
+      "fileNotes": "0.1.0 experimental - Population life-cycle: citizens age, retire, grow frail and die of old age (persistent human-age model), event-driven, anti-death-wave trickle caps, F11 stats dashboard.",
+      "version": "0.1.0"
     }
   ]
 }
