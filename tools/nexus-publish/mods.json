@@ -673,7 +673,7 @@
       "dllPath": "../../plugins/HighGround.dll",
       "name": "High Ground",
       "summary": "Height matters: build true high-rises, garrisoned units fire from the top floor over your walls, and shooters in tall buildings get a range bonus. Each feature toggleable in F1.",
-      "fileNotes": "1.0.1 - ElevatedFiring fix: garrisoned units now fire OVER walls. The lifted shot origin was blocked by the unit's own building shell (native exempts it on the return ray only); now exempted on both rays. FoV/range cone also raised to the firing floor.",
+      "fileNotes": "1.0.2 - HeightAdvantage fix: the range boost now applies to units' real firing range, not just the FoV cone. Two-cone visual: green = base range, orange ring = the boost beyond it. Thanks weeman12321 for the report.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
@@ -686,7 +686,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 - runs on Windows / macOS (Crossover) / Steam Deck (Proton). Standalone - no other mods required.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals - nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.0.1"
+      "version": "1.0.2"
     },
     {
       "key": "ClayPitFixes",

@@ -6,6 +6,18 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- High Ground 1.0.2
+
+**[Staged and verified — not yet pushed to Nexus]**
+
+### Fixed
+- **High Ground 1.0.2 —** height-advantage range boost now applies to the unit's actual firing range, not just the on-screen field-of-view cone. The boost previously multiplied `Group.FightRange`, which drives the visual cone and enemy detection, but the game checks whether a unit is in firing range using `CharacterFightHandler.IsInAttackRange`, which compares distance against the per-weapon `reach` and never reads `FightRange` — so garrisoned units could see farther but couldn't actually shoot farther. Fix: new Postfix on `CharacterFightHandler.GetWeaponAttackReach` applies the same height bonus per-unit, so the trigger gate matches the visual. Thanks weeman12321 for reporting.
+
+### Added
+- **High Ground 1.0.2 —** the range-boost visual is now honest: the green cone shows the unit's base firing range, and a new orange extension ring shows the additional range granted by height advantage beyond the green base — previously a single recolored cone, which was misleading about which part of the boost came from height. The two-cone display works for any boost source (height, trait, or combination).
+
+---
+
 ## 2026-07-05 -- IFZ Mod Panels 0.1.0 + IFZ Quality of Life 1.6.0
 
 **[Staged and verified — not yet pushed to Nexus]**
