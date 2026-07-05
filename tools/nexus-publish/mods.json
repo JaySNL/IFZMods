@@ -579,8 +579,8 @@
       "requires": [
         "IFZModAPI"
       ],
-      "version": "1.2.6",
-      "fileNotes": "1.2.6: adds [Raids] GraceDays (default 7) — no base raids before in-game day 7, so a strong pre-existing camp can no longer wipe a fresh base on day 2-3. Set GraceDays=0 to restore old behaviour. Requires IFZ Mod API 1.2.1+."
+      "version": "1.3.1-beta",
+      "fileNotes": "1.3.1-beta: fixes escalation never firing -- wipe detection now polls live raider headcount vs the death callbacks that missed real wipes. A clean full wipe raises RaidForce; a costly one barely moves it. New KillPain config; FastWipeSeconds deprecated."
     },
     {
       "key": "MassDeconstruct",

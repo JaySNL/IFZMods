@@ -6,6 +6,18 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-06 -- RaiderEscalation 1.3.1-beta
+
+**[Built, awaiting in-game verify — not yet pushed to Nexus]**
+
+### Fixed
+- **RaiderEscalation 1.3.1-beta — adaptive escalation now fires on live wipes.** The raid force never climbed because wipe detection counted per-raider death callbacks, which missed some kills (e.g., explosions, friendly fire) — so real camp wipes fell through to the timeout and were misread as false "linger" events, and RaidForce never escalated. Fix: wipe detection now polls live raider headcount instead of counting deaths, instantly recognizing a true zero-raider state. RaidForce scaling on wipe is reworked: a fast/bloodless clear gives a full escalation step, while a slow/costly fight barely moves it (interpolated via new `KillPain` config, default 100 — measuring how one-sided the engagement was). Requires IFZ Mod API (unchanged).
+
+### Changed
+- **RaiderEscalation 1.3.1-beta — `FastWipeSeconds` config deprecated.** The old timeout-based fallback is now dead; wipe detection is instant, and escalation scales via the new `KillPain` config instead. Old configs are orphaned and ignored.
+
+---
+
 ## 2026-07-05 -- BridgeProto 0.2.1.0
 
 **[Staged and verified — not yet pushed to Nexus]**

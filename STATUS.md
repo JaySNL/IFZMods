@@ -6,7 +6,7 @@ Players: spot a bug? **[Open an issue](https://github.com/JaySNL/IFZMods/issues/
 **Legend** — Release state: 🟢 Live (on Nexus) · 🟡 Staged (built/verified, not yet pushed) · 🔬 Experimental · 🛠 WIP (unreleased)
 Bug status: 🔴 Open · 🟠 In progress · 🟢 Fixed (shipped) · ⚪ Won't fix / vanilla limit
 
-_Last updated: 2026-07-05_
+_Last updated: 2026-07-06_
 
 ---
 
@@ -63,6 +63,7 @@ _Last updated: 2026-07-05_
 | Expanded Farming 72 | Farm sizes were lost on reload when the save was reloaded on a later in-game day than the farms were placed (sidecar save-key drifted — it was keyed on the save name, which embeds the in-game clock) | High | 🟢 Fixed | Shipped **0.1.2** — sidecar key now uses map coordinates (clock-independent), with a one-time auto-migration that recovers existing saves |
 | Buildable Bridges 67 | Placed bridge was indestructible (disabled collider invisible to shell/deconstruct queries) | High | 🟢 Fixed | Shipped 0.1.1 (`isTrigger=true`) — bridges take shell/explosion damage + deconstruct, traffic still crosses |
 | IFZ Mod API 42 | Nexus user reported a load crash: live API 1.4.5 has no `IFZModAPI.Radio` type, but Mod Panels 0.1.1 / QoL 1.6.1 (both live) call it — `TypeLoadException` fires every frame at load, game force-quits. Root cause: API dependency push was forgotten when Panels/QoL shipped; BepInDependency isn't version-pinned so BepInEx loads the stale API anyway | Critical | 🟢 Fixed (shipped) | API **1.6.1** (adds `Radio` + SicknessCoordinator, damage-mult registry, SaveStore, all additive) PUSHED to Nexus 2026-07-05. Affected users update API to recover. |
+| Raider Escalation 57 | Adaptive escalation never fired — wipe detection counted per-raider death callbacks, which missed real wipes; those fell through to the timeout as false "lingers" instead, so RaidForce never climbed even through larger raids/vehicles | Medium | 🟠 In progress | **Built 1.3.1-beta** — wipe detection now polls live raider headcount; a clean full wipe raises RaidForce, a costly one barely moves it (new `KillPain` config, `FastWipeSeconds` deprecated). Awaiting in-game verify, NOT yet pushed to Nexus (still 1.2.6 live) |
 
 _Add a row when a new bug comes in via [Issues](https://github.com/JaySNL/IFZMods/issues)._
 
