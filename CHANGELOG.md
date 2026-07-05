@@ -6,6 +6,10 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- High Ground 1.0.3
+
+- **High Ground 1.0.3 —** fixed diagnostic log spam during normal play. The per-shot (`[ElevatedFiring] raised shot origin…`) and per-refresh (`[HeightAdvantage] range…`) log lines fired unconditionally, flooding `LogOutput.log` in combat. They're now gated behind the `ElevatedFiring/Debug` flag (default off), so a shipped game stays quiet. No gameplay change from 1.0.2.
+
 ## 2026-07-05 -- High Ground 1.0.2
 
 **[Staged and verified — not yet pushed to Nexus]**

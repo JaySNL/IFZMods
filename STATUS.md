@@ -43,7 +43,7 @@ _Last updated: 2026-07-05_
 | 58 | Mass Deconstruct — drag-box | 1.4.0-beta | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/58) |
 | 59 | Squad Move and Fire | 0.1.3 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/59) |
 | 63 | Swarm Fix | 1.1.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/63) |
-| 64 | High Ground | 1.0.2 | 🟢 Live | 2026-07-05 | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
+| 64 | High Ground | 1.0.3 | 🟢 Live | 2026-07-05 | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
 | 65 | Clay Pit Fixes | 1.1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |
 | 66 | Night Lights (WindowGlow) | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/66) |
 | 67 | Buildable Bridges | 0.2.0.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
