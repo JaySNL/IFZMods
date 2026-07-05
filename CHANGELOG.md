@@ -6,6 +6,13 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- Squad Auto Behavior 1.1.6-beta
+
+### Fixed
+- **Squad Auto Behavior 1.1.6-beta -- rearm-routing fix (BETA).** `FindNearestAmmoBuilding`, which selects a rearm building for a dry squad heading back to base, previously hardcoded `ResourceID.res_ammo` for building stock checks. This routed mortar squads (whose weapons use `res_explosives`/`res_grenades`) to bullets-only warehouses where they couldn't rearm. Fix: the function now gathers the squad's real ammo currencies from each member's weapon `AmmoResourceType` and accepts only buildings holding at least one of those types; mixed squads match if any needed type is present, and vanilla refills all matching types on entry. Completes the res_ammo de-hardcoding started in 1.1.5-beta's `TryResupplyAmmo` fix. Pure routing change — no resource dupe involved. NOTE: in-game Wine/save-load verification still PENDING — shipped as beta for community testing. Requires IFZ Mod API 1.6.1+.
+
+---
+
 ## 2026-07-05 -- Squad Auto Behavior 1.1.5-beta
 
 ### Fixed

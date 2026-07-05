@@ -27,6 +27,8 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 - **IFZ Mod API → 1.6.1** (mod 42) — PUSHED 2026-07-05 (`publish-all --send`, all 4 stages 200; standalone so requirements N/A). Critical fix: TypeLoadException crash on load (Nexus user report). IFZ Mod Panels 0.1.1 + IFZ Quality of Life 1.6.1 call `IFZModAPI.Radio`, but live Nexus API is still 1.4.5 (no `Radio` type). BepInEx threw `TypeLoadException: Could not resolve type 'IFZModAPI.Radio'` every frame → game force-quit. Push immediately to restore the game for affected users. Also bundles additive features from 1.5.0 onward (SicknessCoordinator, CombatDamageMultiplier, Radio.Announce, SaveStore) — all backward-compatible, zero breaking changes. Hard dependency for all mods (sole patcher of shared systems).
 
+- **Squad Auto Behavior (SquadAutoBehavior) → 1.1.6-beta** (mod 39, requirement set [204]) — BUILT (pending push). Rearm-routing fix: `FindNearestAmmoBuilding` previously hardcoded `ResourceID.res_ammo` for building stock checks, routing mortar squads (which use `res_explosives`/`res_grenades`) to bullets-only warehouses where they couldn't rearm. Fix: gathers the squad's real ammo currencies from each member's weapon `AmmoResourceType` and accepts only buildings holding at least one of those types; mixed squads match if any needed type is present, and vanilla refills all matching types on building entry. Completes the res_ammo de-hardcoding from 1.1.5-beta. Pure routing change — no resource dupe. Requirement set [204] resolves to IFZ Mod API >= 1.6.1 (API unchanged). NOTE: in-game Wine/save-load verification still PENDING — shipped as beta for community testing.
+
 ---
 
 ## Pushed (recent — prune after a few cycles)
