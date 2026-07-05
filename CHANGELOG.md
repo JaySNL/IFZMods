@@ -6,6 +6,23 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-06 -- Shipped-mod build sync (API 1.7.0 recompile) + version bumps
+
+**[git/dist sync -- Nexus pushes tracked separately in RELEASE-QUEUE.md]**
+
+### Added
+- **Surrounded 0.4.6 -- HiveMind.** Any attack near an idle infected cluster (bullets included, not just shells) now wakes it to swarm the attacker; the roused hive pursues the shooter, or the nearest structure/HQ for shells. New `HivemindMinCluster` (default 3) gates the surge to real clusters. Verified in-game. Requires IFZ Mod API 1.4.2+.
+
+### Fixed
+- **GunfireLights 1.4.11 -- antenna beacons anchor to the mast.** Beacons used the whole-model bounding-box centre, which a wide base/dish pulled off the pole (they floated beside the antenna); they now anchor to the tallest renderer (the mast). (Issue #9.)
+- **SquadMoveFire 0.1.4 -- crash fix.** A squad whose attack target died mid-tick could NRE (`ShouldMoveToEnemy` dereferenced a null enemy) and spam the bug reporter in heavy combat; added a null-guard and collapsed the patch to a single prefix (Wine zero-rva safety). Hold-ground behaviour unchanged.
+
+### Changed
+- **All shipped mods recompiled against IFZ Mod API 1.7.0** and re-staged into `plugins/` -- keeps the distributed DLLs ABI-current with the live API (no gameplay change for same-version mods).
+- **SplitUnlock 1.3.1** and **SquadAutoBehavior 1.1.7-beta** build bumps re-staged.
+
+---
+
 ## 2026-07-06 -- RaiderEscalation 1.3.1-beta
 
 **[Pushed to Nexus as beta 2026-07-06 — awaiting in-game verify]**

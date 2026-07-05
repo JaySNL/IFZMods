@@ -203,8 +203,8 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "1.4.10: baked the cinematic showcase look in as the default — punchy muzzle flashes (Muzzle Intensity 115.5), fatter glow (MuzzleSize 1.1 / ExplosionSize 4.5), and a real searchlight per gun barrel (OneLightPerTower off). Fresh installs match the showcase out of the box; set OneLightPerTower = true in F1 for more FPS on tower-heavy bases. Requires IFZ Mod API 1.4.1+.",
-      "version": "1.4.10"
+      "fileNotes": "1.4.11: Antenna beacons now anchor to the mast (tallest renderer) instead of floating off the model centroid.",
+      "version": "1.4.11"
     },
     {
       "key": "HousePower",
@@ -414,7 +414,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.3.0",
+      "version": "1.3.1",
       "fileNotes": "1.3.0: NEW per-building capacity uncap (BuildingCapacity section, opt-in/off by default). Vanilla clamps every building to AdaptConfig.BuildingsMaxVolume (~50000 m³), capping storage, population/gathering capacity, HP and deconstruct yield at the same ~2000-per-building wall regardless of real size. UncapBuildingCapacity + VolumeMultiplier (default 3) lift it so bigger buildings hold/house/yield more without splitting. Population scales too — high values cost late-game FPS; 2-3 is safe. Split + size toggles unchanged."
     },
     {
@@ -440,7 +440,7 @@
       "requires": [
         "IFZModAPI"
       ],
-      "version": "1.1.6-beta"
+      "version": "1.1.7-beta"
     },
     {
       "key": "SquadMerge",
@@ -498,7 +498,7 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "0.4.5: Early-game easing for lair waves — no longer dump on day 1 of a fresh base or new expedition. Grace period (default day 5), ramp to full by ~day 25, and a cooldown so lairs strike in spaced waves. Run-day based. Requires API 1.4.2+.",
+      "fileNotes": "0.4.6: HiveMind — any attack near an idle infected cluster (bullets included, not just shells) now wakes it to swarm the attacker; the roused hive pursues the shooter, or the nearest structure/HQ for shells. New HivemindMinCluster (default 3) gates the surge to real clusters. Requires API 1.4.2+.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
@@ -511,7 +511,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.4.5"
+      "version": "0.4.6"
     },
     {
       "key": "SquadGrenades",
@@ -612,7 +612,7 @@
       "dllPath": "../../plugins/SquadMoveFire.dll",
       "name": "Squad Move and Fire (experimental)",
       "summary": "Squads fire while moving instead of halting — on foot and in vehicles. Hold Your Ground truly anchors.",
-      "fileNotes": "0.1.3: removed a stray debug log from the move-fire patch (it only fired with the experimental MoveAndFire toggle on; now gone). Zero overhead, no gameplay change.",
+      "fileNotes": "0.1.4: Fixed a rare crash when a squad’s attack target died mid-tick (null-guard); collapsed to a single patch for Wine safety. Hold-ground behaviour unchanged.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay"
@@ -624,7 +624,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.1.3"
+      "version": "0.1.4"
     },
     {
       "key": "Flares",
