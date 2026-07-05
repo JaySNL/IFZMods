@@ -11,6 +11,13 @@ Generates the static GitHub Pages landing page for the live IFZ mods.
 ## Rules
 - Zero npm deps — `node:` builtins only. Output makes no external network requests (CSS inline, banners local).
 - `mods.json` is canonical and read-only here. Protos are excluded automatically (not in mods.json).
-- **Regenerate on every release** so the grid + live count stay in sync, then commit `docs/`.
+- **CI owns the build.** `.github/workflows/deploy-pages.yml` runs `build-site.mjs` and deploys to
+  Pages on every push to `main` touching `mods.json` / `tools/site/**` / `docs/assets/**`. Do NOT
+  hand-run the script or hand-edit `index.html` per release — push the `mods.json` change and CI
+  regenerates + deploys. Pages source = **GitHub Actions** (not legacy branch). `index.html` is a
+  build artifact still committed for convenience; it stays in sync via CI.
+- This build is pure deterministic `node` — never route it through Claude or a local LLM. (An LLM's
+  only site-related job is drafting `mods.json` prose for a new mod, not building HTML.)
+- Run the build locally only to preview/verify: `node tools/site/build-site.mjs`.
 - Featured order + fixed links (Ko-fi/Nexus/GitHub/YouTube/Discord) live at the top of `build-site.mjs`.
 - No real name anywhere. `git push` / Pages go-live is outward — only when the user asks.

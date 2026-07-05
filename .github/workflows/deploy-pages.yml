@@ -1,0 +1,60 @@
+# Builds docs/index.html from tools/nexus-publish/mods.json and deploys it to
+# GitHub Pages. Runs on every push to main that touches the site inputs, or on
+# demand. Replaces the legacy "deploy from branch" mode (which published the
+# committed docs/ as-is and had no retry on Pages backend flakes).
+#
+# The site build (tools/site/build-site.mjs) is pure deterministic Node — no
+# LLM, no npm deps. index.html no longer needs to be hand-committed; CI is the
+# source of truth. Banners come from the tracked docs/assets/banners/*.png.
+
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/nexus-publish/mods.json'
+      - 'tools/site/**'
+      - 'docs/assets/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+# Let a newer run supersede an in-flight one, but don't cancel a running deploy
+# (Pages deploys are not safely interruptible).
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build site from mods.json
+        run: node tools/site/build-site.mjs
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 600000
+          error_count: 15        # more retries — Pages backend flakes intermittently
