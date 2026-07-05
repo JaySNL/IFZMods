@@ -6,6 +6,11 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- Expanded Farming (GreenhouseGrow) 0.1.3
+
+- **Expanded Farming 0.1.3 —** bigger farms now produce proportionally more: each production cycle's output scales with footprint area (tier squared), so a 4x farm yields ~16x a 1x. Previously output was flat regardless of size.
+- **Expanded Farming 0.1.3 —** storage capacity scales with size too (12 -> 192 crates at 4x), so the larger output isn't stalled by a small container.
+
 ## 2026-07-05 -- IFZ Mod Panels 0.1.1 + IFZ Quality of Life 1.6.1
 
 ### Fixed

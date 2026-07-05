@@ -31,6 +31,8 @@ _(Nothing staged. Reconciled 2026-07-05 vs Nexus API: 0.1.0 and 1.6.0 were ALREA
 
 ## Pushed (recent — prune after a few cycles)
 
+- **Expanded Farming (GreenhouseGrow) → 0.1.3** (mod 72) — PUSHED 2026-07-05 (`publish-all --send`). Bigger farms now turn over proportionally more: per-cycle production output and storage capacity both scale with footprint area (tier squared), so a 4x farm yields and stores ~16x a 1x (previously output was flat regardless of size). Standalone (no `requires` → requirements step N/A).
+
 - **IFZModPanels → 0.1.1** (mod 77, file 7619132, all 4 stages 200/204) — PUSHED 2026-07-05 (`publish-all --send`). **NRE-on-close fix:** `ModWindow.Save()` ran `CaptureState()` reading a destroyed `_root` (Unity destroyed-but-non-null) → NRE + game bug-report when closing a panel after a scene reload / DestroyWindow. `Save()` now bails when `_root == null`. Fixes a bug every LIVE 0.1.0 user hit. Requires IFZModAPI.
 - **IFZQualityOfLife → 1.6.1** (mod 33, file 7619135, all 4 stages 200/204, now requires IFZ Mod Panels >= 0.1.1) — PUSHED 2026-07-05 (`publish-all --send`). **Log-spam fix:** added `Plugin.Verbose` (default off) + `LogDebug`; gated `SmartWorkerRedistribution` (auto 30-GTS timer) + all `ShellLairs` operational logs that LIVE 1.6.0 spammed into `LogOutput.log`. No gameplay change from 1.6.0. Requires IFZModPanels + IFZModAPI.
 - **High Ground → 1.0.3** (mod 64, file uploaded, stages 200) — PUSHED 2026-07-05 (`publish-all --send`). Log-spam hotfix: per-shot `[ElevatedFiring]` + per-refresh `[HeightAdvantage]` logs were unconditional → flooded LogOutput.log in combat; now gated behind `ElevatedFiring/Debug` (default off) via new `Plugin.LogDebug`. No gameplay change from 1.0.2.
