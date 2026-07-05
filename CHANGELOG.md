@@ -6,6 +6,16 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-05 -- IFZModAPI 1.6.1 (hotfix)
+
+### Fixed
+- **IFZModAPI 1.6.1 —** fixes a critical TypeLoadException crash on load that hit Nexus users running IFZ Mod Panels 0.1.1 and IFZ Quality of Life 1.6.1 together. Both mods call `IFZModAPI.Radio`, but the live API on Nexus was still 1.4.5 (which has no `Radio` type). On load, BepInEx threw `TypeLoadException: Could not resolve type 'IFZModAPI.Radio'` every frame → game force-quit. Root cause: the API dependency release was forgotten when Panels / QoL shipped (BepInDependency doesn't version-pin, so BepInEx loads the stale 1.4.5 by default). Requires immediate push to restore the game for affected users. IFZ Mod API is the sole patcher of shared systems; required by all mods.
+
+### Added
+- **IFZModAPI 1.6.1 —** bundles additive features from 1.5.0 onward: **SicknessCoordinator** (capped daily sickness rolls, pluggable sources); per-character **CombatDamageMultiplier** registry (1.5.1); **Radio.Announce** shared announce hook (1.5.5: call `Radio.Announce(text, severity, source)` for one radio bubble + log entry; sound is opt-in; hard-gated during save-load); **SaveStore** shared per-save persistence (1.6.0: coords-keyed clock-independent JSON sidecar). All additive, fully backward-compatible — existing API members unchanged, older mods resolve without issue.
+
+---
+
 ## 2026-07-05 -- Expanded Farming (GreenhouseGrow) 0.1.3
 
 - **Expanded Farming 0.1.3 —** bigger farms now produce proportionally more: each production cycle's output scales with footprint area (tier squared), so a 4x farm yields ~16x a 1x. Previously output was flat regardless of size.

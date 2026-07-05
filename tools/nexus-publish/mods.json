@@ -40,8 +40,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
       },
-      "fileNotes": "1.4.5: New public event Cache.CharacterDied, fired from a sole Prefix on Character.OnCharacterDeath -- lets other mods react to kills without patching the death method themselves. Purely additive; zero breaking changes, older mods unaffected. 1.4.4: Harmony __args compatibility fix — removes dependency on newer HarmonyX __args injection (which old BepInEx 5.4.5.0 can't emit), so patches apply cleanly on old BepInEx. Fixes GiveOrder patch failure on Chinese-repo old versions (SquadMerge merge hook never ran). Public-surface unchanged; backward-compat audited. 1.4.3: fixes the clock showing day '0' (e.g. '0 JULY') after loading a base-game save - the day-counter restore fired the clock-repaint event redundantly and the UI painted the wrong number; now it only fires when the value actually changes. Gameplay day was always correct. Builds on 1.4.2's expedition day-counter fix + Time.RunDay. IMPORTANT: update ALL your IFZ mods together - older versions crash with this API.",
-      "version": "1.4.5"
+      "fileNotes": "REQUIRED UPDATE - fixes a crash. Live 1.4.5 lacks IFZModAPI.Radio; Mod Panels 0.1.1/QoL 1.6.1 call it, throw TypeLoadException, force-quit. 1.6.1 adds Radio (announce hook), SicknessCoordinator, dmg-mult registry, SaveStore. Additive, back-compatible.",
+      "version": "1.6.1"
     },
     {
       "key": "ArmyBackup",
