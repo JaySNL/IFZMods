@@ -49,7 +49,7 @@ _Last updated: 2026-07-06_
 | 67 | Buildable Bridges | 0.2.1.0 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
 | 68 | NoPath - YesPath | 0.3.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
 | 69 | Squad Grenades | 1.0.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/69) |
-| 81 | Elder Population | 0.1.1-hotfix | 🟡 Draft | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/81) |
+| 81 | Elder Population | 0.1.1-hotfix | 🔬 Experimental | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/81) |
 
 > "Requires: API" = needs **IFZ Mod API** (mod 42). "Panels" = needs **IFZ Mod Panels** (mod 77), a UI library — install only if a mod lists it as a requirement. Match API version to the mod's requirement; always update API + mods together.
 
