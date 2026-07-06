@@ -6,6 +6,16 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-07 -- PerfPack 1.5.4 + IFZ Quality of Life 1.6.2
+
+**[Pushed to Nexus -- see RELEASE-QUEUE.md]**
+
+### Added
+- **PerfPack 1.5.4 -- rain & snow particle toggles** (`[Weather]` `DisableRainParticles` / `DisableSnowParticles`, both default off). Rain/snow each spawn 16+ particle systems per map tile that simulate every frame -- a real GPU/CPU cost on big maps, and some players find heavy snow blinding. Toggling one on removes its particles live (on the next weather change, or immediately mid-weather) and keeps them off. Rain/thunder **sound is untouched**. Does not dim the snow ground shader (particle toggle only). Verified in-game. (issues #37, #38)
+- **IFZ Quality of Life 1.6.2 -- worker large-step.** Hold the modifier (rebindable, default **Ctrl**) while clicking a building's +/- max-worker buttons to add or remove **100** workers at once (`[Workers]` `WorkerLargeStep`). Shift still steps 10, a plain click 1; the vanilla cap clamp and button greying are unchanged. Verified in-game. Requires IFZ Mod API + IFZ Mod Panels. (issue #25)
+
+---
+
 ## 2026-07-06 -- ElderPop 0.1.1-hotfix
 
 **[Pushed to Nexus mod 81 as a file update to the existing DRAFT page -- awaiting user publish]**
