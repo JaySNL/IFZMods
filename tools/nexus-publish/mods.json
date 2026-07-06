@@ -897,8 +897,8 @@
         "IFZModAPI",
         "IFZModPanels"
       ],
-      "fileNotes": "0.1.0 experimental - Population life-cycle: citizens age, retire, grow frail and die of old age (persistent human-age model), event-driven, anti-death-wave trickle caps, F11 stats dashboard.",
-      "version": "0.1.0"
+      "fileNotes": "0.1.1 hotfix - Fresh new-game colonists and later immigrants now seed young (18-30) instead of the full age pyramid, which was killing elderly-seeded pops on day one. Established-save adoption baseline unchanged. No save-format change.",
+      "version": "0.1.1-hotfix"
     }
   ]
 }

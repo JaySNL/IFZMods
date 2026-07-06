@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-06 -- ElderPop 0.1.1-hotfix
+
+**[Pushed to Nexus mod 81 as a file update to the existing DRAFT page -- awaiting user publish]**
+
+### Fixed
+- **ElderPop 0.1.1-hotfix -- fresh colonists no longer die on day one.** Citizens on a brand-new game, and later immigrants on any colony, were seeded from the full 18-78 age pyramid; an elderly-seeded pop whose rolled personal lifespan was already behind its seed age died at its first sunrise (reported: "every run, end of first day ppl die"). Fresh arrivals now seed young (18-30, below the frailty threshold) via new `NewGameMaxDay`/`NewGameSeedMaxAge` config; the established-save adoption baseline (the realistic age pyramid) is unchanged. Auto-heals across reloads, no save-format change. Requires IFZ Mod API 1.7.0+ (unchanged), optional IFZ Mod Panels.
+
+---
+
 ## 2026-07-06 -- Shipped-mod build sync (API 1.7.0 recompile) + version bumps
 
 **[git/dist sync -- Nexus pushes tracked separately in RELEASE-QUEUE.md]**

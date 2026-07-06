@@ -49,6 +49,7 @@ _Last updated: 2026-07-06_
 | 67 | Buildable Bridges | 0.2.1.0 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
 | 68 | NoPath - YesPath | 0.3.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
 | 69 | Squad Grenades | 1.0.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/69) |
+| 81 | Elder Population | 0.1.1-hotfix | 🟡 Draft | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/81) |
 
 > "Requires: API" = needs **IFZ Mod API** (mod 42). "Panels" = needs **IFZ Mod Panels** (mod 77), a UI library — install only if a mod lists it as a requirement. Match API version to the mod's requirement; always update API + mods together.
 
@@ -64,6 +65,7 @@ _Last updated: 2026-07-06_
 | Buildable Bridges 67 | Placed bridge was indestructible (disabled collider invisible to shell/deconstruct queries) | High | 🟢 Fixed | Shipped 0.1.1 (`isTrigger=true`) — bridges take shell/explosion damage + deconstruct, traffic still crosses |
 | IFZ Mod API 42 | Nexus user reported a load crash: live API 1.4.5 has no `IFZModAPI.Radio` type, but Mod Panels 0.1.1 / QoL 1.6.1 (both live) call it — `TypeLoadException` fires every frame at load, game force-quits. Root cause: API dependency push was forgotten when Panels/QoL shipped; BepInDependency isn't version-pinned so BepInEx loads the stale API anyway | Critical | 🟢 Fixed (shipped) | API **1.6.1** (adds `Radio` + SicknessCoordinator, damage-mult registry, SaveStore, all additive) PUSHED to Nexus 2026-07-05. Affected users update API to recover. |
 | Raider Escalation 57 | Adaptive escalation never fired — wipe detection counted per-raider death callbacks, which missed real wipes; those fell through to the timeout as false "lingers" instead, so RaidForce never climbed even through larger raids/vehicles | Medium | 🟠 In progress | **Built 1.3.1-beta** — wipe detection now polls live raider headcount; a clean full wipe raises RaidForce, a costly one barely moves it (new `KillPain` config default 0.5, `FastWipeSeconds` deprecated). **Pushed as 1.3.1-beta 2026-07-06** (file 7622597) — awaiting in-game verify |
+| ElderPop 81 | Fresh colonists on a new game (and later immigrants) were seeded from the full 18-78 age pyramid; elderly-seeded pops past their rolled personal lifespan died end of day one ("every run, end of first day ppl die") | High | 🟢 Fixed | Shipped **0.1.1-hotfix**: fresh arrivals now seed young (18-30, below frailty age) via new `NewGameMaxDay`/`NewGameSeedMaxAge`; established-save adoption baseline unchanged. No save-format change. |
 
 _Add a row when a new bug comes in via [Issues](https://github.com/JaySNL/IFZMods/issues)._
 
@@ -74,7 +76,6 @@ _Add a row when a new bug comes in via [Issues](https://github.com/JaySNL/IFZMod
 | Project | State | Blocker / next step |
 |---------|-------|---------------------|
 | BlitzHund (suicide-bomber infected dog, new mod) | 🟡 Draft 0.1.0 — files + images pushed to mod 71 | Awaiting user: set main image + publish the draft. Requires IFZ Mod API 1.4.5 (live) |
-| ElderPop proto (citizen life-cycle: age/retire/die) | 🛠 WIP 0.1.0, built | Seed age-pyramid (v0.2 internal iteration, same 0.1.0 label) not yet playtested — awaiting in-game verify |
 | StackBuild proto (rooftop buildings) | 🛠 WIP, built+deployed | Save/load fix (ground-anchor restore) — awaiting in-game verify |
 | WorldEvents proto (dispatcher + events) | 🛠 WIP, code-complete | Awaiting in-game verify |
 | Black-Market Trader event | 🛠 WIP, E2E tested | Polish / ship decision |
