@@ -8,7 +8,8 @@
 // Pipeline per mod (from openapi.yaml):
 //   1. GET  /v3/games/{game}/mods/{numericId}        -> resolve opaque mod UID (data.id)
 //   2. POST /v3/uploads {size_bytes, filename}        -> {id, presigned_url}
-//   3. PUT  <presigned_url>  (raw DLL bytes)          -> S3
+//   3. PUT  <presigned_url>  (ZIPPED bytes)           -> S3   (auto-zipped: see packForUpload —
+//        a bare .dll gets auto-quarantined by Nexus; a real archive it can preview passes)
 //   4. POST /v3/uploads/{id}/finalise                 -> close session
 //   5. poll GET /v3/uploads/{id} until state=available
 //   6. POST /v3/mod-files {upload_id, mod_id, name, version, file_category:"main"}
@@ -27,6 +28,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
+import os from 'node:os'
+import { execFileSync } from 'node:child_process'
 
 const HERE = path.dirname(url.fileURLToPath(import.meta.url))
 
@@ -142,9 +145,50 @@ async function resolveUid(numericId) {
   return res.data.id
 }
 
-async function uploadFile(dllAbs) {
-  const bytes = fs.readFileSync(dllAbs)
-  const filename = path.basename(dllAbs)
+// Archive the DLL before upload. A BARE .dll upload gets auto-QUARANTINED on Nexus (the scanner
+// "fails to preview archive contents" for a raw PE, holds the file even at 0/70 VirusTotal).
+// A plain ZIP wrapping a single DLL ALSO gets quarantined (observed on PerfPack 1.5.4, 2026-07-07);
+// a real .7z container previews clean and passes. So we emit .7z (p7zip). We wrap into
+// BepInEx/plugins/<dll> so Vortex/MO2 install to the right path. Preflight already validated the
+// version against the RAW dll, so compression here is irrelevant. Non-.dll dllPath (already an
+// archive) is uploaded as-is.
+function makeArchive(stageDir, outPath) {
+  if (fs.existsSync(outPath)) fs.rmSync(outPath)
+  // Real 7z container (-t7z). Zip is deliberately NOT used — Nexus quarantines single-DLL zips.
+  const attempts = [
+    ['7z',  ['a', '-t7z', '-bso0', '-bsp0', outPath, 'BepInEx']],
+    ['7za', ['a', '-t7z', '-bso0', '-bsp0', outPath, 'BepInEx']],
+    ['7zr', ['a', '-t7z', '-bso0', '-bsp0', outPath, 'BepInEx']],
+  ]
+  let lastErr
+  for (const [bin, args] of attempts) {
+    try { execFileSync(bin, args, { cwd: stageDir, stdio: 'ignore' }); return bin }
+    catch (e) { lastErr = e; if (fs.existsSync(outPath)) fs.rmSync(outPath) }
+  }
+  throw new Error(`no 7z archiver on PATH (install p7zip): ${lastErr?.message || ''}`)
+}
+
+function packForUpload(fileAbs, key, version) {
+  if (!fileAbs.toLowerCase().endsWith('.dll'))
+    return { fileAbs, filename: path.basename(fileAbs), archiver: '(pre-archived)', cleanup() {} }
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ifz-pack-'))
+  const stage = path.join(tmp, 'stage')
+  const plugins = path.join(stage, 'BepInEx', 'plugins')
+  fs.mkdirSync(plugins, { recursive: true })
+  fs.copyFileSync(fileAbs, path.join(plugins, path.basename(fileAbs)))
+  const safe = `${key}-${version}`.replace(/[^A-Za-z0-9._-]/g, '_')
+  const outPath = path.join(tmp, `${safe}.7z`)
+  const archiver = makeArchive(stage, outPath)
+  return {
+    fileAbs: outPath,
+    filename: `${safe}.7z`,
+    archiver,
+    cleanup() { try { fs.rmSync(tmp, { recursive: true, force: true }) } catch {} },
+  }
+}
+
+async function uploadFile(fileAbs, filename) {
+  const bytes = fs.readFileSync(fileAbs)
   // 1. create upload session
   const up = await jpost(`${API}/uploads`, { size_bytes: bytes.length, filename })
   const { id, presigned_url } = up.data
@@ -177,7 +221,10 @@ async function pushMod(mod, versionArg) {
   console.log(`\n=== ${mod.key} (mod ${mod.nexusModId}) -> v${version} ===`)
   const uid = await resolveUid(mod.nexusModId)
   console.log(`  uid=${uid}`)
-  const uploadId = await uploadFile(dllAbs)
+  const pkg = packForUpload(dllAbs, mod.key, version)
+  console.log(`  packed ${pkg.filename} via ${pkg.archiver}`)
+  let uploadId
+  try { uploadId = await uploadFile(pkg.fileAbs, pkg.filename) } finally { pkg.cleanup() }
   console.log(`  upload=${uploadId} available`)
   const name = mod.name.replace(/[^a-zA-Z0-9 _'().-]/g, '').slice(0, 50)
   try {
@@ -205,7 +252,10 @@ async function updateMod(mod, version) {
   if (!groups.length) { console.log(`  ✗ no update groups (was a file ever uploaded? run first-upload mode)`); return }
   const group = groups.find((g) => g.is_active) || groups[0]
   console.log(`  uid=${uid} group=${group.id}${group.name ? ` (${group.name})` : ''}`)
-  const uploadId = await uploadFile(dllAbs)
+  const pkg = packForUpload(dllAbs, mod.key, version)
+  console.log(`  packed ${pkg.filename} via ${pkg.archiver}`)
+  let uploadId
+  try { uploadId = await uploadFile(pkg.fileAbs, pkg.filename) } finally { pkg.cleanup() }
   console.log(`  upload=${uploadId} available`)
   const name = mod.name.replace(/[^a-zA-Z0-9 _'().-]/g, '').slice(0, 50)
   try {
