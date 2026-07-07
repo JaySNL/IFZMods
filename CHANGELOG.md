@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-07 -- Smart Worker Redistribution 1.2.0
+
+**[Pushed to Nexus mod 37 -- see RELEASE-QUEUE.md]**
+
+### Added
+- **Smart Worker Redistribution 1.2.0 -- workers auto-haul loose ground items** (`[DroppedCrates]`). When you cancel a queued build, the refunded materials normally drop as loose piles only your combat squads can pick up (tedious micro). Now they drop as **worker-gatherable debris** -- exactly like deconstruction rubble -- so idle workers haul them to a stockroom on their own. A base-area sweep (`SweepExisting`, radius `SweepRadius` around your HQ) also converts *existing* loose piles (squad-dropped, scavenged, or dropped before the mod loaded), leaving distant expedition loot for squads. Persists across save/load; skips piles a squad is already carrying and mission/sickness resources (meat, scientific material/sample). Verified in-game. (issue #15)
+
+---
+
 ## 2026-07-07 -- PerfPack 1.5.4 + IFZ Quality of Life 1.6.2
 
 **[Pushed to Nexus -- see RELEASE-QUEUE.md]**

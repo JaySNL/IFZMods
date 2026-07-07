@@ -376,7 +376,8 @@
       "nexusModId": 37,
       "dllPath": "../../plugins/SmartWorkerRedist.dll",
       "name": "Smart Worker Redistribution",
-      "summary": "Stalled construction sites auto-pull workers from idle jobs.",
+      "summary": "Stalled construction sites auto-pull workers from idle jobs. 1.2.0: idle workers also auto-haul loose ground items near your base.",
+      "fileNotes": "1.2.0 - New: idle workers auto-haul loose ground items. Cancelled-build refunds AND existing loose piles near your HQ become worker-gatherable debris (like deconstruct rubble) instead of squad-only piles. Toggle + radius in F1 [DroppedCrates].",
       "description": "Every TickSeconds (default 20), scans all active works. Counts vacancies on unsuspended works that can execute. Frees an equal number of workers from suspended works (e.g. waiting on resources) — WorkController auto-reassigns them to live jobs.\n\nResult: no more workers sitting idle at a stalled construction while another site needs them.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Tick interval tunable.",
       "category": "Miscellaneous",
       "tags": [
@@ -386,14 +387,14 @@
       "sections": {
         "description": "When construction stalls because resources are missing but workers are still parked there, this mod frees them. Every TickSeconds (default 20) it counts vacancies on unsuspended works that can execute, then frees an equal number of workers from suspended works — WorkController auto-reassigns them to live jobs.",
         "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- Periodic redistribution sweep\n- Frees idle workers from stalled construction\n- Live jobs pick them up via vanilla WorkController paths\n- Tunable verbosity for debugging",
+        "mainFeatures": "- Periodic redistribution sweep\n- Frees idle workers from stalled construction\n- Live jobs pick them up via vanilla WorkController paths\n- NEW 1.2.0: workers auto-haul loose ground items -- cancelled-build refunds and existing loose piles near your HQ become worker-gatherable debris (like deconstruction rubble) instead of squad-only pickups. Toggle + radius in [DroppedCrates].\n- Tunable verbosity for debugging",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "requires": [
         "IFZModAPI"
       ],
-      "version": "1.1.1"
+      "version": "1.2.0"
     },
     {
       "key": "SplitUnlock",
