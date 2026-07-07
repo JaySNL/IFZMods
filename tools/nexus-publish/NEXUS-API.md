@@ -67,20 +67,32 @@ is safe, changelog/details return 200/skip). `add auto` derives version from `mo
 - **GraphQL mutations** (`/v2/graphql`, 73 total, apikey or cookie): endorse, track, collections,
   comments, tags, api-keys, moderation… **none touch mod files/versions/categories.**
 
-## ⚠️ OPEN: how to ARCHIVE / set file category
+## ARCHIVE a file / set category  (SOLVED 2026-07-07 — cookie-gated site route)
 
-Not yet cracked via apikey. Ruled out (2026-07-07):
-- `PUT/PATCH/POST /v3/mod-files/{id}` with category/is_active/archived/file_category/category_id → 204 **no-op**.
-- `/v3/mod-files/{id}/versions/{vid}`, `/v3/mod-file-versions/{vid}` PATCH/PUT/DELETE → 404 (read-only).
-- `/v3/games/{game}/mods/{id}/files/{fileId}` → 404.
-- v2 GraphQL (apikey **and** cookie) → no archive/file mutation exists.
-- legacy `www/Core/Libs/Common/Managers/Mods?SetFileCategory` → dead (HTML).
-- `www.nexusmods.com/api/mods/{id}/files/{fileId}` → 400 HTML for all methods (not a real JSON route).
+**NOT in the apikey API.** It's a Next.js site route, Cloudflare-JA3-gated → curl-impersonate + cookie:
 
-**TODO to finish:** capture the real request from the browser — log in, open a mod's Files tab,
-DevTools → Network, click **Archive** on a file, copy the request (URL, method, payload, any CSRF/
-`x-*` headers). It's almost certainly a **cookie-gated `www` action** → replay via curl-impersonate
-(same pattern as media upload). Paste it here and into a helper script once captured.
+```
+POST https://next.nexusmods.com/api/flamework/mods/archive-file
+Cookie: <NEXUS_COOKIE>   (curl-impersonate --impersonate firefox147 --compressed)
+Content-Type: application/json
+Origin: https://www.nexusmods.com   Referer: https://www.nexusmods.com/
+body: {"fileId": <v1 file_id>, "gameId": 7442, "modId": <numeric mod id>}
+```
+`gameId` **7442** = infectionfreezone (required; a missing/other numeric field is what makes the app
+reject with `{"error":"Expected number, received nan"}`). `fileId` = the **v1 `file_id`**
+(== v3 `version.game_scoped_id`), NOT the v3 group/version id. Success → `{"success":true}` (200).
+
+Helper: **`node archive-old-files.mjs [--send] <Key ...>`** — lists each mod's MAIN files, keeps the
+newest by `uploaded_time`, archives the rest (policy: always keep only the latest online). Dry-run
+without `--send`. Backs off on v1 429/403, throttles the site endpoint (~600ms). Cross-ref
+`nexus-media-cf-bypass` for the curl-impersonate pattern.
+
+Ruled out (don't retry these): `PUT /v3/mod-files/{id}` (category silently ignored, 204 no-op);
+`/v3/mod-file-versions/{vid}` (read-only, PATCH/PUT/DELETE 404); v2 GraphQL (73 mutations, none for
+files, apikey or cookie); legacy `www/Core/.../SetFileCategory` (dead); `www.nexusmods.com/api/...` (not a route).
+
+Note: v1 `files.json` returns **403 "Mod not available"** for hidden/moderated mod pages (mod.json still
+200); use v3 `GET /v3/mods/{uid}/files` (`is_active`) to inspect those instead.
 
 ## Gotchas
 - API **cannot delete** files (by design). Archive is the intended way to retire old versions — but see OPEN above.
