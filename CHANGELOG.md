@@ -6,6 +6,18 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-07 -- IFZ Quality of Life 1.7.0 + CamControl 1.1.0
+
+**[Staged and verified — not yet pushed to Nexus]**
+
+### Added
+- **IFZ Quality of Life 1.7.0 -- AreaWorkMarker night-fade.** The vanilla blue "queued for area work" fill (trees/debris/streetlights/wrecks queued for cutting, metal/resource nodes queued for scavenging) is drawn full-bright and glows like a beacon at night, breaking immersion. New config `AreaWorkMarker/Mode` (default `NightFade`) fades the marker to 0 at night and back to full by day, keeping the daytime "which items are queued" cue while killing the night glow; set to `Off` to never show it, or `Vanilla` for unchanged behaviour. Live-toggle in F1 (`AreaWorkMarker/Mode`); existing marks update within a tick. Requires IFZ Mod API + IFZ Mod Panels.
+
+### Fixed
+- **CamControl 1.1.0 -- F7 now fully hides all UI.** The hide-HUD toggle (F7) previously hid only the game's `MainUILayer` (the main HUD bar), leaving the vanilla map-layers toolbar and every mod window (Flares, Housing Panel, etc.) visible on screen. Now F7 hides everything -- all vanilla UI and all mod windows. New config `UI/FullHide` (default on) enables this full hiding; set it off to revert to `MainUILayer`-only hiding. Requires IFZ Mod API.
+
+---
+
 ## 2026-07-07 -- Smart Worker Redistribution 1.2.0
 
 **[Pushed to Nexus mod 37 -- see RELEASE-QUEUE.md]**

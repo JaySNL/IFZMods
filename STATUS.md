@@ -6,7 +6,7 @@ Players: spot a bug? **[Open an issue](https://github.com/JaySNL/IFZMods/issues/
 **Legend** — Release state: 🟢 Live (on Nexus) · 🟡 Staged (built/verified, not yet pushed) · 🔬 Experimental · 🛠 WIP (unreleased)
 Bug status: 🔴 Open · 🟠 In progress · 🟢 Fixed (shipped) · ⚪ Won't fix / vanilla limit
 
-_Last updated: 2026-07-06_
+_Last updated: 2026-07-07_
 
 ---
 
@@ -27,7 +27,7 @@ _Last updated: 2026-07-06_
 | 31 | House Power | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/31) |
 | 32 | House Rebalance | 1.2.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/32) |
 | 77 | IFZ Mod Panels | 0.1.1 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/77) |
-| 33 | IFZ Quality of Life Bundle | 1.6.2 | 🟢 Live | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |
+| 33 | IFZ Quality of Life Bundle | 1.7.0 | 🟡 Staged | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |
 | 34 | Locale Fix | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/34) |
 | 35 | Performance Pack | 1.5.4 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/35) |
 | 36 | Save File Version Unlock | 1.0.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/36) |
@@ -49,6 +49,7 @@ _Last updated: 2026-07-06_
 | 67 | Buildable Bridges | 0.2.1.0 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
 | 68 | NoPath - YesPath | 0.3.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
 | 69 | Squad Grenades | 1.0.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/69) |
+| 79 | CamControl | 1.1.0 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/79) |
 | 80 | Extended Health | 0.1.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/80) |
 | 81 | Elder Population | 0.1.1-hotfix | 🔬 Experimental | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/81) |
 
