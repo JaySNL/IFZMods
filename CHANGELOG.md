@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-07 -- Unlocked Buildings 1.3.2 (Gathering Place capacity fix)
+
+**[Staged and verified — not yet pushed to Nexus]**
+
+### Fixed
+- **Unlocked Buildings 1.3.2 -- Gathering Place capacity now scales with volume multiplier.** The forum building's "Places for citizens" capacity was hard-capped at ~2000 seats, completely ignoring the per-building volume scaling and UncapBuildingCapacity multiplier settings that raise every other building's stats. The seats came from an AnimationCurve in `LawsConfig.CalculateForumCapacity` that saturated at ~2000 and bypassed the per-building clamp/uncap logic. Fix: a new Harmony postfix on `CalculateForumCapacity` multiplies the curve's result by `VolumeMultiplier` when `UncapBuildingCapacity` is enabled, scaling the seat count with the same modifiers as other stats (default 3x multiplier: ~2000 → ~6000; raising `VolumeMultiplier` scales it further). Opt-in, bundled with the existing BuildingCapacity uncap feature, sole patcher of `CalculateForumCapacity` (no collisions).
+
+---
+
 ## 2026-07-07 -- Expanded Farming (GreenhouseGrow) 0.1.4
 
 **[Pushed to Nexus mod 72 -- see RELEASE-QUEUE.md]**

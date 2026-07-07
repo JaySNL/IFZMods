@@ -415,8 +415,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.3.1",
-      "fileNotes": "1.3.0: NEW per-building capacity uncap (BuildingCapacity section, opt-in/off by default). Vanilla clamps every building to AdaptConfig.BuildingsMaxVolume (~50000 m³), capping storage, population/gathering capacity, HP and deconstruct yield at the same ~2000-per-building wall regardless of real size. UncapBuildingCapacity + VolumeMultiplier (default 3) lift it so bigger buildings hold/house/yield more without splitting. Population scales too — high values cost late-game FPS; 2-3 is safe. Split + size toggles unchanged."
+      "version": "1.3.2",
+      "fileNotes": "1.3.2: Fixes Gathering Place seat cap stuck ~2000 despite VolumeMultiplier -- CalculateForumCapacity curve saturates, bypassing the uncap. Postfix now scales it too (2000 -> ~6000 at default 3x). Opt-in with rest of BuildingCapacity."
     },
     {
       "key": "SquadAutoBehavior",
