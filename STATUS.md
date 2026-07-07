@@ -16,7 +16,7 @@ _Last updated: 2026-07-07_
 |----|-----|---------|-------|----------|------|
 | 42 | IFZ Mod API | 1.6.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
 | 71 | BlitzHund | 0.1.0 | 🟡 Draft | API | [link](https://www.nexusmods.com/infectionfreezone/mods/71) |
-| 72 | Expanded Farming (2x-4x) | 0.1.3 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/72) |
+| 72 | Expanded Farming (2x-4x) | 0.1.4 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/72) |
 | 24 | Army Backup AI Fix | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/24) |
 | 25 | Cinematic FX | 1.2.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/25) |
 | 26 | Construction ETA | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/26) |

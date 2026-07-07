@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-07 -- Expanded Farming (GreenhouseGrow) 0.1.4
+
+**[Pushed to Nexus mod 72 -- see RELEASE-QUEUE.md]**
+
+### Fixed
+- **Expanded Farming 0.1.4 -- production panel now shows the scaled per-cycle output for enlarged farms.** The building's production panel previously showed the flat base recipe number regardless of farm size (e.g. always "4 grain" even on a 4x greenhouse), even though actual output was already scaling with footprint area since 0.1.3 -- a Nexus user reported this as confusing/looked broken. The panel now shows the real scaled number (a 4x greenhouse displays ~16x the recipe amount, e.g. grain 4 -> 64). Display-only; actual production output is unchanged. An un-scaled x1 farm still shows the base number. Standalone (no `requires`).
+
+---
+
 ## 2026-07-07 -- IFZ Quality of Life 1.7.0 + CamControl 1.1.0
 
 **[Staged and verified — not yet pushed to Nexus]**
