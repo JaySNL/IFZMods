@@ -726,13 +726,13 @@
       "sections": {
         "description": "Warm amber window lights across the city at night. Reconstructs the game's own window placement and lights a realistic, patchy fraction of windows after dark, with a moonlight-immune additive glow that fades in at dusk.",
         "installation": "Drop WindowGlow.dll into <game>/BepInEx/plugins/. The shader is embedded in the DLL — no extra files. Launch the game; windows light up at night. Press F1 (ConfigurationManager) to tune colour, intensity and the lit fraction live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- Warm amber window glow on buildings at night\n- Reconstructs the game's exact window placement (pixel-accurate on standard buildings)\n- Moonlight-immune additive emission (no blue-white night wash)\n- Realistic patchy lighting — only a fraction of windows lit, varies per building, stable (no flicker)\n- Fades in/out around sunrise/sunset on the game's own day/night value\n- Fully tunable in F1: colour, intensity/bloom, lit fraction, ramp, cleanup\n- Single self-contained DLL (shader bundle embedded), no dependencies",
+        "mainFeatures": "- Warm amber window glow on buildings at night\n- Reconstructs the game's exact window placement (pixel-accurate on standard buildings)\n- Moonlight-immune additive emission (no blue-white night wash)\n- Realistic patchy lighting — only a fraction of windows lit, varies per building, stable within a night (no flicker); which windows light up now reshuffles nightly (toggle: VaryNightly)\n- Fades in/out around sunrise/sunset on the game's own day/night value\n- Fully tunable in F1: colour, intensity/bloom, lit fraction, ramp, cleanup\n- Single self-contained DLL (shader bundle embedded), no dependencies",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton). No mod dependencies.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tune live)\n- LocaleFix (if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "requires": [],
-      "fileNotes": "1.0.0: initial release. Warm amber window lighting at night via a reconstructed, moonlight-immune additive emission pass on the game's own window placement. Patchy lit-fraction by default. Shader bundle embedded in the DLL.",
-      "version": "1.0.0"
+      "fileNotes": "1.0.0: amber window lighting at night, moonlight-immune, patchy by default. 1.1.0: which windows light up now varies each night (same lit count), seeded by day number, swapped only in daylight. New: [Lit] VaryNightly (default true).",
+      "version": "1.1.0"
     },
     {
       "key": "BridgeProto",
