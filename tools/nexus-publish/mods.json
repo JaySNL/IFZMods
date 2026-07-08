@@ -828,8 +828,8 @@
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "requires": null,
-      "fileNotes": "0.1.4 - The production panel now shows the scaled per-cycle output for enlarged farms (a 4x greenhouse displays ~16x the recipe amount) instead of the flat base number, so size scaling is visible. Display-only; actual output already scaled. A x1 farm still shows the base.",
-      "version": "0.1.4"
+      "fileNotes": "0.1.5 - Fixed two playtester bugs: new farms no longer default to max size (tier now resets to x1 on each new placement), and greenhouse workers no longer stand outside the building (work-position picker no longer double-applies the scale).",
+      "version": "0.1.5"
     },
     {
       "key": "CamControl",

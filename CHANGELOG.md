@@ -6,6 +6,16 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-08 -- Expanded Farming (GreenhouseGrow) 0.1.5
+
+**[Pushed to Nexus mod 72 -- see RELEASE-QUEUE.md]**
+
+### Fixed
+- **Expanded Farming 0.1.5 -- farms no longer default to max size on placement.** The `PlaceBump` global size-tier state was never reset between placements, so a new farm silently inherited whatever tier (up to x4) was last used -- placing without pressing `,` / `.` could start at max size and fail placement (oversized footprint). The tier now resets to x1 (vanilla size) at the start of each new placement (cursor Init).
+- **Expanded Farming 0.1.5 -- greenhouse workers no longer stand outside the building.** Greenhouses scale via `transform.localScale`; the game's work-position picker (`GetRandomPositionInObject`) re-applied that scale a second time via `TransformPoint`, landing farmers outside the greenhouse's actual footprint on any farm above x1. The double-scale is now cancelled for scaled greenhouses only -- open-field farms (which don't use localScale) and the placement/collision validator are unaffected.
+
+---
+
 ## 2026-07-08 -- No Map Limit - Buildings 1.0.0
 
 **[Pushed to Nexus mod 85 -- NEW page (DRAFT), user publishes -- see RELEASE-QUEUE.md]**
