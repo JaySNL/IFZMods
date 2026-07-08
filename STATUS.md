@@ -6,7 +6,7 @@ Players: spot a bug? **[Open an issue](https://github.com/JaySNL/IFZMods/issues/
 **Legend** — Release state: 🟢 Live (on Nexus) · 🟡 Staged (built/verified, not yet pushed) · 🔬 Experimental · 🛠 WIP (unreleased)
 Bug status: 🔴 Open · 🟠 In progress · 🟢 Fixed (shipped) · ⚪ Won't fix / vanilla limit
 
-_Last updated: 2026-07-07_
+_Last updated: 2026-07-08_
 
 ---
 
@@ -52,6 +52,7 @@ _Last updated: 2026-07-07_
 | 79 | CamControl | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/79) |
 | 80 | Extended Health | 0.1.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/80) |
 | 81 | Elder Population | 0.1.1-hotfix | 🔬 Experimental | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/81) |
+| 85 | No Map Limit - Buildings | 1.0.0 | 🟡 Draft | — | [link](https://www.nexusmods.com/infectionfreezone/mods/85) |
 
 > "Requires: API" = needs **IFZ Mod API** (mod 42). "Panels" = needs **IFZ Mod Panels** (mod 77), a UI library — install only if a mod lists it as a requirement. Match API version to the mod's requirement; always update API + mods together.
 
@@ -78,6 +79,7 @@ _Add a row when a new bug comes in via [Issues](https://github.com/JaySNL/IFZMod
 | Project | State | Blocker / next step |
 |---------|-------|---------------------|
 | BlitzHund (suicide-bomber infected dog, new mod) | 🟡 Draft 0.1.0 — files + images pushed to mod 71 | Awaiting user: set main image + publish the draft. Requires IFZ Mod API 1.4.5 (live) |
+| No Map Limit - Buildings (new mod, mod 85) | 🟡 Draft 1.0.0 — DLL + page pushed to Nexus | Awaiting user: banner/main image + publish the draft. Standalone (no requirements) |
 | StackBuild proto (rooftop buildings) | 🛠 WIP, built+deployed | Save/load fix (ground-anchor restore) — awaiting in-game verify |
 | WorldEvents proto (dispatcher + events) | 🛠 WIP, code-complete | Awaiting in-game verify |
 | Black-Market Trader event | 🛠 WIP, E2E tested | Polish / ship decision |

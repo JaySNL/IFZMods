@@ -900,6 +900,27 @@
       ],
       "fileNotes": "0.1.1 hotfix - Fresh new-game colonists and later immigrants now seed young (18-30) instead of the full age pyramid, which was killing elderly-seeded pops on day one. Established-save adoption baseline unchanged. No save-format change.",
       "version": "0.1.1-hotfix"
+    },
+    {
+      "key": "NoMapLimitBuildings",
+      "nexusModId": 85,
+      "dllPath": "../../plugins/NoMapLimitBuildings.dll",
+      "name": "No Map Limit - Buildings",
+      "summary": "Lift the hardware-scaled building-count limit that stops you selecting dense real-world map areas.",
+      "description": "When you pick a starting area on the world map, Infection Free Zone rejects tiles whose total real-world (OpenStreetMap) building count is too high - the 'this area is not playable' block. That ceiling is not fixed: the game benchmarks your PC (CPU/RAM/GPU) into a 0-1 score and scales the limit from 20,000 buildings on a weak rig up to 50,000 on a top-tier machine. On mid hardware you get blocked somewhere in between (e.g. around 47k).\n\nThis mod lifts that single benchmark-gated limit. It multiplies the limit band by a configurable Multiplier (default x10 -> 200,000 to 500,000), keeping the game's hardware curve intact so the scaling still respects your machine, just far higher. At the default you can select any real city center.\n\nPERFORMANCE: the limit exists for a reason. A very dense map is main-thread CPU-bound on Unity culling and physics over object count, so a huge area will run at low late-game FPS no matter your GPU - lifting the limit lets you pick the map, it does not make it run faster. The game's own 'too many buildings / difficult area' warning is a separate rule this mod leaves in place, so you still get warned.\n\nConfigurable in F1 ConfigurationManager: [General] Enabled (off = vanilla limit) and Multiplier (1-1000; values <= 1 leave vanilla untouched).",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "The world-map area picker blocks tiles whose total real-world (OpenStreetMap) building count is too high ('this area is not playable'). That cap is not fixed - the game benchmarks your PC into a 0-1 score and scales the limit from 20,000 buildings on a weak rig to 50,000 on a top-tier machine, so mid hardware gets blocked somewhere in between.\n\nThis mod lifts that single benchmark-gated limit, multiplying the band by a configurable Multiplier (default x10) while keeping the hardware curve intact. At default you can select any real city center.\n\nPerformance: the limit is a real guard - a very dense map is main-thread CPU-bound on culling and physics, so it will run at low late-game FPS regardless of your GPU. Lifting the limit lets you pick the map, it does not make it run faster. The game's own 'too many buildings' warning is left in place.",
+        "installation": "Drop NoMapLimitBuildings.dll into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to set the Multiplier live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
+        "mainFeatures": "- Lifts the map-selection building-count cap that blocks dense real-world areas\n- The cap is your hardware benchmark: vanilla 20,000 (weak) to 50,000 (top-tier) buildings\n- Multiplier (default x10) scales the whole band, keeping the hardware curve\n- Only touches the single benchmark-gated rule - per-area minimums and the 'difficult area' warning are untouched\n- No dependencies, sole patcher - no other mod affected\n- Tunable in F1 ConfigurationManager",
+        "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 - runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 to set the Multiplier live).",
+        "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
+      },
+      "fileNotes": "1.0.0 - Lifts the map-selection building-count limit that blocks dense real-world areas. The cap is hardware-benchmarked (20k weak to 50k top rig); Multiplier (default x10) raises it. The native 'too many buildings' warning still shows.",
+      "version": "1.0.0"
     }
   ]
 }

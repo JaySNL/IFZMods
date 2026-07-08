@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-08 -- No Map Limit - Buildings 1.0.0
+
+**[Pushed to Nexus mod 85 -- NEW page (DRAFT), user publishes -- see RELEASE-QUEUE.md]**
+
+### Added
+- **No Map Limit - Buildings 1.0.0 -- removes/scales the map building count limit to allow large real-world areas.** Infection Free Zone's map-selection screen rejects a tile if its total OpenStreetMap building count is too high ("this area is not playable"). The cap is not fixed — the game benchmarks the player's hardware into a 0-1 score and scales the limit from 20,000 buildings (weak hardware) up to 50,000 (top-tier hardware); mid-range hardware gets blocked somewhere in between. This mod is the sole Harmony patcher of `MapTiler.TileValidation.Requirement.BuildingsCount.Validate`, keying on the unique `MultiplyByHardware=true` rule (the `BuildingLimit` requirement) and scaling its `value`/`MinValue` endpoints by a configurable `Multiplier` (default x10, giving a 200,000–500,000 band), keeping the native hardware curve intact. The game's own separate "too many buildings / difficult area" warning is untouched. Config: `[General] Enabled` (bool) and `Multiplier` (float, 1-1000). Verified in-game: a 60k-building area is now selectable. Standalone (no `requires`). Dev repo commit master 8bdff18. Page is a new DRAFT — user publishes + sets main image/banner.
+
+---
+
 ## 2026-07-07 -- Unlocked Buildings 1.3.2 (Gathering Place capacity fix)
 
 **[Staged and verified — not yet pushed to Nexus]**
