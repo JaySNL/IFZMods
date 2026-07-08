@@ -6,6 +6,24 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-09 -- Smart Worker Redistribution 1.2.1
+
+**[Pushed to Nexus mod 37 -- see RELEASE-QUEUE.md]**
+
+### Removed
+- **Smart Worker Redistribution 1.2.1 -- removed base-area loose-pile sweep.** The periodic scan that converted existing loose ground piles near HQ into worker-gatherable debris has been removed; that role is now covered by Squad Auto Behavior's new base-scavenge feature. The core worker-redistribution (freeing idle workers from stalled construction) and cancelled-build-refund → worker-gatherable-debris haul are unchanged. Behavior removal only, no new surface.
+
+---
+
+## 2026-07-09 -- Squad Auto Behavior 1.2.0
+
+**[Pushed to Nexus mod 39 -- see RELEASE-QUEUE.md]**
+
+### Added
+- **Squad Auto Behavior 1.2.0 -- base-scavenge and wounded-garrison relocation.** Two new features: (1) **Base-scavenge (opt-in):** Rename a squad to include the tag `[SCAV]`; in daytime when idle and safe, it walks to loose resource piles within configurable `Radius` of the main HQ, collects them (native squad pickup), returns to HQ to unload, then idles. Combat-hold, heal-return, and ammo-return all take priority over scavenging. New config section `Scavenge` with options `Enabled` / `NameTag` / `Radius` / `DaylightOnly`. (2) **Wounded-garrison relocation:** A wounded squad garrisoned in a non-hospital building near HQ now walks to the nearest hospital.
+
+---
+
 ## 2026-07-08 -- Night Lights (WindowGlow) 1.1.0
 
 **[Pushed to Nexus mod 66 -- see RELEASE-QUEUE.md]**

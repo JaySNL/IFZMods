@@ -376,8 +376,8 @@
       "nexusModId": 37,
       "dllPath": "../../plugins/SmartWorkerRedist.dll",
       "name": "Smart Worker Redistribution",
-      "summary": "Stalled construction sites auto-pull workers from idle jobs. 1.2.0: idle workers also auto-haul loose ground items near your base.",
-      "fileNotes": "1.2.0 - New: idle workers auto-haul loose ground items. Cancelled-build refunds AND existing loose piles near your HQ become worker-gatherable debris (like deconstruct rubble) instead of squad-only piles. Toggle + radius in F1 [DroppedCrates].",
+      "summary": "Stalled construction sites auto-pull workers from idle jobs. Cancelled-build refunds auto-haul to a stockroom as worker-gatherable debris.",
+      "fileNotes": "1.2.1 - Removed the base-area loose-pile sweep (existing ground piles near HQ no longer auto-converted); that job now belongs to squad base-scavenge (Squad Auto Behavior 1.2.0). Cancelled-build refunds still auto-haul as worker debris.",
       "description": "Every TickSeconds (default 20), scans all active works. Counts vacancies on unsuspended works that can execute. Frees an equal number of workers from suspended works (e.g. waiting on resources) — WorkController auto-reassigns them to live jobs.\n\nResult: no more workers sitting idle at a stalled construction while another site needs them.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Tick interval tunable.",
       "category": "Miscellaneous",
       "tags": [
@@ -387,14 +387,14 @@
       "sections": {
         "description": "When construction stalls because resources are missing but workers are still parked there, this mod frees them. Every TickSeconds (default 20) it counts vacancies on unsuspended works that can execute, then frees an equal number of workers from suspended works — WorkController auto-reassigns them to live jobs.",
         "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- Periodic redistribution sweep\n- Frees idle workers from stalled construction\n- Live jobs pick them up via vanilla WorkController paths\n- NEW 1.2.0: workers auto-haul loose ground items -- cancelled-build refunds and existing loose piles near your HQ become worker-gatherable debris (like deconstruction rubble) instead of squad-only pickups. Toggle + radius in [DroppedCrates].\n- Tunable verbosity for debugging",
+        "mainFeatures": "- Periodic redistribution sweep\n- Frees idle workers from stalled construction\n- Live jobs pick them up via vanilla WorkController paths\n- Workers auto-haul loose ground items from cancelled builds -- refunds become worker-gatherable debris (like deconstruction rubble) instead of squad-only pickups\n- Tunable verbosity for debugging",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "requires": [
         "IFZModAPI"
       ],
-      "version": "1.2.0"
+      "version": "1.2.1"
     },
     {
       "key": "SplitUnlock",
@@ -423,25 +423,25 @@
       "nexusModId": 39,
       "dllPath": "../../plugins/SquadAutoBehavior.dll",
       "name": "Squad Auto Behavior",
-      "summary": "Auto-medbay when wounded, auto-resupply ammo, auto-return to the nearest ammo source when dry.",
-      "fileNotes": "1.1.6-beta: rearm-building pick still hardcoded res_ammo -- dry mortar squads could route to bullets-only buildings. Now matches real ammo types. 1.1.5-beta: fixed same res_ammo hardcode in resupply. 1.1.4-beta: idle-gate fix. Requires IFZ Mod API 1.2.1+.",
-      "description": "Every TickSeconds (default 8) the mod sweeps player squads:\n\n- **Auto-return when wounded** — wounded squad outside HQ moves to nearest building with a soldiers-treatment module and available beds.\n- **Auto-resupply** — squad inside a HQ-zone enterable auto-grabs ammo from the stockroom when below LowAmmoFraction.\n- **Auto-return when dry** — squad outside HQ with avg ammo below ReturnAmmoFraction is sent to the NEAREST reachable building holding ammo (a closer warehouse beats the HQ); falls back to HQ if none is reachable.\n\nDaylight-only by default (configurable). Per-squad cooldowns prevent order spam.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Each behaviour individually toggleable.",
+      "summary": "Auto-medbay when wounded, auto-resupply ammo, auto-return when dry, and (new) opt-in [SCAV]-tagged squads auto-gather loose piles near HQ.",
+      "fileNotes": "1.2.0 - New opt-in base-scavenge: tag a squad [SCAV] and it gathers loose piles near HQ by day when idle/safe, then unloads (combat/heal/resupply take priority). Also: wounded garrisons in non-hospital buildings relocate to the nearest hospital.",
+      "description": "Every TickSeconds (default 8) the mod sweeps player squads:\n\n- **Auto-return when wounded** — wounded squad outside HQ moves to nearest building with a soldiers-treatment module and available beds. A wounded squad garrisoned in a non-hospital building near HQ also relocates to the nearest hospital.\n- **Auto-resupply** — squad inside a HQ-zone enterable auto-grabs ammo from the stockroom when below LowAmmoFraction.\n- **Auto-return when dry** — squad outside HQ with avg ammo below ReturnAmmoFraction is sent to the NEAREST reachable building holding ammo (a closer warehouse beats the HQ); falls back to HQ if none is reachable.\n- **NEW: Base-scavenge (opt-in)** — rename a squad to include the tag `[SCAV]` and, by day when idle and safe, it walks to loose resource piles within `Radius` of your main HQ, collects them, then returns to HQ to unload and idle. Combat-hold, heal-return and ammo-return all take priority over scavenging.\n\nDaylight-only by default (configurable). Per-squad cooldowns prevent order spam.\n\n**Configurable in F1 ConfigurationManager.** Master Enabled in `[General]`. Each behaviour individually toggleable.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
         "Quality of Life"
       ],
       "sections": {
-        "description": "Reduces babysitting. Every TickSeconds (default 8) the mod sweeps player squads and issues smart orders: wounded squads go to medbay, indoor squads grab ammo from stockrooms, dry squads head to the nearest building that holds ammo (HQ as a fallback).",
+        "description": "Reduces babysitting. Every TickSeconds (default 8) the mod sweeps player squads and issues smart orders: wounded squads go to medbay (including relocating out of a non-hospital garrison), indoor squads grab ammo from stockrooms, dry squads head to the nearest building that holds ammo (HQ as a fallback), and [SCAV]-tagged squads gather loose piles near HQ when idle and safe.",
         "installation": "Drop the DLL into <game>/BepInEx/plugins/. Launch the game. Press F1 in-game (ConfigurationManager) to tweak settings live.\n\nProton/Wine/Mac: add launch option WINEDLLOVERRIDES=\"winhttp=n,b\" %command%.",
-        "mainFeatures": "- Auto-medbay when wounded near HQ\n- Auto-resupply ammo from stockroom indoors\n- Auto-return to the NEAREST building with ammo when dry (HQ as fallback)\n- Daylight-only by default (configurable)\n- Per-squad cooldowns prevent order spam",
+        "mainFeatures": "- Auto-medbay when wounded near HQ, including relocating out of a non-hospital garrison to the nearest hospital\n- Auto-resupply ammo from stockroom indoors\n- Auto-return to the NEAREST building with ammo when dry (HQ as fallback)\n- NEW: opt-in base-scavenge -- tag a squad `[SCAV]` and it gathers loose piles within Radius of HQ by day when idle/safe, then returns to unload (combat/heal/resupply take priority)\n- Daylight-only by default (configurable)\n- Per-squad cooldowns prevent order spam",
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "requires": [
         "IFZModAPI"
       ],
-      "version": "1.1.7-beta"
+      "version": "1.2.0"
     },
     {
       "key": "SquadMerge",
