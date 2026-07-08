@@ -8,7 +8,7 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-07-08 -- Night Lights (WindowGlow) 1.1.0
 
-**[Staged and verified in-game -- not yet pushed to Nexus]**
+**[Pushed to Nexus mod 66 -- see RELEASE-QUEUE.md]**
 
 ### Added
 - **Night Lights (WindowGlow) 1.1.0 -- nightly window reshuffle.** Each in-game night, a different set of windows now lights up instead of the same windows every night. The per-window lit/unlit state is seeded by the in-game day number (`Controllers.Time.TimeController.Day`) via a new shader uniform `_LitSeed`, applied only while windows are dark (global `_Night` below the ramp), so the swap happens in daylight and is never visible mid-night. Deterministic and reload-stable — a given night looks identical after reload. Lit window count unchanged (same `LitFraction`) — only which windows are lit changes. New config entry: `[Lit] VaryNightly` (bool, default true); set false to restore the old fixed-every-night pattern. No new Harmony patches, no IFZModAPI change. Standalone (no `requires`).
