@@ -6,6 +6,22 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-09 -- IFZ Mod API 1.9.1
+
+**[Pushed to Nexus mod 42 -- see RELEASE-QUEUE.md]**
+
+### Fixed
+- **IFZ Mod API 1.9.1 -- fixes GreenhouseGrow TypeLoadException on load.** The live Nexus API had been stuck at 1.7.0 while `IFZModAPI.ProductionUI` (the shared production-row `RefreshBar` hook) only ever existed in dev 1.8.x/1.9.x and was never shipped. Expanded Farming (GreenhouseGrow) 0.1.6+ hard-references `IFZModAPI.ProductionUI.RowRefreshed`, so any player still on the old API got `TypeLoadException: Could not resolve type ... 'IFZModAPI.ProductionUI'` at plugin Awake -- the mod loaded but silently failed to finish initializing and never appeared in F1 (reported via a player's Player.log). Shipping 1.9.1 makes `ProductionUI` available to all dependents.
+
+### Added
+- **Production.Register custom-recipe API** -- shared registry for mod-added production recipes; sole patcher of `ProductionWork.HasResourcesToProduce` (gates on real + virtual resource inputs) and `ProductionBar.RefreshBar` (shows the right amounts for custom recipes), so mods no longer need their own patch on either method.
+- **ProductionUI.RowRefreshed** event -- fires whenever a production row's bar refreshes, letting dependents (e.g. GreenhouseGrow) react without patching `ProductionBar` themselves.
+- **Cache.WeaponFired** event -- sole patcher of `GunFireEffect.StartAnimation`; Gunfire Lights now consumes this instead of its own patch.
+
+1.8.x was never shipped to Nexus either; 1.9.1 supersedes it and every 1.8.x addition is included above. Additive/backward-compatible -- no removed or changed public members; all other API consumers unaffected. Also re-anchors Expanded Farming's Requirements tab to this API (its `requires` was incorrectly empty since it went "standalone" in 0.1.2, before regaining the ProductionUI dependency in 0.1.6).
+
+---
+
 ## 2026-07-09 -- Expanded Farming (GreenhouseGrow) 0.1.7
 
 **[Pushed to Nexus mod 72 -- see RELEASE-QUEUE.md]**

@@ -14,9 +14,9 @@ _Last updated: 2026-07-09_
 
 | ID | Mod | Version | State | Requires | Page |
 |----|-----|---------|-------|----------|------|
-| 42 | IFZ Mod API | 1.6.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
+| 42 | IFZ Mod API | 1.9.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
 | 71 | BlitzHund | 0.1.0 | 🟡 Draft | API | [link](https://www.nexusmods.com/infectionfreezone/mods/71) |
-| 72 | Expanded Farming (2x-4x) | 0.1.7 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/72) |
+| 72 | Expanded Farming (2x-4x) | 0.1.7 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/72) |
 | 24 | Army Backup AI Fix | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/24) |
 | 25 | Cinematic FX | 1.2.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/25) |
 | 26 | Construction ETA | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/26) |
@@ -70,6 +70,7 @@ _Last updated: 2026-07-09_
 | Raider Escalation 57 | Adaptive escalation never fired — wipe detection counted per-raider death callbacks, which missed real wipes; those fell through to the timeout as false "lingers" instead, so RaidForce never climbed even through larger raids/vehicles | Medium | 🟠 In progress | **Built 1.3.1-beta** — wipe detection now polls live raider headcount; a clean full wipe raises RaidForce, a costly one barely moves it (new `KillPain` config default 0.5, `FastWipeSeconds` deprecated). **Pushed as 1.3.1-beta 2026-07-06** (file 7622597) — awaiting in-game verify |
 | ElderPop 81 | Fresh colonists on a new game (and later immigrants) were seeded from the full 18-78 age pyramid; elderly-seeded pops past their rolled personal lifespan died end of day one ("every run, end of first day ppl die") | High | 🟢 Fixed | Shipped **0.1.1-hotfix**: fresh arrivals now seed young (18-30, below frailty age) via new `NewGameMaxDay`/`NewGameSeedMaxAge`; established-save adoption baseline unchanged. No save-format change. |
 | NoPath - YesPath 68 | Abandoned buildings with a stuck event lock (e.g. bandit-ransom, blockBuildingDeconstruct=true) had demolish hidden/blocked even after the event orphaned | Medium | 🟢 Fixed | Shipped **0.3.1** (2026-07-09): new sole postfix on `Building.HasMarkerWithBlockedDeconstruction()`, mode-aware — sandbox overrules the orphaned lock and demolishes; story mode preserves the native lock unaffected |
+| IFZ Mod API 42 | Live Nexus API stuck at 1.7.0 lacked `IFZModAPI.ProductionUI` (only ever existed in dev 1.8.x/1.9.x); Expanded Farming 0.1.6+ hard-references `ProductionUI.RowRefreshed`, so `TypeLoadException` fired at plugin Awake for any player still on the old API — the mod loaded but silently failed to finish init and never appeared in F1 (confirmed from a player's Player.log) | Critical | 🟢 Fixed | API **1.9.1** PUSHED 2026-07-09: adds `ProductionUI` + `Production.Register` custom-recipe API (additive/backward-compatible). Also fixed Expanded Farming's `requires` in mods.json (was empty) and re-anchored its Nexus Requirements tab to API >=1.9.1. |
 
 _Add a row when a new bug comes in via [Issues](https://github.com/JaySNL/IFZMods/issues)._
 

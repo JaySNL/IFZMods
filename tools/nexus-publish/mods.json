@@ -40,8 +40,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
       },
-      "fileNotes": "1.7.0 - SicknessCoordinator onset gate: mod-driven sickness (Extended Health, Elder Pop) stays off until you own a building that can treat citizens, then eases in over a grace+ramp window. Additive, backward-compatible.",
-      "version": "1.7.0"
+      "fileNotes": "1.9.1 (since 1.7.0): adds Production.Register recipe API + ProductionUI.RowRefreshed shared production-row hook (sole patcher HasResourcesToProduce/RefreshBar), needed by Expanded Farming 0.1.6+. Also Cache.WeaponFired event. Additive/backward-compatible.",
+      "version": "1.9.1"
     },
     {
       "key": "ArmyBackup",
@@ -827,7 +827,9 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.x. Standalone — no other mods required. Pure-managed netstandard2.1 — Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tune live)\n- LocaleFix (if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "requires": null,
+      "requires": [
+        "IFZModAPI"
+      ],
       "fileNotes": "0.1.7 - Fixes farm worker count breaking after loading a save: workers dropped on reload (worst in manual work mode) are now restored to the farm's scaled limit. Also includes 0.1.6: workers now respect the raised max on bigger farms.",
       "version": "0.1.7"
     },
