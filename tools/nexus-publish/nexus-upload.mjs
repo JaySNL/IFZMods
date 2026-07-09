@@ -16,14 +16,19 @@
 //
 // Auth: header `apikey: <key>`. Reads key from env NEXUS_API_KEY (never hardcoded/committed).
 //
+// AN ACTION VERB IS MANDATORY — there is NO bare mode. A bare/verb-less call used to upload every mod
+// (created 6 accidental dup files, 2026-07-09); it now refuses. To just LOOK, use `list` (read-only).
+//
 // Usage (CANONICAL — the API route; no browser):
-//   node nexus-upload.mjs add auto [key ...]   # add a new file at each mod's mods.json version
-//   node nexus-upload.mjs add 1.3.0 PerfPack   # add a new file at an explicit version
-//   node nexus-upload.mjs update auto [key ...] # version into an existing API file-update-group
+//   node nexus-upload.mjs list [key ...]        # READ-ONLY: show each mod's Nexus files (NO upload)
+//   node nexus-upload.mjs add auto [key ...]    # add a new file at each mod's mods.json version
+//   node nexus-upload.mjs add 1.3.0 PerfPack    # add a new file at an explicit version
+//   node nexus-upload.mjs update auto [key ...]  # version into an existing API file-update-group
 //   (key reads from .env.local NEXUS_API_KEY; no keys = all mods with a nexusModId)
+//   Prefer `publish-all.mjs --send <Key>` (dry-run unless --send) for a full release; this is the raw file step.
 //   Note: `publish.mjs` (Playwright) is ONLY for CREATING a new page; file uploads go through here.
 //
-// On Windows PowerShell:  $env:NEXUS_API_KEY="..."; node nexus-upload.mjs
+// On Windows PowerShell:  $env:NEXUS_API_KEY="..."; node nexus-upload.mjs list
 
 import fs from 'node:fs'
 import path from 'node:path'
@@ -89,19 +94,33 @@ if (!KEY) {
   process.exit(1)
 }
 
-// Modes:
-//   node nexus-upload.mjs [key]                  -> first upload (createModFile)
-//   node nexus-upload.mjs update <version> [key] -> new version on existing file (createUpdateGroupVersion)
-const isUpdate = process.argv[2] === 'update'
+// ACTION VERB IS MANDATORY. Every mutating path here creates a REAL live file on a mod page — there is
+// NO bare/implicit mode. (History: the old code treated argv[2] directly as a mod key when it wasn't a
+// verb, so `nexus-upload.mjs list Foo` uploaded Foo, and a bare `nexus-upload.mjs` uploaded EVERY mod —
+// this created 6 accidental duplicate files across live mod pages, 2026-07-09.) An unrecognized or
+// missing verb now REFUSES and exits without touching Nexus. Read-only inspection goes through `list`.
+const ACTION = process.argv[2]
+const VALID_ACTIONS = new Set(['add', 'first', 'update', 'list'])
+if (!VALID_ACTIONS.has(ACTION)) {
+  console.error('[fatal] nexus-upload.mjs performs REAL uploads — there is no bare/implicit mode.')
+  console.error('  An explicit action is required (a stray arg is NOT treated as a mod key):')
+  console.error('    list                       READ-ONLY: show each mod\'s Nexus files (no upload)')
+  console.error('    add    auto|<ver> [key…]   add a new file at the mods.json (auto) or given version')
+  console.error('    update auto|<ver> [key…]   new version in the existing file-update group')
+  console.error('  (no keys = all mods with a nexusModId).  To just look, use: node nexus-upload.mjs list [key…]')
+  process.exit(1)
+}
+const isList   = ACTION === 'list'
 // 'add' is the canonical route: createModFile adds a new file version to an EXISTING page (does NOT
 // create a page). 'first' kept as an alias. Use this — web-uploaded pages have no API file-update-
 // group, so `update` 404s; `add` is what actually works.
-const isFirst  = process.argv[2] === 'first' || process.argv[2] === 'add'
+const isUpdate = ACTION === 'update'
+const isFirst  = ACTION === 'first' || ACTION === 'add'
 const updateVersion = (isUpdate || isFirst) ? process.argv[3] : null
-// One or more keys may follow (update/first mode: argv[4..], bare first-upload mode: argv[2..]).
-const keyList = ((isUpdate || isFirst) ? process.argv.slice(4) : process.argv.slice(2)).filter(Boolean)
+// Keys follow the verb: list -> argv[3..]; add/update -> argv[4..] (after the version).
+const keyList = (isList ? process.argv.slice(3) : process.argv.slice(4)).filter(Boolean)
 const keySet = keyList.length ? new Set(keyList) : null
-if ((isUpdate || isFirst) && !updateVersion) { console.error(`[fatal] ${process.argv[2]} mode needs a version: node nexus-upload.mjs ${process.argv[2]} 1.1.0 [key ...]`); process.exit(1) }
+if ((isUpdate || isFirst) && !updateVersion) { console.error(`[fatal] ${ACTION} mode needs a version: node nexus-upload.mjs ${ACTION} auto [key ...]`); process.exit(1) }
 const H = { apikey: KEY, 'Content-Type': 'application/json' }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
@@ -278,6 +297,23 @@ if (targets.length === 0) {
   console.error(keySet ? `[fatal] none of [${[...keySet].join(', ')}] have a nexusModId in mods.json` : '[fatal] no mods have a nexusModId yet — create pages first')
   process.exit(1)
 }
+
+// READ-ONLY: list each mod's live Nexus files (v1 files.json). No preflight, no upload — this is the
+// safe way to inspect file IDs / versions before deciding to `add`.
+if (isList) {
+  for (const m of targets) {
+    try {
+      const j = await jget(`https://api.nexusmods.com/v1/games/${GAME}/mods/${m.nexusModId}/files.json`)
+      const files = (j.files || []).sort((a, b) => new Date(b.uploaded_time) - new Date(a.uploaded_time))
+      console.log(`\n=== ${m.key} (mod ${m.nexusModId}) — ${files.length} file(s) ===`)
+      for (const f of files) console.log(`  ${(f.category_name || 'ARCHIVED').padEnd(8)} file ${f.file_id}  v${f.version}  ${f.file_name}`)
+    } catch (e) { console.log(`[error] ${m.key}: ${e.message.split('\n')[0]}`) }
+    await sleep(300)
+  }
+  console.log('\n[done] list — READ-ONLY, no uploads performed.')
+  process.exit(0)
+}
+
 preflight(targets)
 console.log(`${isUpdate ? `Versioning ${targets.length} mod(s) to v${updateVersion}` : `Uploading ${targets.length} mod(s)`} on Nexus (${GAME})...`)
 for (const m of targets) {
