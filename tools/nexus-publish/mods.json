@@ -828,8 +828,8 @@
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
       "requires": null,
-      "fileNotes": "0.1.5 - Fixed two playtester bugs: new farms no longer default to max size (tier now resets to x1 on each new placement), and greenhouse workers no longer stand outside the building (work-position picker no longer double-applies the scale).",
-      "version": "0.1.5"
+      "fileNotes": "0.1.7 - Fixes farm worker count breaking after loading a save: workers dropped on reload (worst in manual work mode) are now restored to the farm's scaled limit. Also includes 0.1.6: workers now respect the raised max on bigger farms.",
+      "version": "0.1.7"
     },
     {
       "key": "CamControl",

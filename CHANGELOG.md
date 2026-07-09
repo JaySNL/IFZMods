@@ -6,6 +6,16 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-09 -- Expanded Farming (GreenhouseGrow) 0.1.7
+
+**[Pushed to Nexus mod 72 -- see RELEASE-QUEUE.md]**
+
+### Fixed
+- **Expanded Farming (GreenhouseGrow) 0.1.7 -- worker count no longer breaks after loading a save.** On reload, the game reconstructs a farm's production work with the *vanilla* worker cap before the mod's driver re-applies the scaled footprint a moment later; saved workers beyond the vanilla cap were dropped. This was invisible in auto work mode (continuous rebalancing masked it) but left manual-mode farms stuck below their cap with idle workers that never returned. The driver now reasserts the scaled cap and refills workers once per farm after each load. Verified in-game across reloads (e.g. a x3 farm's cap and worker count both restored 2 -> 18; a x2 farm restored cap 2 -> 8, workers 2 -> 6, correctly pool-limited by available idle workers).
+- **Expanded Farming (GreenhouseGrow) 0.1.6 -- farm workers now respect the raised max-staff cap.** (Built in dev but never pushed to dist/Nexus until this release.) Bigger farms' scaled worker limit is now correctly enforced -- workers no longer exceed the raised cap on larger footprints; output and storage scaling unaffected.
+
+---
+
 ## 2026-07-09 -- NoPath - YesPath 0.3.1
 
 **[Pushed to Nexus mod 68 -- see RELEASE-QUEUE.md]**
