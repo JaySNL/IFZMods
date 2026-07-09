@@ -47,7 +47,7 @@ _Last updated: 2026-07-09_
 | 65 | Clay Pit Fixes | 1.1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |
 | 66 | Night Lights (WindowGlow) | 1.1.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/66) |
 | 67 | Buildable Bridges | 0.2.1.0 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
-| 68 | NoPath - YesPath | 0.3.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
+| 68 | NoPath - YesPath | 0.3.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
 | 69 | Squad Grenades | 1.0.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/69) |
 | 79 | CamControl | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/79) |
 | 80 | Extended Health | 0.1.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/80) |
@@ -69,6 +69,7 @@ _Last updated: 2026-07-09_
 | IFZ Mod API 42 | Nexus user reported a load crash: live API 1.4.5 has no `IFZModAPI.Radio` type, but Mod Panels 0.1.1 / QoL 1.6.1 (both live) call it — `TypeLoadException` fires every frame at load, game force-quits. Root cause: API dependency push was forgotten when Panels/QoL shipped; BepInDependency isn't version-pinned so BepInEx loads the stale API anyway | Critical | 🟢 Fixed (shipped) | API **1.6.1** (adds `Radio` + SicknessCoordinator, damage-mult registry, SaveStore, all additive) PUSHED to Nexus 2026-07-05. Affected users update API to recover. |
 | Raider Escalation 57 | Adaptive escalation never fired — wipe detection counted per-raider death callbacks, which missed real wipes; those fell through to the timeout as false "lingers" instead, so RaidForce never climbed even through larger raids/vehicles | Medium | 🟠 In progress | **Built 1.3.1-beta** — wipe detection now polls live raider headcount; a clean full wipe raises RaidForce, a costly one barely moves it (new `KillPain` config default 0.5, `FastWipeSeconds` deprecated). **Pushed as 1.3.1-beta 2026-07-06** (file 7622597) — awaiting in-game verify |
 | ElderPop 81 | Fresh colonists on a new game (and later immigrants) were seeded from the full 18-78 age pyramid; elderly-seeded pops past their rolled personal lifespan died end of day one ("every run, end of first day ppl die") | High | 🟢 Fixed | Shipped **0.1.1-hotfix**: fresh arrivals now seed young (18-30, below frailty age) via new `NewGameMaxDay`/`NewGameSeedMaxAge`; established-save adoption baseline unchanged. No save-format change. |
+| NoPath - YesPath 68 | Abandoned buildings with a stuck event lock (e.g. bandit-ransom, blockBuildingDeconstruct=true) had demolish hidden/blocked even after the event orphaned | Medium | 🟢 Fixed | Shipped **0.3.1** (2026-07-09): new sole postfix on `Building.HasMarkerWithBlockedDeconstruction()`, mode-aware — sandbox overrules the orphaned lock and demolishes; story mode preserves the native lock unaffected |
 
 _Add a row when a new bug comes in via [Issues](https://github.com/JaySNL/IFZMods/issues)._
 

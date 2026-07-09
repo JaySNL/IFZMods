@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-09 -- NoPath - YesPath 0.3.1
+
+**[Pushed to Nexus mod 68 -- see RELEASE-QUEUE.md]**
+
+### Fixed
+- **NoPath - YesPath 0.3.1 -- event-locked abandoned buildings can now be demolished.** Abandoned buildings carrying a stuck event lock (e.g. a bandit-ransom `EventMarker` with `blockBuildingDeconstruct=true`) had their demolish button hidden and the demolish action blocked. First Harmony patch in this mod -- a sole postfix on `Building.HasMarkerWithBlockedDeconstruction()` -- is mode-aware: in **sandbox** the orphaned lock is overruled so the building demolishes; in **story mode** the native lock is preserved so live event content is unaffected. Gated by the mod's master toggle; fails safe to the vanilla block on any error. Verified in-game in both modes.
+
+---
+
 ## 2026-07-09 -- Smart Worker Redistribution 1.2.1
 
 **[Pushed to Nexus mod 37 -- see RELEASE-QUEUE.md]**

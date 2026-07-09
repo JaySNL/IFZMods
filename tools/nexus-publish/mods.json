@@ -780,8 +780,8 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "0.3.0 - Denser footprint sampling + reachability checks (no workers assigned to unreachable spots). New config: max work positions, sample spacing, inside-only demolition.",
-      "version": "0.3.0"
+      "fileNotes": "0.3.1 - Fixes demolish blocked on abandoned buildings with a stuck event lock (e.g. bandit-ransom). Sandbox: the orphaned lock is overruled, building demolishes. Story mode: native event lock preserved, unaffected.",
+      "version": "0.3.1"
     },
     {
       "key": "BlitzHund",
