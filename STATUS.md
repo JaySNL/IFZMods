@@ -49,7 +49,7 @@ _Last updated: 2026-07-09_
 | 67 | Buildable Bridges | 0.2.1.0 | 🟡 Staged | API | [link](https://www.nexusmods.com/infectionfreezone/mods/67) |
 | 68 | NoPath - YesPath | 0.3.1 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/68) |
 | 69 | Squad Grenades | 1.0.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/69) |
-| 79 | CamControl | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/79) |
+| 79 | CamControl | 1.1.1 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/79) |
 | 80 | Extended Health | 0.1.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/80) |
 | 81 | Elder Population | 0.1.1-hotfix | 🔬 Experimental | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/81) |
 | 85 | No Map Limit - Buildings | 1.0.0 | 🟡 Draft | — | [link](https://www.nexusmods.com/infectionfreezone/mods/85) |

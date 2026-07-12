@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-12 -- CamControl 1.1.1
+
+**[Pushed to Nexus mod 79 -- see STATUS.md]**
+
+### Fixed
+- **CamControl 1.1.1 -- F7 now hides native map-layer overlays (Labels, Structure outlines, Scavenge, Full-info, UI group).** The F7 toggle previously hid only uGUI canvases, so the game's native map-layer overlays leaked into screenshots. Now F7 also suppresses each overlay via the game's `ViewLayersController` and restores every one to its exact prior state on toggle-off. Requires IFZ Mod API.
+
+---
+
 ## 2026-07-09 -- IFZ Mod API 1.9.1
 
 **[Pushed to Nexus mod 42 -- see RELEASE-QUEUE.md]**
