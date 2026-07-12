@@ -853,8 +853,8 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "1.1.0 - F7 hide-HUD now fully hides ALL UI (map-layers toolbar + mod windows like Flares), not just MainUILayer. New UI/FullHide (default on); disable to revert to MainUILayer-only. 1.0.0: smooth eased camera + slow-mo.",
-      "version": "1.1.0"
+      "fileNotes": "1.1.1 - F7 now also suppresses native map-layer overlays (Labels, Structure outlines, Scavenge, Full-info, UI group) via ViewLayersController, restoring each to prior state on toggle-off. 1.1.0: F7 fully hides ALL UI (map-layers toolbar + mod windows like Flares), not just MainUILayer. 1.0.0: smooth eased camera + slow-mo.",
+      "version": "1.1.1"
     },
     {
       "key": "ExtendedHealth",
