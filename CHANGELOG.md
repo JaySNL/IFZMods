@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-14 -- Split Unlock 1.3.3
+
+**[Pushed to Nexus mod 38 -- see RELEASE-QUEUE.md]**
+
+### Fixed
+- **Split Unlock 1.3.3 -- the Split button stayed greyed-out / non-interactable on small buildings even with `AllowSmallSurface` on.** Root cause: the UI size gate `SplitConfig.IsTooSmallForSplit` (Surface < 200) rejected them before the split. Fix: a Postfix now yields that gate to the toggle, so small buildings split.
+
+---
+
 ## 2026-07-13 -- SquadMoveFire 0.1.5
 
 **[Staged and verified — not yet pushed to Nexus]**

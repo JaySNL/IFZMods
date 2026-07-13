@@ -32,7 +32,7 @@ _Last updated: 2026-07-09_
 | 35 | Performance Pack | 1.5.4 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/35) |
 | 36 | Save File Version Unlock | 1.0.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/36) |
 | 37 | Smart Worker Redistribution | 1.2.1 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/37) |
-| 38 | Unlocked Buildings | 1.3.2 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/38) |
+| 38 | Unlocked Buildings | 1.3.3 | 🟢 Live | #35 | [link](https://www.nexusmods.com/infectionfreezone/mods/38) |
 | 39 | Squad Auto Behavior | 1.2.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/39) |
 | 40 | Squad Merge (right-click) | 1.1.2 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/40) |
 | 41 | Better Vehicle Squad Size | 1.1.2 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/41) |

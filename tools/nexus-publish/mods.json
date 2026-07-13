@@ -415,8 +415,8 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.3.2",
-      "fileNotes": "1.3.2: Fixes Gathering Place seat cap stuck ~2000 despite VolumeMultiplier -- CalculateForumCapacity curve saturates, bypassing the uncap. Postfix now scales it too (2000 -> ~6000 at default 3x). Opt-in with rest of BuildingCapacity."
+      "version": "1.3.3",
+      "fileNotes": "1.3.3: Fixes the Split button staying greyed-out on small buildings even with AllowSmallSurface on. The UI size gate (SplitConfig.IsTooSmallForSplit, Surface < 200) now yields to the toggle, so small buildings can be split."
     },
     {
       "key": "SquadAutoBehavior",

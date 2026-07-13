@@ -25,6 +25,8 @@ legacy Playwright path. Auth: `NEXUS_API_KEY` + `NEXUS_COOKIE`/`NEXUS_UA` in `.e
 
 ## Pending
 
+- **Unlocked Buildings → 1.3.3** (mod 38) — **PUSHED 2026-07-14** (`publish-all --send`: upload ✓, requirements [204], changelog [200], details [200]). **Small buildings can now be split.** The Split button stayed greyed-out on small buildings (Surface < 200) even with `AllowSmallSurface` on because `SplitConfig.IsTooSmallForSplit` rejected them before the split. Fix: a Postfix now yields that gate to the toggle, so small buildings split.
+
 - **Surrounded → 0.4.6** (mod 55, file 7622861) — PUSHED 2026-07-06 (`publish-all --send`: upload ✓, requirements API ≥1.7.0 [204], changelog [200], details [200]). HiveMind verified in-game. (master 7bf8844 + 160c1e5). **HiveMind: any attack near a cluster wakes it to swarm the attacker** (was out-of-range-shells only). `ShelledReaction`'s idle-gate moved off seed detection (kept on cluster membership) → a group hit by *bullets* (which makes it acquire the shooter) now also seeds; new `HivemindMinCluster` (default 3) gates the surge to real clusters; the hive's target = the seed's acquired target (the shooter) via `SetTarget(temporary:false)`, else nearest structure/HQ for shells. Reliable pursuit doubles as a kiting tool. Config: `ShellDamageThreshold`→`AttackDamageThreshold` (rename orphans the old key). No Harmony patch. Requires IFZ Mod API (unchanged). **Do NOT push until the 6-step in-game check passes** (swarm-attacker / straggler-safe / shell-fallback / min-cluster knob / stale-target / no zero-rva). Spec+plan: `docs/superpowers/{specs,plans}/2026-07-05-surrounded-hivemind*`. Before push: bump `mods.json` 55 → 0.4.6 + fileNotes.
 
 
