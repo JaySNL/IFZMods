@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-13 -- SquadMoveFire 0.1.5
+
+**[Staged and verified — not yet pushed to Nexus]**
+
+### Fixed
+- **SquadMoveFire 0.1.5 -- squads and vehicle convoys stopped auto-attacking infected on expeditions.** With Move & Fire enabled, the forced no-pause targeting only saw units with a rendered model, and expedition infected have none, so nothing was targeted (manual attack orders still worked). Move & Fire now uses the normal pause-to-shoot targeting while on expedition. Home-map behaviour unchanged.
+
+---
+
 ## 2026-07-12 -- CamControl 1.1.1
 
 **[Pushed to Nexus mod 79 -- see STATUS.md]**

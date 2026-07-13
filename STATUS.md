@@ -41,7 +41,7 @@ _Last updated: 2026-07-09_
 | 56 | Hives — infected hive seeding | 0.1.6 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/56) |
 | 57 | Raider Escalation | 1.3.1-beta | 🟢 Live (beta) | API | [link](https://www.nexusmods.com/infectionfreezone/mods/57) |
 | 58 | Mass Deconstruct — drag-box | 1.4.0-beta | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/58) |
-| 59 | Squad Move and Fire | 0.1.3 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/59) |
+| 59 | Squad Move and Fire | 0.1.5 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/59) |
 | 63 | Swarm Fix | 1.1.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/63) |
 | 64 | High Ground | 1.0.3 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/64) |
 | 65 | Clay Pit Fixes | 1.1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/65) |

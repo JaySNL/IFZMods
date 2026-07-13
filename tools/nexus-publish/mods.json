@@ -613,7 +613,7 @@
       "dllPath": "../../plugins/SquadMoveFire.dll",
       "name": "Squad Move and Fire (experimental)",
       "summary": "Squads fire while moving instead of halting — on foot and in vehicles. Hold Your Ground truly anchors.",
-      "fileNotes": "0.1.4: Fixed a rare crash when a squad’s attack target died mid-tick (null-guard); collapsed to a single patch for Wine safety. Hold-ground behaviour unchanged.",
+      "fileNotes": "0.1.5: Fixed - with Move & Fire enabled, squads and vehicle convoys stopped auto-attacking infected on expeditions (forced no-pause targeting only saw units with a rendered model, and expedition infected have none). Now uses normal pause-to-shoot targeting on expedition. Home-map behaviour unchanged.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay"
@@ -625,7 +625,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.1.4"
+      "version": "0.1.5"
     },
     {
       "key": "Flares",
