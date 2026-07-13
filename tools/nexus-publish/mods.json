@@ -613,7 +613,7 @@
       "dllPath": "../../plugins/SquadMoveFire.dll",
       "name": "Squad Move and Fire (experimental)",
       "summary": "Squads fire while moving instead of halting — on foot and in vehicles. Hold Your Ground truly anchors.",
-      "fileNotes": "0.1.5: Fixed - with Move & Fire enabled, squads and vehicle convoys stopped auto-attacking infected on expeditions (forced no-pause targeting only saw units with a rendered model, and expedition infected have none). Now uses normal pause-to-shoot targeting on expedition. Home-map behaviour unchanged.",
+      "fileNotes": "Fixed auto-attack for squads on expeditions with Move & Fire enabled. Expeditions now use detector-based targeting to correctly acquire and attack invisible expedition-infected.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay"
