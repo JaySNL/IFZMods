@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-15 -- RaiderEscalation 1.3.11-exp
+
+**[Git-first EXPERIMENTAL build -- not yet pushed to Nexus]**
+
+### Added
+- **RaiderEscalation 1.3.11-exp — sighting-gated escalation.** A fresh camp now starts DORMANT (Strength pinned to 1) and sends only scout probes — it does not grow or raid. The camp only begins to fatten after the player **sights it 3 times** (via scout probes that march in and report). On the 3rd sighting a silent **prep window** (configurable `SightedPrepDays`, default 7) begins: the camp massing up, no scouts, no raids. After the window, full raids resume on the normal clock. This fixes the old raid-gate deadlock (a camp pinned below `RaidMinTier` could never scout, so it never became sighted, so it never raided) and the premature buildup where camps grew from day one. **Grandfathered:** camps already sighted or raid-capable on an existing save keep their old behaviour. Config defaults unchanged.
+
+---
+
 ## 2026-07-14 -- Split Unlock 1.3.3
 
 **[Pushed to Nexus mod 38 -- see RELEASE-QUEUE.md]**
