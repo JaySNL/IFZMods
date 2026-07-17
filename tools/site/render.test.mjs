@@ -74,6 +74,8 @@ test('renderPage is standalone, counts mods, orders featured first, wires links'
   assert.ok(html.indexOf('Bravo') < html.indexOf('Alpha'));
   assert.doesNotMatch(html, /<link[^>]+rel=["']?stylesheet/i);
   assert.doesNotMatch(html, /<script\s+src=/i);
+  assert.match(html, /href="api\.html"/);
+  assert.match(html, /API for Modders/);
 });
 
 import { renderApiPage, renderApiSection } from './render.mjs';

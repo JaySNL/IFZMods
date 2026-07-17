@@ -93,6 +93,7 @@ export function renderPage({ mods, gameSlug, featuredKeys, meta }) {
   <h1>Jay's Desk</h1>
   <p class="tagline">${count} free mods for Infection Free Zone — performance, fixes, and gameplay expansions.</p>
   <p class="install">Drop the DLL into <code>BepInEx/plugins/</code>. <a href="${esc(meta.installDoc)}" target="_blank" rel="noopener">Full install guide</a>.</p>
+  <p class="install"><a href="api.html">API for Modders →</a></p>
   <a class="btn kofi" href="${esc(meta.kofi)}" target="_blank" rel="noopener">Support on Ko-fi</a>
 </header>
 <main class="grid">
