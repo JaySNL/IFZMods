@@ -75,3 +75,45 @@ test('renderPage is standalone, counts mods, orders featured first, wires links'
   assert.doesNotMatch(html, /<link[^>]+rel=["']?stylesheet/i);
   assert.doesNotMatch(html, /<script\s+src=/i);
 });
+
+import { renderApiPage, renderApiSection } from './render.mjs';
+
+const apiFixture = [{
+  key: 'FooApi', title: 'FooApi', dll: 'FooApi.dll', guid: 'com.x.foo', version: '1.0.0',
+  blurb: 'Does foo things.',
+  reference: {
+    bepInDependency: '[BepInDependency("com.x.foo")]',
+    hintPath: '<Reference Include="FooApi"><HintPath>..\\FooApi\\bin\\Release\\FooApi.dll</HintPath></Reference>',
+    notes: 'Never version-pin unless <required> & audited.',
+  },
+  types: [{
+    name: 'Foo', kind: 'static class', summary: 'Entry point.',
+    members: [{ signature: 'static void Bar(int n)', params: [{ name: 'n', type: 'int', desc: 'count' }], returns: 'void — nothing', remarks: 'Call once at Awake.' }],
+    hooks: [{ name: 'Foo.Ping', signature: 'static event Action Ping', when: 'Fires on ping.', remarks: 'Unsubscribe on destroy.' }],
+  }],
+  example: 'Foo.Bar(3); // <run>',
+}];
+const apiMeta = { github: 'https://github.com/JaySNL', discord: 'https://discord.gg/habeKjNdN9' };
+
+test('renderApiSection shows blurb, referencing box, member, hook, example', () => {
+  const html = renderApiSection(apiFixture[0]);
+  assert.match(html, /id="FooApi"/);
+  assert.match(html, /v1\.0\.0/);
+  assert.match(html, /Referencing this API/);
+  assert.match(html, /\[BepInDependency\(&quot;com\.x\.foo&quot;\)\]/);
+  assert.match(html, /HintPath/);
+  assert.match(html, /static void Bar\(int n\)/);
+  assert.match(html, /Foo\.Ping/);
+  assert.match(html, /Foo\.Bar\(3\); \/\/ &lt;run&gt;/);
+  assert.match(html, /Never version-pin unless &lt;required&gt; &amp; audited/);
+});
+
+test('renderApiPage is standalone, no external requests, links back to index, lists all APIs', () => {
+  const html = renderApiPage({ apis: apiFixture, meta: apiMeta });
+  assert.match(html, /^<!doctype html>/i);
+  assert.match(html, /API for Modders/);
+  assert.match(html, /href="index\.html"/);
+  assert.match(html, /href="#FooApi"/);
+  assert.doesNotMatch(html, /<link[^>]+rel=["']?stylesheet/i);
+  assert.doesNotMatch(html, /<script\s+src=/i);
+});

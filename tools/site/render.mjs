@@ -110,3 +110,106 @@ ${cards}
 </body>
 </html>`;
 }
+
+export const API_CSS = `
+.apimain { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.25rem; }
+.apinav { color: var(--muted); font-size: .95rem; }
+.apisec { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 1.5rem; }
+.apisec > .blurb { color: var(--muted); }
+.refbox { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: .75rem 1rem; margin: 1rem 0; }
+.refbox h4 { margin: 0 0 .4rem; }
+.apitype { margin: 1.25rem 0; }
+.apitype h3 { display: flex; align-items: center; gap: .5rem; margin: 0 0 .35rem; }
+table.api { width: 100%; border-collapse: collapse; font-size: .9rem; margin: .5rem 0 1rem; }
+table.api th, table.api td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); padding: .4rem .5rem; }
+table.api th { color: var(--muted); font-weight: 600; }
+pre { background: var(--tile); padding: .75rem 1rem; border-radius: 8px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+.apitype code, .refbox code, td code { background: var(--tile); padding: .1rem .35rem; border-radius: 4px; }
+`;
+
+function renderRefBox(ref) {
+  return `<div class="refbox">
+  <h4>Referencing this API</h4>
+  <p><strong>Load order (BepInDependency):</strong> <code>${esc(ref.bepInDependency)}</code></p>
+  <p><strong>Build reference (HintPath):</strong></p>
+  <pre><code>${esc(ref.hintPath)}</code></pre>
+  ${ref.notes ? `<p class="blurb">${esc(ref.notes)}</p>` : ''}
+</div>`;
+}
+
+function renderMembers(members) {
+  if (!members || !members.length) return '';
+  const rows = members.map((m) => `<tr>
+    <td><code>${esc(m.signature)}</code></td>
+    <td>${(m.params || []).map((p) => `<code>${esc(p.name)}</code>: ${esc(p.desc)}`).join('<br>') || '—'}</td>
+    <td>${esc(m.returns || '—')}</td>
+    <td>${esc(m.remarks || '')}</td>
+  </tr>`).join('\n');
+  return `<table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+${rows}
+</tbody></table>`;
+}
+
+function renderHooks(hooks) {
+  if (!hooks || !hooks.length) return '';
+  const rows = hooks.map((h) => `<tr>
+    <td><code>${esc(h.name)}</code></td>
+    <td><code>${esc(h.signature)}</code></td>
+    <td>${esc(h.when || '')}</td>
+    <td>${esc(h.remarks || '')}</td>
+  </tr>`).join('\n');
+  return `<h4>Hooks / events</h4>
+<table class="api"><thead><tr><th>Hook</th><th>Signature</th><th>When</th><th>Remarks</th></tr></thead><tbody>
+${rows}
+</tbody></table>`;
+}
+
+function renderType(t) {
+  return `<div class="apitype">
+  <h3>${esc(t.name)} <span class="badge">${esc(t.kind)}</span></h3>
+  ${t.summary ? `<p>${esc(t.summary)}</p>` : ''}
+  ${renderMembers(t.members)}
+  ${renderHooks(t.hooks)}
+</div>`;
+}
+
+export function renderApiSection(api) {
+  const types = (api.types || []).map(renderType).join('\n');
+  return `<section class="apisec" id="${esc(api.key)}">
+  <h2>${esc(api.title)} <span class="badge">v${esc(api.version)}</span></h2>
+  <p class="blurb">${esc(api.blurb)}</p>
+  ${renderRefBox(api.reference)}
+  ${types}
+  <h4>Example</h4>
+  <pre><code>${esc(api.example)}</code></pre>
+</section>`;
+}
+
+export function renderApiPage({ apis, meta }) {
+  const nav = apis.map((a) => `<a href="#${esc(a.key)}">${esc(a.title)}</a>`).join(' · ');
+  const sections = apis.map(renderApiSection).join('\n');
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API for Modders — Infection Free Zone Mods</title>
+<style>${CSS}${API_CSS}</style>
+</head>
+<body>
+<header class="hero">
+  <h1>API for Modders</h1>
+  <p class="tagline">Shared libraries you can build against. <a href="index.html">← Back to mods</a></p>
+  <p class="apinav">${nav}</p>
+</header>
+<main class="apimain">
+${sections}
+</main>
+<footer>
+  <a href="${esc(meta.github)}" target="_blank" rel="noopener">GitHub</a>
+  <a href="${esc(meta.discord)}" target="_blank" rel="noopener">Discord</a>
+</footer>
+</body>
+</html>`;
+}
