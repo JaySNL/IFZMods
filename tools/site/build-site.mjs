@@ -1,7 +1,7 @@
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { renderPage } from './render.mjs';
+import { renderPage, renderApiPage } from './render.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(here, '..', '..');
@@ -36,3 +36,21 @@ for (const m of mods) {
 const html = renderPage({ mods, gameSlug, featuredKeys: FEATURED, meta });
 writeFileSync(join(docsDir, 'index.html'), html);
 console.log(`[ok] wrote docs/index.html (${mods.length} mods)`);
+
+const apiDir = join(here, 'api');
+const API_ORDER = ['IFZModAPI', 'IFZModPanels', 'IFZModDialog', 'IFZResourceApi'];
+let apis = [];
+if (existsSync(apiDir)) {
+  const byKey = new Map();
+  for (const f of readdirSync(apiDir)) {
+    if (!f.endsWith('.json')) continue;
+    const a = JSON.parse(readFileSync(join(apiDir, f), 'utf8'));
+    byKey.set(a.key, a);
+  }
+  const known = API_ORDER.filter((k) => byKey.has(k)).map((k) => byKey.get(k));
+  const extra = [...byKey.keys()].filter((k) => !API_ORDER.includes(k)).sort().map((k) => byKey.get(k));
+  apis = [...known, ...extra];
+}
+const apiHtml = renderApiPage({ apis, meta });
+writeFileSync(join(docsDir, 'api.html'), apiHtml);
+console.log(`[ok] wrote docs/api.html (${apis.length} APIs)`);
