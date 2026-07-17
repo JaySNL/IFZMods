@@ -3,6 +3,11 @@
   Downloads BepInEx 5.4.23.2 x64 + drops in this repo's plugin DLLs.
   Idempotent: safe to re-run for upgrades.
 #>
+# Optional single-mod target: `-Mod CinematicPost` copies only that mod's DLL + its loose
+# assets, so a user can pull one update in isolation. No flag = install all.
+# Via IEX (args can't cross `irm|iex`, so use the scriptblock form):
+#   & ([scriptblock]::Create((irm URL))) -Mod CinematicPost
+param([string]$Mod)
 
 $ErrorActionPreference = "Stop"
 $BepInExUrl = "https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.2/BepInEx_win_x64_5.4.23.2.zip"
@@ -70,20 +75,33 @@ if (-not (Test-Path $PluginSource)) {
 # Plugins
 $PluginDest = "$Game\BepInEx\plugins"
 New-Item -ItemType Directory -Force -Path $PluginDest | Out-Null
-New-Item -ItemType Directory -Force -Path "$PluginDest\ConfigurationManager" | Out-Null
+if (-not $Mod) { New-Item -ItemType Directory -Force -Path "$PluginDest\ConfigurationManager" | Out-Null }
 
-Write-Host "Copying mods..." -ForegroundColor Cyan
-Get-ChildItem "$PluginSource" -Filter *.dll | ForEach-Object {
+if ($Mod) {
+    Write-Host "Targeted install: $Mod" -ForegroundColor Cyan
+    $modDll = Join-Path "$PluginSource" "$Mod.dll"
+    if (-not (Test-Path $modDll)) {
+        Write-Host "ERROR: mod '$Mod' not found ($modDll)" -ForegroundColor Red; exit 1
+    }
+    $dllItems = @(Get-Item $modDll)
+} else {
+    Write-Host "Copying mods..." -ForegroundColor Cyan
+    $dllItems = Get-ChildItem "$PluginSource" -Filter *.dll
+}
+$dllItems | ForEach-Object {
     Copy-Item $_.FullName "$PluginDest\$($_.Name)" -Force
     Write-Host "  + $($_.Name)" -ForegroundColor DarkGray
 }
 # Loose mod assets (LUTs, textures) next to a DLL — e.g. CinematicPost_Bleach.png.
 # Mods load these by filename from the plugins dir, so a dll-only copy silently breaks them.
-Get-ChildItem "$PluginSource" -File | Where-Object { $_.Extension -ne '.dll' } | ForEach-Object {
+# With -Mod, only assets whose name starts with the mod name are pulled.
+Get-ChildItem "$PluginSource" -File | Where-Object {
+    $_.Extension -ne '.dll' -and (-not $Mod -or $_.Name -like "$Mod*")
+} | ForEach-Object {
     Copy-Item $_.FullName "$PluginDest\$($_.Name)" -Force
     Write-Host "  + $($_.Name)" -ForegroundColor DarkGray
 }
-if (Test-Path "$PluginSource\ConfigurationManager\ConfigurationManager.dll") {
+if (-not $Mod -and (Test-Path "$PluginSource\ConfigurationManager\ConfigurationManager.dll")) {
     Copy-Item "$PluginSource\ConfigurationManager\ConfigurationManager.dll" "$PluginDest\ConfigurationManager\ConfigurationManager.dll" -Force
     Write-Host "  + ConfigurationManager/ConfigurationManager.dll" -ForegroundColor DarkGray
 }

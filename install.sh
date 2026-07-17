@@ -4,6 +4,18 @@
 # Idempotent: safe to re-run for upgrades. Safe to run via `curl ... | bash`.
 set -euo pipefail
 
+# Optional single-mod target: `install.sh --mod CinematicPost` (or `--mod=Name`) copies
+# only that mod's DLL + its loose assets, so a user can pull one update in isolation.
+# Via curl|bash: `curl -fsSL URL | bash -s -- --mod CinematicPost`. No flag = install all.
+MOD=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --mod) MOD="${2:-}"; shift 2 ;;
+    --mod=*) MOD="${1#--mod=}"; shift ;;
+    *) shift ;;
+  esac
+done
+
 BEPINEX_URL="https://github.com/BepInEx/BepInEx/releases/download/v5.4.23.2/BepInEx_win_x64_5.4.23.2.zip"
 REPO_ZIP_URL="https://github.com/JaySNL/IFZMods/archive/refs/heads/main.zip"
 
@@ -91,11 +103,19 @@ fi
 
 # Plugins
 DEST="$GAME/BepInEx/plugins"
-mkdir -p "$DEST/ConfigurationManager"
+mkdir -p "$DEST"
+[ -z "$MOD" ] && mkdir -p "$DEST/ConfigurationManager"
 
-echo "Copying mods..."
+if [ -n "$MOD" ]; then
+  echo "Targeted install: $MOD"
+  [ -f "$PLUGIN_SRC/$MOD.dll" ] || { echo "ERROR: mod '$MOD' not found ($PLUGIN_SRC/$MOD.dll)." >&2; exit 1; }
+  dlls=("$PLUGIN_SRC/$MOD.dll")
+else
+  echo "Copying mods..."
+  dlls=("$PLUGIN_SRC"/*.dll)
+fi
 copied=0
-for f in "$PLUGIN_SRC"/*.dll; do
+for f in "${dlls[@]}"; do
   [ -f "$f" ] || continue
   cp -f "$f" "$DEST/"
   echo "  + $(basename "$f")"
@@ -103,13 +123,15 @@ for f in "$PLUGIN_SRC"/*.dll; do
 done
 # Loose mod assets (LUTs, textures) that live next to a DLL — e.g. CinematicPost_Bleach.png.
 # Mods load these by filename from the plugins dir, so a dll-only copy silently breaks them.
+# With --mod, only assets whose name starts with the mod name are pulled.
 for f in "$PLUGIN_SRC"/*; do
   [ -f "$f" ] || continue
   case "$f" in *.dll) continue;; esac
+  if [ -n "$MOD" ]; then case "$(basename "$f")" in "$MOD"*) ;; *) continue;; esac; fi
   cp -f "$f" "$DEST/"
   echo "  + $(basename "$f")"
 done
-if [ -f "$PLUGIN_SRC/ConfigurationManager/ConfigurationManager.dll" ]; then
+if [ -z "$MOD" ] && [ -f "$PLUGIN_SRC/ConfigurationManager/ConfigurationManager.dll" ]; then
   cp -f "$PLUGIN_SRC/ConfigurationManager/ConfigurationManager.dll" "$DEST/ConfigurationManager/"
   echo "  + ConfigurationManager/ConfigurationManager.dll"
   copied=$((copied + 1))
