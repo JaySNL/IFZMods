@@ -119,3 +119,9 @@ test('renderApiPage is standalone, no external requests, links back to index, li
   assert.doesNotMatch(html, /<link[^>]+rel=["']?stylesheet/i);
   assert.doesNotMatch(html, /<script\s+src=/i);
 });
+
+test('renderApiSection tolerates a missing reference block (no crash, no "undefined")', () => {
+  const html = renderApiSection({ key: 'X', title: 'X', version: '1.0', blurb: 'b', types: [], example: 'e' });
+  assert.match(html, /id="X"/);
+  assert.doesNotMatch(html, /undefined/);
+});

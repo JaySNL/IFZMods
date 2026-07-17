@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { renderPage, renderApiPage } from './render.mjs';
@@ -37,19 +37,15 @@ const html = renderPage({ mods, gameSlug, featuredKeys: FEATURED, meta });
 writeFileSync(join(docsDir, 'index.html'), html);
 console.log(`[ok] wrote docs/index.html (${mods.length} mods)`);
 
+// Load exactly the registry's APIs in order — do NOT glob api/*.json (that would also pick up
+// the <Key>.surface.json baselines and _extract.template.md).
 const apiDir = join(here, 'api');
-const API_ORDER = ['IFZModAPI', 'IFZModPanels', 'IFZModDialog', 'IFZResourceApi'];
-let apis = [];
-if (existsSync(apiDir)) {
-  const byKey = new Map();
-  for (const f of readdirSync(apiDir)) {
-    if (!f.endsWith('.json')) continue;
-    const a = JSON.parse(readFileSync(join(apiDir, f), 'utf8'));
-    byKey.set(a.key, a);
-  }
-  const known = API_ORDER.filter((k) => byKey.has(k)).map((k) => byKey.get(k));
-  const extra = [...byKey.keys()].filter((k) => !API_ORDER.includes(k)).sort().map((k) => byKey.get(k));
-  apis = [...known, ...extra];
+const registry = JSON.parse(readFileSync(join(here, 'api-registry.json'), 'utf8'));
+const apis = [];
+for (const entry of registry.apis) {
+  const p = join(apiDir, `${entry.key}.json`);
+  if (existsSync(p)) apis.push(JSON.parse(readFileSync(p, 'utf8')));
+  else console.warn(`[warn] no api doc: ${entry.key}.json`);
 }
 const apiHtml = renderApiPage({ apis, meta });
 writeFileSync(join(docsDir, 'api.html'), apiHtml);

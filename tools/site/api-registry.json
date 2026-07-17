@@ -1,0 +1,9 @@
+{
+  "_comment": "Source of truth for the documented shared APIs. Order here = section order on docs/api.html. dir/dll are relative to the dev repo (see devRepoDefault). Add an API = add an entry + run refresh-api-docs.sh <Key>.",
+  "devRepoDefault": "../IFZ-Modding",
+  "apis": [
+    { "key": "IFZModAPI",    "dir": "IFZModAPI",    "dll": "000_IFZModAPI.dll" },
+    { "key": "IFZModPanels", "dir": "IFZModPanels", "dll": "IFZModPanels.dll" },
+    { "key": "IFZModDialog", "dir": "IFZModDialog", "dll": "IFZModDialog.dll" }
+  ]
+}

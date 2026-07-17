@@ -130,11 +130,12 @@ pre code { background: none; padding: 0; }
 `;
 
 function renderRefBox(ref) {
+  if (!ref) return '';
   return `<div class="refbox">
   <h4>Referencing this API</h4>
-  <p><strong>Load order (BepInDependency):</strong> <code>${esc(ref.bepInDependency)}</code></p>
-  <p><strong>Build reference (HintPath):</strong></p>
-  <pre><code>${esc(ref.hintPath)}</code></pre>
+  ${ref.bepInDependency ? `<p><strong>Load order (BepInDependency):</strong> <code>${esc(ref.bepInDependency)}</code></p>` : ''}
+  ${ref.hintPath ? `<p><strong>Build reference (HintPath):</strong></p>
+  <pre><code>${esc(ref.hintPath)}</code></pre>` : ''}
   ${ref.notes ? `<p class="blurb">${esc(ref.notes)}</p>` : ''}
 </div>`;
 }
