@@ -1,0 +1,287 @@
+{
+  "key": "IFZModAPI",
+  "title": "IFZModAPI",
+  "dll": "000_IFZModAPI.dll",
+  "guid": "com.ifzmod.api",
+  "version": "1.9.1",
+  "blurb": "Shared API for Infection Free Zone BepInEx mods — provides controller caches, time-of-day helpers, VFX utilities, reflection helpers, and mod-coordination hooks.",
+  "reference": {
+    "bepInDependency": "[BepInDependency(\"com.ifzmod.api\")]",
+    "hintPath": "<Reference Include=\"IFZModAPI\"><HintPath>..\\\\IFZModAPI\\\\bin\\\\Release\\\\netstandard2.1\\\\IFZModAPI.dll</HintPath></Reference>",
+    "notes": "Additive-only API. Do not version-pin the BepInDependency unless you require a specific minimum."
+  },
+  "types": [
+    {
+      "name": "Plugin",
+      "kind": "class",
+      "summary": "BepInEx plugin entry point. Binds config entries for Bloom and Sickness, patches all Harmony targets, and initializes the custom production API at load.",
+      "members": [
+        { "signature": "public const string Guid = \"com.ifzmod.api\"", "params": [], "returns": "The plugin GUID string", "remarks": "Used by consumer mods in [BepInDependency] for explicit load ordering." },
+        { "signature": "public static ManualLogSource Log", "params": [], "returns": "BepInEx's logger, set in Awake()", "remarks": "All IFZModAPI log output goes through this." },
+        { "signature": "public static ConfigEntry<bool> BloomEnabled", "params": [], "returns": "Config: boost bloom at night (default true)", "remarks": "Off = vanilla bloom." },
+        { "signature": "public static ConfigEntry<float> BloomNightIntensity", "params": [], "returns": "Config: peak Bloom intensity at full night (default 8f)", "remarks": "Vanilla is ~low single digits." },
+        { "signature": "public static ConfigEntry<float> BloomThreshold", "params": [], "returns": "Config: brightness threshold for bloom (default 1.1f)", "remarks": "High = only bright emissive sources bloom." },
+        { "signature": "public static ConfigEntry<float> BloomSoftKnee", "params": [], "returns": "Config: Bloom knee (0 hard, 1 soft) (default 0.5f)", "remarks": "" },
+        { "signature": "public static ConfigEntry<float> BloomTransitionHours", "params": [], "returns": "Config: fade width around sunset/sunrise (default 1.5f)", "remarks": "Match DarkerNights for sync." },
+        { "signature": "public static ConfigEntry<float> SicknessMaxNewSickPerDayFraction", "params": [], "returns": "Config: max fraction of population newly infected per day (default 0.10f)", "remarks": "Vanilla infections are separate and uncapped." },
+        { "signature": "public static ConfigEntry<SicknessCoordinator.Combine> SicknessCombineMode", "params": [], "returns": "Config: how multiple mods' infect chances merge (Max or SumClamped)", "remarks": "" },
+        { "signature": "public static ConfigEntry<bool> SicknessRollEnabled", "params": [], "returns": "Config: master switch for coordinated daily sickness roll (default true)", "remarks": "" },
+        { "signature": "public static ConfigEntry<bool> SicknessDebugLog", "params": [], "returns": "Config: log each day's coordinated roll (default false)", "remarks": "" },
+        { "signature": "public static ConfigEntry<bool> SicknessRequireTreatmentBuilding", "params": [], "returns": "Config: sickness stays OFF until player owns a treatment building (default true)", "remarks": "Off = sickness can roll from day one." },
+        { "signature": "public static ConfigEntry<int> SicknessOnsetGraceDays", "params": [], "returns": "Config: days after treatment first available before sickness rolls (default 2)", "remarks": "" },
+        { "signature": "public static ConfigEntry<int> SicknessOnsetRampDays", "params": [], "returns": "Config: days over which sickness ramps 0..1 (default 15)", "remarks": "0 = full strength immediately after grace." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "Cache",
+      "kind": "static class",
+      "summary": "Controller refs filled by Harmony postfixes. Consumers read e.g. IFZAPI.Cache.Buildings; null until the game has constructed each controller.",
+      "members": [
+        { "signature": "public static BuildingsController Buildings", "params": [], "returns": "The game's BuildingsController, null until constructed", "remarks": "" },
+        { "signature": "public static GroupsController Groups", "params": [], "returns": "The game's GroupsController", "remarks": "" },
+        { "signature": "public static SquadsController Squads", "params": [], "returns": "The game's SquadsController", "remarks": "" },
+        { "signature": "public static StockroomsController Stockrooms", "params": [], "returns": "The game's StockroomsController", "remarks": "" },
+        { "signature": "public static WorkController Work", "params": [], "returns": "The game's WorkController (WorkSystem)", "remarks": "" },
+        { "signature": "public static ColorSwitcher ColorSwitcher", "params": [], "returns": "The game's ColorSwitcher (PPv2 profile holder)", "remarks": "" },
+        { "signature": "public static WeatherController Weather", "params": [], "returns": "The game's WeatherController", "remarks": "" },
+        { "signature": "public static LightController Light", "params": [], "returns": "The game's LightController", "remarks": "" },
+        { "signature": "public static HideoutsController Hideouts", "params": [], "returns": "The game's HideoutsController", "remarks": "" },
+        { "signature": "public static Zenject.DiContainer Container", "params": [], "returns": "The current session's Zenject container", "remarks": "Set by ContainerCapturePatch on each session install." },
+        { "signature": "public static T TryResolve<T>() where T : class", "params": [{ "name": "T", "type": "T", "desc": "The singleton type to resolve" }], "returns": "T, or null if no active session or type unbound", "remarks": "Re-resolve at point of use — never cache across loads." }
+      ],
+      "hooks": [
+        { "name": "Cache.ContainerReady", "signature": "public static event System.Action<Zenject.DiContainer> ContainerReady", "when": "Fires after the game (re)installs its scene bindings — i.e. on a fresh game / save load. The scene DiContainer is rebuilt across loads; subscribe to reset per-session state.", "remarks": "Sole patcher of the installer is IFZModAPI; consumer mods must NOT patch it themselves." },
+        { "name": "Cache.HideoutsReady", "signature": "public static event System.Action<HideoutsController> HideoutsReady", "when": "Fires when the game (re)builds the HideoutsController — i.e. on a fresh game / save load.", "remarks": "Sole patcher of the ctor is IFZModAPI — consumer mods must NOT patch the HideoutsController ctor themselves." },
+        { "name": "Cache.Exploded", "signature": "public static event System.Action<Explosion, Vector3> Exploded", "when": "Fires after every Explosion.Explode, with the explosion and its world position.", "remarks": "Sole patcher of Explosion.Explode is IFZModAPI — consumer mods must NOT patch Explode themselves." },
+        { "name": "Cache.RegisterMaxGroupCountAdjuster", "signature": "public static void RegisterMaxGroupCountAdjuster(MaxGroupCountAdjuster a)", "when": "Registers a callback that adjusts the max member count for a group (raise only). Called by all registered adjusters.", "remarks": "Used by SquadMerge / VehicleSquadSize mods." },
+        { "name": "Cache.RegisterOrderInterceptor", "signature": "public static void RegisterOrderInterceptor(OrderInterceptor h)", "when": "Intercepts an OrdersQueue.GiveOrder call. Return true if the order was consumed (the original GiveOrder is then skipped). First interceptor that returns true wins.", "remarks": "Used by SquadMerge / VehicleSquadSize mods." },
+        { "name": "Cache.DefenceModuleAdded", "signature": "public static event System.Action<Gameplay.Rebuilding.Towers.StructureDefenceModule> DefenceModuleAdded", "when": "Fires when a defence module is spawned (Awake patch).", "remarks": "Main-thread only." },
+        { "name": "Cache.DefenceModuleRemoved", "signature": "public static event System.Action<Gameplay.Rebuilding.Towers.StructureDefenceModule> DefenceModuleRemoved", "when": "Fires when a defence module is destroyed (OnDestroy patch).", "remarks": "Main-thread only." },
+        { "name": "Cache.AntennaAdded", "signature": "public static event System.Action<Gameplay.Rebuilding.Towers.Antenna> AntennaAdded", "when": "Fires when an antenna is spawned (Awake patch).", "remarks": "Main-thread only." },
+        { "name": "Cache.AntennaRemoved", "signature": "public static event System.Action<Gameplay.Rebuilding.Towers.Antenna> AntennaRemoved", "when": "Fires when an antenna is destroyed (OnDestroy patch).", "remarks": "Main-thread only." },
+        { "name": "Cache.CharacterDied", "signature": "public static event System.Action<Gameplay.Units.Characters.Character> CharacterDied", "when": "Fires when a character dies, from a Prefix on Character.OnCharacterDeath — i.e. BEFORE the game's DestroyCharacter teardown, so LastAttackedBy / Health.KilledByEnemy are still valid for kill attribution.", "remarks": "Sole patcher of OnCharacterDeath (cross-mod: BlitzHund detonation + SquadTraits veterancy both subscribe here rather than double-patching)." },
+        { "name": "Cache.WeaponFired", "signature": "public static event System.Action<GunFireEffect, Gameplay.GameResources.ResourceID> WeaponFired", "when": "Fires once per shot from a Postfix on GunFireEffect.StartAnimation.", "remarks": "Sole patcher of that method (cross-mod: GunfireLights muzzle flashes + Radiosity bounce-lights both subscribe here rather than double-patching)." }
+      ]
+    },
+    {
+      "name": "Time",
+      "kind": "static class",
+      "summary": "Time-of-day helpers. Hour / Sunrise / Sunset / IsNight / NightBlend(transitionHours). Fires once per in-game day at sunset/sunrise.",
+      "members": [
+        { "signature": "public static float Hour", "params": [], "returns": "The current game hour (0..24)", "remarks": "" },
+        { "signature": "public static float Sunrise", "params": [], "returns": "The game's configured sunrise hour", "remarks": "" },
+        { "signature": "public static float Sunset", "params": [], "returns": "The game's configured sunset hour", "remarks": "" },
+        { "signature": "public static bool IsPaused", "params": [], "returns": "True when the game clock is paused (TimeController.SpeedMultiplier == 0)", "remarks": "IFZ pauses by setting SpeedMultiplier to 0, never touches UnityEngine.Time.timeScale." },
+        { "signature": "public static bool IsNight()", "params": [], "returns": "True when the current hour is before Sunrise or >= Sunset", "remarks": "" },
+        { "signature": "public static bool IsDay()", "params": [], "returns": "True when the current hour is between Sunrise and Sunset", "remarks": "" },
+        { "signature": "public static int DaysFromPreviousGames { get; internal set; }", "params": [], "returns": "Days carried over from a previous playthrough (expedition mode). 0 on a plain base run.", "remarks": "Mirrored from TimeController so it survives reloads." },
+        { "signature": "public static int RunDay", "params": [], "returns": "The current run's OWN age in days (1-based). On an expedition it strips the inherited days (Day - DaysFromPreviousGames).", "remarks": "Floor 1." },
+        { "signature": "public static float NightBlend(float transitionHours)", "params": [{ "name": "transitionHours", "type": "float", "desc": "Hours over which the fade in/out around sunset/sunrise" }], "returns": "Smooth 0..1 ramp. 1=deep night, 0=midday.", "remarks": "Cached per frame + per transitionHours; safe to call from many mods each frame." }
+      ],
+      "hooks": [
+        { "name": "Time.OnSunset", "signature": "public static event System.Action OnSunset", "when": "Fires once per in-game day at sunset. Re-wired each session; safe to subscribe once at plugin load.", "remarks": "" },
+        { "name": "Time.OnSunrise", "signature": "public static event System.Action OnSunrise", "when": "Fires once per in-game day at sunrise.", "remarks": "" }
+      ]
+    },
+    {
+      "name": "Vfx",
+      "kind": "static class",
+      "summary": "Shared smoke prefab cache + pooled point-light flash system. CloneSmokeAt clones the game's work-site smoke; Flash creates a one-shot point-light that fades with quadratic falloff.",
+      "members": [
+        { "signature": "public static ParticleSystem SmokePrefab()", "params": [], "returns": "The game's work-site smoke ParticleSystem, cached after first lookup. Null until at least one Smoke MonoBehaviour exists in the scene.", "remarks": "" },
+        { "signature": "public static GameObject CloneSmokeAt(Vector3 worldPos, Transform parent)", "params": [{ "name": "worldPos", "type": "Vector3", "desc": "World position for the clone" }, { "name": "parent", "type": "Transform", "desc": "Parent transform (or null)" }], "returns": "A clone of the smoke prefab as an active GameObject, or null if prefab not yet cached.", "remarks": "Strips injected MonoBehaviours from the clone so it's pure visual." },
+        { "signature": "public static void Flash(Vector3 pos, Color color, float range, float intensity, float lifetime)", "params": [{ "name": "pos", "type": "Vector3", "desc": "World position" }, { "name": "color", "type": "Color", "desc": "Flash color" }, { "name": "range", "type": "float", "desc": "Light range" }, { "name": "intensity", "type": "float", "desc": "Peak intensity" }, { "name": "lifetime", "type": "float", "desc": "Fade-out lifetime" }], "returns": "One-shot point-light flash that fades out with quadratic falloff.", "remarks": "Shared pool of 32 lights across all consumer mods; oldest reused once exhausted." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "GlowFx",
+      "kind": "static class",
+      "summary": "Shared additive-glow primitives for 'real glow/bloom' looks (muzzle flashes, tower lamps, beacons, headlights, flares). A Unity Light illuminates surfaces but never blooms on its own; a bright additive sprite at the source does. Centralised here so every mod reuses ONE additive material + shader-resolve + mesh set instead of each re-deriving it.",
+      "members": [
+        { "signature": "public static Camera Cam()", "params": [], "returns": "Main camera (cached, refreshed if lost). Null if no camera.", "remarks": "" },
+        { "signature": "public static Shader AdditiveShader()", "params": [], "returns": "Resolve an additive transparent shader once (engine candidates, else borrow a loaded additive material). Null if none.", "remarks": "" },
+        { "signature": "public static Material MakeAdditiveMaterial(Texture2D tex)", "params": [{ "name": "tex", "type": "Texture2D", "desc": "Texture to wrap in an additive material" }], "returns": "An additive Material around tex. Null if no additive shader is available.", "remarks": "" },
+        { "signature": "public static Texture2D SoftGlowTexture()", "params": [], "returns": "Shared round soft-glow texture (white core, smooth alpha falloff to the rim).", "remarks": "Cached after first call." },
+        { "signature": "public class GlowSource : MonoBehaviour", "params": [], "returns": "Steady additive glow billboard pinned to a transform — gives a light SOURCE a visible heat halo that feeds Bloom.", "remarks": "Set Color/Size/Intensity each frame (or once). Billboard faces the camera." },
+        { "signature": "public static GlowSource GlowSource.Attach(Transform parent, Vector3 localPos, Color color, float size)", "params": [{ "name": "parent", "type": "Transform", "desc": "Parent transform" }, { "name": "localPos", "type": "Vector3", "desc": "Local position under parent" }, { "name": "color", "type": "Color", "desc": "Glow color (brightness carries intensity)" }, { "name": "size", "type": "float", "desc": "Billboard size" }], "returns": "A GlowSource component attached to a new GameObject, or null if no additive shader is available.", "remarks": "" },
+        { "signature": "public class LightBeam : MonoBehaviour", "params": [], "returns": "Additive light-shaft cone along the host transform's +Z (forward). Parent it to a light and it beams where the light aims.", "remarks": "Set Color/Length/Radius/Intensity." },
+        { "signature": "public static LightBeam LightBeam.Attach(Transform parent, Color color, float length, float radius)", "params": [{ "name": "parent", "type": "Transform", "desc": "Parent transform" }, { "name": "color", "type": "Color", "desc": "Beam color" }, { "name": "length", "type": "float", "desc": "Beam length" }, { "name": "radius", "type": "float", "desc": "Cone tip radius (world)" }], "returns": "A LightBeam component attached to a new GameObject, or null if no additive shader is available.", "remarks": "" },
+        { "signature": "public static class FlashGlow", "params": [], "returns": "One-shot pooled bright round additive dot for TRANSIENT sources (muzzle, explosion).", "remarks": "Camera-facing, pause-aware (frozen while the game clock is paused)." },
+        { "signature": "public static void FlashGlow.Spawn(Vector3 pos, Color color, float size, float lifetime)", "params": [{ "name": "pos", "type": "Vector3", "desc": "World position" }, { "name": "color", "type": "Color", "desc": "Color carries brightness (push >1 to feed Bloom)" }, { "name": "size", "type": "float", "desc": "Diameter in metres" }, { "name": "lifetime", "type": "float", "desc": "Fade-out lifetime" }], "returns": "One-shot glow dot. No-ops if no additive shader is available.", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "BloomControl",
+      "kind": "static class",
+      "summary": "Drives the game's own PPv2 Bloom up at night so emissive sources actually glow. A Unity light illuminates surfaces but emits no bright pixel; bloom is what makes a bright pixel bleed. We boost Bloom on the game's existing ColorSwitcher.ppVolume profile (no camera-layer matching) and restore the captured original on disable. High threshold = only bright HDR emissive blooms, so the dark scene stays readable. Coexists with DarkerNights (which drives ColorGrading / AutoExposure on the same profile — different settings, no clobber).",
+      "members": [
+        { "signature": "internal class Driver : MonoBehaviour", "params": [], "returns": "Bloom boost driver. Runs on Update() and boosts Bloom at night based on Plugin's config entries.", "remarks": "Added to a DontDestroyOnLoad GameObject by Plugin.Awake()." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "Reflect",
+      "kind": "static class",
+      "summary": "Cached AccessTools.Field lookups shared across all consumer mods. Drops ~5-15 static FieldInfo declarations per mod.",
+      "members": [
+        { "signature": "public static FieldInfo Field(Type t, string name)", "params": [{ "name": "t", "type": "Type", "desc": "Type to look up" }, { "name": "name", "type": "string", "desc": "Field name" }], "returns": "A cached AccessTools.Field lookup, or null if not found.", "remarks": "Cached per (Type, name) pair." },
+        { "signature": "public static T Get<T>(object instance, string fieldName) where T : class", "params": [{ "name": "instance", "type": "object", "desc": "Object to read from" }, { "name": "fieldName", "type": "string", "desc": "Field name" }], "returns": "Field value cast to T, or default(T) if field or value is null.", "remarks": "" },
+        { "signature": "public static T GetValue<T>(object instance, string fieldName) where T : struct", "params": [{ "name": "instance", "type": "object", "desc": "Object to read from" }, { "name": "fieldName", "type": "string", "desc": "Field name" }], "returns": "Field value as T, or default(T) if missing.", "remarks": "" },
+        { "signature": "public static void Set(object instance, string fieldName, object value)", "params": [{ "name": "instance", "type": "object", "desc": "Object to write to" }, { "name": "fieldName", "type": "string", "desc": "Field name" }, { "name": "value", "type": "object", "desc": "Value to set" }], "returns": "void", "remarks": "No-ops if instance is null." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "FloatParam",
+      "kind": "static class",
+      "summary": "PostProcessing v2 FloatParameter has a public value field. Wrapping the boxed-getter dance keeps DarkerNights / future lighting mods simpler.",
+      "members": [
+        { "signature": "public static void SetValue(object floatParam, float v)", "params": [{ "name": "floatParam", "type": "object", "desc": "A PostProcessing FloatParameter" }, { "name": "v", "type": "float", "desc": "Value to set" }], "returns": "void", "remarks": "No-ops if floatParam is null." },
+        { "signature": "public static float GetValue(object floatParam)", "params": [{ "name": "floatParam", "type": "object", "desc": "A PostProcessing FloatParameter" }], "returns": "The float value, or 0f if missing.", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "Wine",
+      "kind": "static class",
+      "summary": "JIT-safety guards for the game's Proton/Wine Mono runtime. The FIRST time Mono compiles a method it can fail to load a callee's IL body and throw BadImageFormatException: 'Method has zero rva'. A DELEGATE invocation is never inlined by Mono, so routing the risky access through one of these guards keeps the cold callee behind a real call boundary.",
+      "members": [
+        { "signature": "[MethodImpl(MethodImplOptions.NoInlining)] public static T Try<T>(Func<T> access, T fallback = default, string label = null)", "params": [{ "name": "access", "type": "Func<T>", "desc": "A value-returning access that may JIT-fail under Wine" }, { "name": "fallback", "type": "T", "desc": "Value to return if the access throws" }, { "name": "label", "type": "string", "desc": "Optional label for log output" }], "returns": "The access result, or fallback (and logs once) if it throws.", "remarks": "The delegate boundary stops Mono inlining the cold callee past this guard." },
+        { "signature": "[MethodImpl(MethodImplOptions.NoInlining)] public static bool Try(Action access, string label = null)", "params": [{ "name": "access", "type": "Action", "desc": "An action that may JIT-fail under Wine" }, { "name": "label", "type": "string", "desc": "Optional label for log output" }], "returns": "True on success, false (and logs once) if it throws.", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "Combat",
+      "kind": "static class",
+      "summary": "Per-character outgoing-damage multiplier registry. Additive API surface: writers (e.g. SquadTraits veterancy) set a factor by Character.Id; the sole GetDamage patcher (SquadMoveFire) multiplies its result by it. Default 1f => zero effect until something writes, so no mod is coupled to this.",
+      "members": [
+        { "signature": "public static float GetDamageMult(string id)", "params": [{ "name": "id", "type": "string", "desc": "Character.Id" }], "returns": "The damage multiplier for the character, or 1f (no effect) if not set.", "remarks": "" },
+        { "signature": "public static void SetDamageMult(string id, float mult)", "params": [{ "name": "id", "type": "string", "desc": "Character.Id" }, { "name": "mult", "type": "float", "desc": "Damage multiplier" }], "returns": "void", "remarks": "No-ops if id is null/empty." },
+        { "signature": "public static void ClearDamageMult(string id)", "params": [{ "name": "id", "type": "string", "desc": "Character.Id" }], "returns": "void", "remarks": "No-ops if id is null/empty." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "Production",
+      "kind": "static class",
+      "summary": "Custom production recipe API for IFZ mods. This static class provides a way for mods to inject custom production recipes into buildings without causing Harmony patch collisions. The API handles all the patching internally and manages both real (local container) and virtual (global container) resource inputs.",
+      "members": [
+        { "signature": "internal static void Init()", "params": [], "returns": "Armed once at API load (from Plugin.Awake), BEFORE any game session fires ContainerReady.", "remarks": "Subscribes to Cache.ContainerReady and ProductionUI.RowRefreshed." },
+        { "signature": "public static void Register(RecipeDef def)", "params": [{ "name": "def", "type": "RecipeDef", "desc": "The recipe definition to register" }], "returns": "void", "remarks": "No-ops on null, empty ID, or duplicate ID. Logs warnings." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "RecipeDef",
+      "kind": "sealed class",
+      "summary": "Definition for a custom production recipe.",
+      "members": [
+        { "signature": "public string Id", "params": [], "returns": "Unique ID for this recipe (also used as content unlock ID)", "remarks": "" },
+        { "signature": "public System.Func<PlaceableObjectDraft, bool> AppliesTo", "params": [], "returns": "Function to determine which building drafts should receive this recipe", "remarks": "" },
+        { "signature": "public System.Collections.Generic.List<ResourceInput> Cost", "params": [], "returns": "Real local-container inputs (e.g. wood/metal/etc.) - these will be consumed from the building's local container", "remarks": "" },
+        { "signature": "public System.Collections.Generic.List<ResourceInput> VirtualInputs", "params": [], "returns": "Virtual/global inputs (e.g. virt_infected_corpse) - these must be consumed from the global VirtualResourcesContainer", "remarks": "" },
+        { "signature": "public System.Collections.Generic.List<ResourceInput> Profit", "params": [], "returns": "Outputs of this production recipe (required, >=1)", "remarks": "" },
+        { "signature": "public ResourceID InheritTimeFromOutput = ResourceID.None", "params": [], "returns": "Borrow cycle time from the draft's existing recipe that outputs this ResourceID", "remarks": "" },
+        { "signature": "public float TotalProductionTime = 0f", "params": [], "returns": "Explicit cycle time if not inheriting (0 = use inherited time)", "remarks": "" },
+        { "signature": "public bool AutoUnlock = true", "params": [], "returns": "Register and unlock content ID on load", "remarks": "" },
+        { "signature": "public System.Func<UnityEngine.Sprite> InputIcon", "params": [], "returns": "Optional custom input glyph for virtual inputs (null = no special glyph)", "remarks": "" },
+        { "signature": "public UnityEngine.Color? InputIconColor", "params": [], "returns": "Optional tint for the input glyph. Vanilla resource icons are coloured by their sprite art, so a white monochrome glyph renders white — set this (e.g. a resource-green) to tint it. Null = untinted.", "remarks": "" },
+        { "signature": "public string InputLabel", "params": [], "returns": "Optional label text beside the glyph (e.g. '20')", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "ResourceInput",
+      "kind": "struct",
+      "summary": "Structure representing a resource input in a recipe.",
+      "members": [
+        { "signature": "public ResourceInput(ResourceID resource, float amount)", "params": [{ "name": "resource", "type": "ResourceID", "desc": "The resource" }, { "name": "amount", "type": "float", "desc": "The amount" }], "returns": "A new ResourceInput", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "ProductionUI",
+      "kind": "static class",
+      "summary": "Sole patcher of ProductionBar.RefreshBar — the single injection point for the building info-panel 'SELECT PRODUCTION' rows. RefreshBar rebuilds a row from scratch every call (Clear() destroys the input ResourcePanels / output ProductionCycles, then GetCostPairs/GetProfitPairs repopulate them), so any mod that tweaks a row's icons or labels must re-do it on EVERY refresh. Two Harmony patches on one method crash under Wine (zero-rva, see wine-double-patch-zero-rva) and build.sh fatal-gates the collision — so consumer mods must NOT patch RefreshBar themselves. Subscribe to RowRefreshed instead.",
+      "members": [],
+      "hooks": [
+        { "name": "ProductionUI.RowRefreshed", "signature": "public static event Action<ProductionBar> RowRefreshed", "when": "Fires AFTER the game finished rebuilding a production row's input/output icons. Runs on the game/UI thread. Handlers MUST be idempotent per refresh (the row is cleared and repopulated each time). A throwing handler is isolated so one mod cannot break the row for the others.", "remarks": "The ProductionBar is passed raw; subscribers reflect whatever private fields they need (_productionData, _productionWork, _productionCycles, neededResourcesParent, producedResourcesParent, ...) themselves — keeps this API surface minimal and additive." }
+      ]
+    },
+    {
+      "name": "Radio",
+      "kind": "static class",
+      "summary": "Shared radio helper. A mod calls it to push ONE message into the vanilla radio — cloud bubble + transmission log + optional call audio — and ONLY when a mod calls it. It never patches, and never mutates, the vanilla radio. Message colour travels as TextMeshPro rich-text markup INSIDE the message string, so the game's own per-message type→colour styling (e.g. danger = white text + highlight box) is left completely intact ('typelocked').",
+      "members": [
+        { "signature": "public static void Message(string text, string type = null, string colorHex = null, float duration = 0f, bool bubble = true, bool log = true, bool sound = false, RadioSource source = RadioSource.NPC)", "params": [{ "name": "text", "type": "string", "desc": "Message text" }, { "name": "type", "type": "string", "desc": "Free label; 'danger'/'alert' also UPPERCASE the text and add a trailing '!' (mirrors the game's own danger styling) — cosmetic only, never touches shared colour." }, { "name": "colorHex", "type": "string", "desc": "e.g. '#59A6FF' or '59A6FF' tints ONLY this message's bubble text via rich-text; pass null/empty for the game's default colour. It cannot affect vanilla messages." }, { "name": "duration", "type": "float", "desc": "Message duration (default 5f)" }, { "name": "bubble", "type": "bool", "desc": "Show cloud bubble (default true)" }, { "name": "log", "type": "bool", "desc": "Add to transmission log (default true)" }, { "name": "sound", "type": "bool", "desc": "Opt-in call blip + mumble (default false)" }, { "name": "source", "type": "RadioSource", "desc": "Speaker type (default NPC)" }], "returns": "void", "remarks": "No-ops on null/empty text or during a save load / loading screen." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "RadioSource",
+      "kind": "enum",
+      "summary": "WHO's talking — drives the persistent-log speaker + mumble voice. NPC first so zero-value = NPC.",
+      "members": [
+        { "signature": "NPC", "params": [], "returns": "NPC speaker (default)", "remarks": "" },
+        { "signature": "Operator", "params": [], "returns": "Operator speaker", "remarks": "" },
+        { "signature": "Trader", "params": [], "returns": "Trader speaker", "remarks": "" },
+        { "signature": "Scout", "params": [], "returns": "Scout speaker", "remarks": "" },
+        { "signature": "Base", "params": [], "returns": "Base speaker", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "RadioSeverity",
+      "kind": "enum",
+      "summary": "Legacy severity preset kept for back-compat callers. New code passes a colour hex to Radio.Message directly.",
+      "members": [
+        { "signature": "Info", "params": [], "returns": "Info severity (null = native default cloud colour)", "remarks": "" },
+        { "signature": "Warning", "params": [], "returns": "Warning severity (calm blue #59A6FF)", "remarks": "" },
+        { "signature": "Alert", "params": [], "returns": "Alert severity (alert red #FF4D40)", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "SaveStore",
+      "kind": "static class",
+      "summary": "Per-save persistence for mods, keyed on the map's stable SaveHandler.Coordinates — NOT SaveInfo.Name, which embeds the in-game clock and drifts every day. That drift silently re-baselines a mod's per-save state on every reload (it bit Expanded Farming and ElderPop before this helper existed: each reload looked like a brand-new save). Layout: one JSON blob per (save, modId) at {SavesDirPath}/.ifzmods/{coordsKey}/{modId}.json — i.e. BESIDE the game's Saves dir (so it travels when a user copies their whole Saves folder) but NOT inside IFZ's per-save timestamped folders — those are recreated on every manual save, so anything written inside one is invisible to the next save of the same game. The coords key is stable across every reload/re-save of the same base location, which is exactly what per-save mod state needs. Serialization is UnityEngine.JsonUtility (Wine-safe, no Newtonsoft): pass a [Serializable] type with PUBLIC FIELDS. JsonUtility does not serialize Dictionary<,> — use a List field instead. All methods are null/exception-safe and no-op when no save is active (see HasSave), so a mod may call them freely without guarding for the main-menu / pre-load window.",
+      "members": [
+        { "signature": "public static bool HasSave", "params": [], "returns": "True once a map is active (coordinates assigned). Persist only while in-game.", "remarks": "" },
+        { "signature": "public static string SaveKey", "params": [], "returns": "Clock-independent per-save key. Same base location -> same key across every reload/re-save. Empty string when no save is active.", "remarks": "" },
+        { "signature": "public static bool Save(string modId, object data)", "params": [{ "name": "modId", "type": "string", "desc": "Mod identifier" }, { "name": "data", "type": "object", "desc": "A [Serializable] type with PUBLIC FIELDS" }], "returns": "True if saved, false (no-op) if no save is active.", "remarks": "" },
+        { "signature": "public static object Load(string modId, Type type)", "params": [{ "name": "modId", "type": "string", "desc": "Mod identifier" }, { "name": "type", "type": "Type", "desc": "The [Serializable] type to cast to" }], "returns": "The loaded object, or null if none is stored / parsing fails.", "remarks": "NON-GENERIC ON PURPOSE: a generic Load<T> forces a cross-assembly generic instantiation that IFZ's Mono-under-Wine cannot JIT — it throws BadImageFormatException 'Method has zero rva' at the CALLER's entry, which took down ElderPop's sunrise/sunset hooks (the whole method the caller is in fails to compile). Unity's non-generic JsonUtility.FromJson(string, Type) sidesteps it." },
+        { "signature": "public static bool SaveText(string modId, string text)", "params": [{ "name": "modId", "type": "string", "desc": "Mod identifier" }, { "name": "text", "type": "string", "desc": "Raw string blob (no JsonUtility)" }], "returns": "True if saved, false (no-op) if no save is active.", "remarks": "Prefer this over Save/Load for anything list- or map-shaped: JsonUtility does not round-trip collection fields reliably under Wine, whereas a raw string is bulletproof. Stored at the same per-save path as the JSON blob, .txt suffix." },
+        { "signature": "public static string LoadText(string modId)", "params": [{ "name": "modId", "type": "string", "desc": "Mod identifier" }], "returns": "The raw string blob written by SaveText, or null if none.", "remarks": "" },
+        { "signature": "public static bool Has(string modId)", "params": [{ "name": "modId", "type": "string", "desc": "Mod identifier" }], "returns": "True if this mod has a stored blob for the current save.", "remarks": "" },
+        { "signature": "public static bool Delete(string modId)", "params": [{ "name": "modId", "type": "string", "desc": "Mod identifier" }], "returns": "True if a file was removed.", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "SicknessCoordinator",
+      "kind": "static class",
+      "summary": "The arbiter that stops multiple mods (ExtendedHealth, ElderPop, ...) from independently rolling sickness on the same pop and stacking into a death wave. Consumer mods RegisterSource(modId, fn) once at load; fn returns a per-pop, per-day chance in [0,1] (or <=0 for 'no opinion'). Once per in-game day, at sunset (Time.OnSunset), this runs ONE roll per adult/non-dead/non-sick citizen: merges every registered source's chance (Max or SumClamped — CombineMode), rolls once, and caps the day's total NEW infections to a shared fraction of the population (MaxNewSickPerDayFraction, min 1) so no combination of mods can out-sick the vanilla die-chance/medicine/treatment-bed pipeline in one day. All actual sickness still goes through the game's own SicknessController.MakeCharacterSick, so existing recovery/death machinery is untouched — this only gates WHO gets sick and WHEN.",
+      "members": [
+        { "signature": "public static bool Available", "params": [], "returns": "Presence flag for version-guarded callers (always true).", "remarks": "" },
+        { "signature": "public static void RegisterSource(string modId, SicknessSource fn)", "params": [{ "name": "modId", "type": "string", "desc": "Mod identifier" }, { "name": "fn", "type": "SicknessSource", "desc": "Per-pop, per-day chance in [0,1] (or <=0 for 'no opinion')" }], "returns": "void", "remarks": "Register once at load. No-ops on null/empty modId or null fn." },
+        { "signature": "public static void UnregisterSource(string modId)", "params": [{ "name": "modId", "type": "string", "desc": "Mod identifier" }], "returns": "void", "remarks": "No-ops on null/empty modId." },
+        { "signature": "internal static void Init()", "params": [], "returns": "Wired once by Plugin's deferred session wire: SicknessCoordinator.Init() subscribes Time.OnSunset += DailyRoll. Idempotent (unsub/sub) so a re-arm mid-session is harmless.", "remarks": "Drops the onset latch so the first roll reloads it from THIS save's SaveStore (or re-latches if this save has no clinic yet)." },
+        { "signature": "public static float MaxNewSickPerDayFraction", "params": [], "returns": "Max fraction of population that mod sickness-sources may newly infect per day (shared cap across all mods). Vanilla infections are separate and uncapped.", "remarks": "Config-backed, set by Plugin at load (Config.Bind under the 'Sickness' section). Default 0.10f." },
+        { "signature": "public static Combine CombineMode", "params": [], "returns": "How multiple mods' infect chances merge for one pop: Max (no compounding) or SumClamped.", "remarks": "Config-backed, set by Plugin at load." },
+        { "signature": "public static bool RollEnabled", "params": [], "returns": "Master switch for the coordinated daily sickness roll.", "remarks": "Config-backed, set by Plugin at load." },
+        { "signature": "public static bool DebugLog", "params": [], "returns": "Log each day's coordinated roll.", "remarks": "Config-backed, set by Plugin at load." },
+        { "signature": "public static bool RequireTreatmentBuilding", "params": [], "returns": "Capability gate: mod-driven sickness stays OFF until the player owns a completed building that can treat citizens (a clinic/hospital). Prevents illness you have no means to cure. Off = sickness can roll from day one.", "remarks": "Config-backed, set by Plugin at load." },
+        { "signature": "public static int OnsetGraceDays", "params": [], "returns": "Days after treatment first becomes available before any mod-driven sickness rolls. A short buffer so a freshly-built clinic doesn't instantly trigger a wave.", "remarks": "Config-backed, set by Plugin at load." },
+        { "signature": "public static int OnsetRampDays", "params": [], "returns": "After the grace window, the day's whole sickness chance ramps linearly 0..1 over this many days, so difficulty eases in rather than spiking. 0 = full strength immediately after grace.", "remarks": "Config-backed, set by Plugin at load." }
+      ],
+      "hooks": [
+        { "name": "SicknessCoordinator.OnPopFellSick", "signature": "public static event Action<Character> OnPopFellSick", "when": "Fires when a character becomes sick through the coordinated roll.", "remarks": "" }
+      ]
+    }
+  ],
+  "example": "// Register a custom production recipe\nvar recipe = new RecipeDef\n{\n    Id = \"my_mod.special_bricks\",\n    AppliesTo = draft => draft.Name.Contains(\"Brick Kiln\"),\n    Cost = new List<ResourceInput> { new ResourceInput(ResourceID.Clay, 10f) },\n    Profit = new List<ResourceInput> { new ResourceInput(ResourceID.Brick, 5f) },\n    InputIcon = () => MyMod.SpriteFromAssetBundle(\"bricks_icon\"),\n    InputLabel = \"10\"\n};\nProduction.Register(recipe);\n\n// Listen to production row refreshes\nProductionUI.RowRefreshed += bar => {\n    // Inject custom icons into the production row\n};\n\n// Use the shared radio\nRadio.Message(\"Hello world\", type: \"info\", colorHex: \"#59A6FF\", sound: true);\n\n// Per-save persistence\nif (SaveStore.HasSave)\n{\n    SaveStore.Save(\"MyMod\", mySaveData);\n    var loaded = (MySave)SaveStore.Load(\"MyMod\", typeof(MySave));\n}"
+}

@@ -1,0 +1,751 @@
+{
+  "key": "IFZModPanels",
+  "title": "IFZModPanels",
+  "dll": "IFZModPanels.dll",
+  "guid": "ifz.modpanels",
+  "version": "0.1.1",
+  "blurb": "A BepInEx plugin that provides a panel system for building in-game UI windows with layout, theming, persistence, and interactive controls.",
+  "reference": {
+    "bepInDependency": "[BepInDependency(\"com.ifzmod.api\")]",
+    "hintPath": "<Reference Include=\"IFZModPanels\"><HintPath>..\\\\IFZModPanels\\\\bin\\\\Release\\\\netstandard2.1\\\\IFZModPanels.dll</HintPath></Reference>",
+    "notes": "Additive-only API. Do not version-pin the BepInDependency unless you require a specific minimum."
+  },
+  "types": [
+    {
+      "name": "Panels",
+      "kind": "static class",
+      "summary": "Consumer entry point. Register a builder once; it re-runs on every Game-scene load.",
+      "members": [
+        {
+          "signature": "public static Theme DefaultTheme { get; set; }",
+          "params": [],
+          "returns": "Theme — the default theme applied to windows that don't override. Mutable.",
+          "remarks": "Set once during mod init. Windows that pass a theme argument to Panels.Register use that instead."
+        },
+        {
+          "signature": "public static void Register(string id, Action<PanelContext> build)",
+          "params": [
+            { "name": "id", "type": "string", "desc": "Unique identifier for the window. Used for persistence and toggling." },
+            { "name": "build", "type": "Action<PanelContext>", "desc": "A builder callback that receives a PanelContext to construct the window." }
+          ],
+          "returns": "void",
+          "remarks": "Idempotent — same id replaces. If a Game scene is already live, builds immediately into the current canvas."
+        },
+        {
+          "signature": "public static void Unregister(string id)",
+          "params": [
+            { "name": "id", "type": "string", "desc": "The window id to remove." }
+          ],
+          "returns": "void",
+          "remarks": "Removes the builder and destroys the window if it exists."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "PanelContext",
+      "kind": "sealed class",
+      "summary": "Builder context passed to the Action<PanelContext> callback. Creates a ModWindow and returns it.",
+      "members": [
+        {
+          "signature": "public ModWindow Window(string title, SizeMode? size = null, Theme? theme = null, KeyCode toggleKey = KeyCode.None)",
+          "params": [
+            { "name": "title", "type": "string", "desc": "Window title shown in the header." },
+            { "name": "size", "type": "SizeMode?", "desc": "Sizing mode (AutoHeight, Fixed, Resizable). Defaults to DefaultAuto (320×400 max)." },
+            { "name": "theme", "type": "Theme?", "desc": "Per-window theme override. Defaults to Panels.DefaultTheme." },
+            { "name": "toggleKey", "type": "KeyCode", "desc": "Keyboard shortcut to show/hide the window. Defaults to None." }
+          ],
+          "returns": "ModWindow — the created window, ready for further configuration.",
+          "remarks": "Called once during registration. The window is persisted (pos/size/collapsed/visible) via WindowStore.Load."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "ModWindow",
+      "kind": "sealed partial class",
+      "summary": "A single in-game window with header, body, and row-based layout. Supports drag, resize, collapse, and toggle.",
+      "members": [
+        {
+          "signature": "public bool Locked { get; set; }",
+          "params": [],
+          "returns": "bool — whether the window is locked (cannot be dragged or resized).",
+          "remarks": "When true, DraggablePanel and ResizeGrip are disabled."
+        },
+        {
+          "signature": "public bool Collapsed { get; set; }",
+          "params": [],
+          "returns": "bool — whether the body is collapsed (header only).",
+          "remarks": "Toggling persists to disk via WindowStore."
+        },
+        {
+          "signature": "public bool Visible { get; set; }",
+          "params": [],
+          "returns": "bool — whether the window is visible.",
+          "remarks": "Toggling persists to disk. Hidden windows can be reopened via toggleKey."
+        },
+        {
+          "signature": "public RectTransform Body { get; }",
+          "params": [],
+          "returns": "RectTransform — the scrollable content parent (from UiFactory.ScrollView).",
+          "remarks": "Use this as the parent for NewRow and other layout calls."
+        },
+        {
+          "signature": "public LabelHandle Label(string text)",
+          "params": [
+            { "name": "text", "type": "string", "desc": "Label text." }
+          ],
+          "returns": "LabelHandle — a handle to update the label text or color.",
+          "remarks": "Creates a new row with the label flexing to fill available width."
+        },
+        {
+          "signature": "public LabelHandle Section(string text)",
+          "params": [
+            { "name": "text", "type": "string", "desc": "Section header text." }
+          ],
+          "returns": "LabelHandle — a handle to update the section text or color.",
+          "remarks": "Like Label but uses Accent color and Bold style."
+        },
+        {
+          "signature": "public ValueRow Value(string label, string initial = \"\")",
+          "params": [
+            { "name": "label", "type": "string", "desc": "Label text (left-aligned, muted)." },
+            { "name": "initial", "type": "string", "desc": "Initial value text (right-aligned)." }
+          ],
+          "returns": "ValueRow — a handle to update the value text or color.",
+          "remarks": "Creates a two-column row: label on left, value on right."
+        },
+        {
+          "signature": "public SeparatorHandle Separator()",
+          "params": [],
+          "returns": "SeparatorHandle — a 1px horizontal divider.",
+          "remarks": "Creates a new row with a faint separator line."
+        },
+        {
+          "signature": "public BarHandle Bar(string label = null, float value01 = 0f)",
+          "params": [
+            { "name": "label", "type": "string", "desc": "Optional label text." },
+            { "name": "value01", "type": "float", "desc": "Fill level 0..1." }
+          ],
+          "returns": "BarHandle — a handle to update fill, color, or label.",
+          "remarks": "Creates a track with an Accent-colored fill bar."
+        },
+        {
+          "signature": "public ButtonHandle Button(string text, Action onClick)",
+          "params": [
+            { "name": "text", "type": "string", "desc": "Button label." },
+            { "name": "onClick", "type": "Action", "desc": "Callback when clicked." }
+          ],
+          "returns": "ButtonHandle — a handle to update interactability or label.",
+          "remarks": "Creates a 120px-wide button row."
+        },
+        {
+          "signature": "public ButtonHandle IconButton(IconKind icon, Action onClick)",
+          "params": [
+            { "name": "icon", "type": "IconKind", "desc": "Icon to display." },
+            { "name": "onClick", "type": "Action", "desc": "Callback when clicked." }
+          ],
+          "returns": "ButtonHandle — a handle to update interactability.",
+          "remarks": "Creates a square icon button (size = RowHeight)."
+        },
+        {
+          "signature": "public SliderHandle Slider(string label, float min, float max, Action<float> onChange)",
+          "params": [
+            { "name": "label", "type": "string", "desc": "Optional label text." },
+            { "name": "min", "type": "float", "desc": "Slider minimum." },
+            { "name": "max", "type": "float", "desc": "Slider maximum." },
+            { "name": "onChange", "type": "Action<float>", "desc": "Callback with current value." }
+          ],
+          "returns": "SliderHandle — a handle to get/set the slider value.",
+          "remarks": "Creates a horizontal slider with optional label."
+        },
+        {
+          "signature": "public ToggleHandle Toggle(string label, bool initial, Action<bool> onChange)",
+          "params": [
+            { "name": "label", "type": "string", "desc": "Toggle label text." },
+            { "name": "initial", "type": "bool", "desc": "Initial checked state." },
+            { "name": "onChange", "type": "Action<bool>", "desc": "Callback with new state." }
+          ],
+          "returns": "ToggleHandle — a handle to get/set the toggle state.",
+          "remarks": "Creates a checkbox-style toggle with an Accent-colored check indicator."
+        },
+        {
+          "signature": "public InputHandle Input(string placeholder, Action<string> onChange)",
+          "params": [
+            { "name": "placeholder", "type": "string", "desc": "Placeholder text shown when empty." },
+            { "name": "onChange", "type": "Action<string>", "desc": "Callback with current text." }
+          ],
+          "returns": "InputHandle — a handle to get/set the input text.",
+          "remarks": "Creates a TMP_InputField with placeholder."
+        },
+        {
+          "signature": "public ListRegion List()",
+          "params": [],
+          "returns": "ListRegion — a vertical container for ListRow items.",
+          "remarks": "Creates a scrollable list with automatic height fitting."
+        },
+        {
+          "signature": "public GraphHandle Graph(GraphKind kind, float height = 80f)",
+          "params": [
+            { "name": "kind", "type": "GraphKind", "desc": "Graph type (Line or Bar)." },
+            { "name": "height", "type": "float", "desc": "Fixed graph height in pixels." }
+          ],
+          "returns": "GraphHandle — a handle to push/set graph values.",
+          "remarks": "Creates a graph with an inset from the background."
+        },
+        {
+          "signature": "public void EveryFrame(Action cb)",
+          "params": [
+            { "name": "cb", "type": "Action", "desc": "Callback invoked every frame." }
+          ],
+          "returns": "void",
+          "remarks": "Called every Tick. Use sparingly."
+        },
+        {
+          "signature": "public void Every(float seconds, Action cb)",
+          "params": [
+            { "name": "seconds", "type": "float", "desc": "Interval in seconds (minimum 0.01f)." },
+            { "name": "cb", "type": "Action", "desc": "Callback invoked at the interval." }
+          ],
+          "returns": "void",
+          "remarks": "Called every N seconds. Use for periodic updates."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "ListRegion",
+      "kind": "sealed class",
+      "summary": "A vertical container for ListRow items. Created by ModWindow.List().",
+      "members": [
+        {
+          "signature": "public void Clear()",
+          "params": [],
+          "returns": "void",
+          "remarks": "Destroys all child row GameObjects."
+        },
+        {
+          "signature": "public ListRow Row()",
+          "params": [],
+          "returns": "ListRow — a new row inside this list.",
+          "remarks": "Creates a new row with the region's theme."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "ListRow",
+      "kind": "sealed class",
+      "summary": "A horizontal row inside a ListRegion. Created by ListRegion.Row().",
+      "members": [
+        {
+          "signature": "public LabelHandle Label(string s)",
+          "params": [
+            { "name": "s", "type": "string", "desc": "Label text." }
+          ],
+          "returns": "LabelHandle — a handle to update the label.",
+          "remarks": "Creates a label that flexes to fill available width."
+        },
+        {
+          "signature": "public BarHandle Bar(float v01 = 0f)",
+          "params": [
+            { "name": "v01", "type": "float", "desc": "Fill level 0..1." }
+          ],
+          "returns": "BarHandle — a handle to update fill or color.",
+          "remarks": "Creates a bar with the region's theme colors."
+        },
+        {
+          "signature": "public ButtonHandle Button(string s, Action onClick)",
+          "params": [
+            { "name": "s", "type": "string", "desc": "Button label." },
+            { "name": "onClick", "type": "Action", "desc": "Callback when clicked." }
+          ],
+          "returns": "ButtonHandle — a handle to update interactability or label.",
+          "remarks": "Creates a 70px-wide button."
+        },
+        {
+          "signature": "public IconGraphic Icon(IconKind k)",
+          "params": [
+            { "name": "k", "type": "IconKind", "desc": "Icon to display." }
+          ],
+          "returns": "IconGraphic — the icon graphic.",
+          "remarks": "Sizes the icon to RowHeight."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "Theme",
+      "kind": "struct",
+      "summary": "A color and layout configuration applied to windows and their elements.",
+      "members": [
+        { "signature": "public Color Panel", "params": [], "returns": "Color — window background.", "remarks": "Default: (0.015, 0.055, 0.052, 0.96)" },
+        { "signature": "public Color Header", "params": [], "returns": "Color — header background.", "remarks": "Default: (0.16, 0.22, 0.21, 0.98)" },
+        { "signature": "public Color Button", "params": [], "returns": "Color — button background.", "remarks": "Default: (0.18, 0.27, 0.26, 0.98)" },
+        { "signature": "public Color ButtonHover", "params": [], "returns": "Color — button hover state.", "remarks": "Default: (0.28, 0.42, 0.40, 1f)" },
+        { "signature": "public Color ButtonPressed", "params": [], "returns": "Color — button pressed state.", "remarks": "Default: (0.08, 0.55, 0.36, 1f)" },
+        { "signature": "public Color Accent", "params": [], "returns": "Color — accent color for fills, checks, graphs.", "remarks": "Default: (0.03, 0.78, 0.47, 1f)" },
+        { "signature": "public Color Faint", "params": [], "returns": "Color — faint backgrounds (separators, scrollbars).", "remarks": "Default: (0.10, 0.13, 0.13, 0.85)" },
+        { "signature": "public Color Text", "params": [], "returns": "Color — primary text.", "remarks": "Default: Color.white" },
+        { "signature": "public Color TextMuted", "params": [], "returns": "Color — secondary/muted text.", "remarks": "Default: (0.6, 0.7, 0.68, 1f)" },
+        { "signature": "public float CornerPad", "params": [], "returns": "float — padding in pixels for corners.", "remarks": "Default: 8f" },
+        { "signature": "public float RowHeight", "params": [], "returns": "float — default row height.", "remarks": "Default: 26f" },
+        { "signature": "public float HeaderHeight", "params": [], "returns": "float — default header height.", "remarks": "Default: 28f" },
+        { "signature": "public TMP_FontAsset Font", "params": [], "returns": "TMP_FontAsset — font (null resolves to game default).", "remarks": "null -> UiFactory resolves the game's default TMP font." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "SizeMode",
+      "kind": "struct",
+      "summary": "Sizing mode for a window: AutoHeight (content-driven), Fixed, or Resizable.",
+      "members": [
+        {
+          "signature": "public enum Kind { AutoHeight, Fixed, Resizable }",
+          "params": [],
+          "returns": "Kind — the sizing mode.",
+          "remarks": ""
+        },
+        { "signature": "public Kind ModeKind", "params": [], "returns": "Kind", "remarks": "" },
+        { "signature": "public float Width", "params": [], "returns": "float — width in pixels.", "remarks": "" },
+        { "signature": "public float Height", "params": [], "returns": "float — height in pixels (Fixed/Resizable).", "remarks": "" },
+        { "signature": "public float MaxHeight", "params": [], "returns": "float — max height (AutoHeight).", "remarks": "" },
+        { "signature": "public Vector2 Min", "params": [], "returns": "Vector2 — minimum size (Resizable).", "remarks": "" },
+        { "signature": "public Vector2 Max", "params": [], "returns": "Vector2 — maximum size (Resizable).", "remarks": "" },
+        {
+          "signature": "public static SizeMode AutoHeight(float width, float maxHeight)",
+          "params": [
+            { "name": "width", "type": "float", "desc": "Fixed width." },
+            { "name": "maxHeight", "type": "float", "desc": "Maximum height (content-driven up to this)." }
+          ],
+          "returns": "SizeMode",
+          "remarks": ""
+        },
+        {
+          "signature": "public static SizeMode Fixed(float width, float height)",
+          "params": [
+            { "name": "width", "type": "float", "desc": "Fixed width." },
+            { "name": "height", "type": "float", "desc": "Fixed height." }
+          ],
+          "returns": "SizeMode",
+          "remarks": ""
+        },
+        {
+          "signature": "public static SizeMode Resizable(float width, float height, Vector2 min, Vector2 max)",
+          "params": [
+            { "name": "width", "type": "float", "desc": "Initial width." },
+            { "name": "height", "type": "float", "desc": "Initial height." },
+            { "name": "min", "type": "Vector2", "desc": "Minimum size." },
+            { "name": "max", "type": "Vector2", "desc": "Maximum size." }
+          ],
+          "returns": "SizeMode",
+          "remarks": ""
+        },
+        {
+          "signature": "public static SizeMode DefaultAuto",
+          "params": [],
+          "returns": "SizeMode",
+          "remarks": "AutoHeight(320f, 400f)."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "IconKind",
+      "kind": "enum",
+      "summary": "Icon types rendered by IconGraphic.",
+      "members": [
+        { "signature": "Play", "params": [], "returns": "", "remarks": "" },
+        { "signature": "Pause", "params": [], "returns": "", "remarks": "" },
+        { "signature": "Prev", "params": [], "returns": "", "remarks": "" },
+        { "signature": "Next", "params": [], "returns": "", "remarks": "" },
+        { "signature": "Shuffle", "params": [], "returns": "", "remarks": "" },
+        { "signature": "List", "params": [], "returns": "", "remarks": "" },
+        { "signature": "Lock", "params": [], "returns": "", "remarks": "" },
+        { "signature": "Disc", "params": [], "returns": "", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "IconGraphic",
+      "kind": "sealed class",
+      "summary": "A MaskableGraphic that draws icons (play, pause, prev, next, shuffle, list, lock, disc) as vector shapes.",
+      "members": [
+        {
+          "signature": "public IconKind Kind { get; set; }",
+          "params": [],
+          "returns": "IconKind",
+          "remarks": "Changes the icon shape. Triggers a vertex rebuild."
+        },
+        {
+          "signature": "public float Fill { get; set; }",
+          "params": [],
+          "returns": "float — fill level (0..1, default 0.62).",
+          "remarks": "Controls the size of the icon within its rect. Triggers a vertex rebuild."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "GraphKind",
+      "kind": "enum",
+      "summary": "Graph types rendered by GraphGraphic.",
+      "members": [
+        { "signature": "Line", "params": [], "returns": "", "remarks": "" },
+        { "signature": "Bar", "params": [], "returns": "", "remarks": "" }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "GraphGraphic",
+      "kind": "sealed class",
+      "summary": "A MaskableGraphic that draws line or bar graphs from a list of float values.",
+      "members": [
+        { "signature": "public GraphKind Kind", "params": [], "returns": "GraphKind", "remarks": "Line or Bar. Default: Line." },
+        { "signature": "public readonly List<float> Values", "params": [], "returns": "List<float>", "remarks": "Values to graph. Add/remove and call MarkDirty()." },
+        { "signature": "public float Min", "params": [], "returns": "float", "remarks": "Y-axis minimum (used when AutoRange is false)." },
+        { "signature": "public float Max", "params": [], "returns": "float", "remarks": "Y-axis maximum (used when AutoRange is false)." },
+        { "signature": "public bool AutoRange", "params": [], "returns": "bool", "remarks": "When true, auto-scales Y to data range. Default: true." },
+        { "signature": "public float LineThickness", "params": [], "returns": "float", "remarks": "Thickness of line segments. Default: 2f." },
+        {
+          "signature": "public void MarkDirty()",
+          "params": [],
+          "returns": "void",
+          "remarks": "Calls SetVerticesDirty() to schedule a mesh rebuild."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "GraphHandle",
+      "kind": "struct",
+      "summary": "Handle to update graph values, range, and color.",
+      "members": [
+        {
+          "signature": "public void SetSeries(IReadOnlyList<float> values)",
+          "params": [
+            { "name": "values", "type": "IReadOnlyList<float>", "desc": "All values to set." }
+          ],
+          "returns": "void",
+          "remarks": "Replaces all values and marks dirty."
+        },
+        {
+          "signature": "public void Push(float value, int maxPoints = 120)",
+          "params": [
+            { "name": "value", "type": "float", "desc": "Value to append." },
+            { "name": "maxPoints", "type": "int", "desc": "Maximum points to keep (default 120). Evicts oldest." }
+          ],
+          "returns": "void",
+          "remarks": "Appends a value and evicts oldest if over maxPoints."
+        },
+        {
+          "signature": "public void SetRange(float min, float max)",
+          "params": [
+            { "name": "min", "type": "float", "desc": "Y-axis minimum." },
+            { "name": "max", "type": "float", "desc": "Y-axis maximum." }
+          ],
+          "returns": "void",
+          "remarks": "Disables AutoRange and sets fixed range."
+        },
+        {
+          "signature": "public void SetColor(Color c)",
+          "params": [
+            { "name": "c", "type": "Color", "desc": "Graph color." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "ResizeGrip",
+      "kind": "sealed class",
+      "summary": "Bottom-right drag grip that resizes Target within [Min, Max]. Fires Resized on end-drag.",
+      "members": [
+        { "signature": "public RectTransform Target", "params": [], "returns": "RectTransform", "remarks": "The window to resize." },
+        { "signature": "public Vector2 Min", "params": [], "returns": "Vector2", "remarks": "Minimum size (default 160×80)." },
+        { "signature": "public Vector2 Max", "params": [], "returns": "Vector2", "remarks": "Maximum size (default 900×900)." },
+        {
+          "signature": "public Action<Vector2> Resized",
+          "params": [],
+          "returns": "Action<Vector2>",
+          "remarks": "Fired on end-drag with the new size."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "PointerHold",
+      "kind": "sealed class",
+      "summary": "Tracks whether a pointer is held (down/up). Implements IPointerDownHandler, IPointerUpHandler.",
+      "members": [
+        {
+          "signature": "public bool Held { get; }",
+          "params": [],
+          "returns": "bool — true while pointer is held.",
+          "remarks": "Reset to false on OnDisable."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "HoverTooltip",
+      "kind": "sealed class",
+      "summary": "Shows/hides a Tooltip GameObject on pointer enter/exit.",
+      "members": [
+        { "signature": "public GameObject Tooltip", "params": [], "returns": "GameObject", "remarks": "The tooltip to show/hide." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "DraggablePanel",
+      "kind": "sealed class",
+      "summary": "Makes a panel draggable by pointer. Implements IPointerDownHandler, IDragHandler, IEndDragHandler.",
+      "members": [
+        { "signature": "public bool Locked", "params": [], "returns": "bool", "remarks": "When true, dragging is disabled." },
+        {
+          "signature": "public Action<Vector2> Moved",
+          "params": [],
+          "returns": "Action<Vector2>",
+          "remarks": "Fired on end-drag with the new anchored position."
+        },
+        { "signature": "public RectTransform Target", "params": [], "returns": "RectTransform", "remarks": "The panel to drag." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "CameraZoomHoverBlocker",
+      "kind": "sealed class",
+      "summary": "Blocks camera zoom movement while pointer hovers over the panel. Implements IPointerEnterHandler, IPointerExitHandler.",
+      "members": [],
+      "hooks": []
+    },
+    {
+      "name": "WindowStore",
+      "kind": "static class",
+      "summary": "Persists window state (position, size, collapsed, visible) to a JSON file under the DLL directory.",
+      "members": [
+        {
+          "signature": "public static void Load(ModWindow w)",
+          "params": [
+            { "name": "w", "type": "ModWindow", "desc": "Window to restore state for." }
+          ],
+          "returns": "void",
+          "remarks": "Applies saved state (pos/size/collapsed/visible). No-op until a window is registered."
+        },
+        {
+          "signature": "public static void Save(ModWindow w)",
+          "params": [
+            { "name": "w", "type": "ModWindow", "desc": "Window to save state for." }
+          ],
+          "returns": "void",
+          "remarks": "Persists current state to disk. Called automatically by ModWindow on move/resize/collapse."
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "WindowState",
+      "kind": "struct (Serializable)",
+      "summary": "Serializable snapshot of a window's state for persistence.",
+      "members": [
+        { "signature": "public string id", "params": [], "returns": "string", "remarks": "Window identifier." },
+        { "signature": "public float x", "params": [], "returns": "float", "remarks": "X position." },
+        { "signature": "public float y", "params": [], "returns": "float", "remarks": "Y position." },
+        { "signature": "public float w", "params": [], "returns": "float", "remarks": "Width." },
+        { "signature": "public float h", "params": [], "returns": "float", "remarks": "Height." },
+        { "signature": "public bool collapsed", "params": [], "returns": "bool", "remarks": "" },
+        { "signature": "public bool visible", "params": [], "returns": "bool", "remarks": "Default: true." },
+        { "signature": "public bool hasSize", "params": [], "returns": "bool", "remarks": "True once user resized / fixed size stored." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "LabelHandle",
+      "kind": "struct",
+      "summary": "Handle to update a label's text or color.",
+      "members": [
+        {
+          "signature": "public void Set(string text)",
+          "params": [
+            { "name": "text", "type": "string", "desc": "New text." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        },
+        {
+          "signature": "public void SetColor(Color c)",
+          "params": [
+            { "name": "c", "type": "Color", "desc": "New color." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "ValueRow",
+      "kind": "struct",
+      "summary": "Handle to update a value row's text or color.",
+      "members": [
+        {
+          "signature": "public void Set(string v)",
+          "params": [
+            { "name": "v", "type": "string", "desc": "Text value." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        },
+        {
+          "signature": "public void Set(float v)",
+          "params": [
+            { "name": "v", "type": "float", "desc": "Numeric value (formatted as 0.##)." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        },
+        {
+          "signature": "public void SetColor(Color c)",
+          "params": [
+            { "name": "c", "type": "Color", "desc": "New color." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "BarHandle",
+      "kind": "struct",
+      "summary": "Handle to update a bar's fill, color, or label.",
+      "members": [
+        {
+          "signature": "public void Set(float v01)",
+          "params": [
+            { "name": "v01", "type": "float", "desc": "Fill level 0..1 (clamped)." }
+          ],
+          "returns": "void",
+          "remarks": "Sets fill proportionally by anchor."
+        },
+        {
+          "signature": "public void SetColor(Color c)",
+          "params": [
+            { "name": "c", "type": "Color", "desc": "Fill color." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        },
+        {
+          "signature": "public void SetLabel(string s)",
+          "params": [
+            { "name": "s", "type": "string", "desc": "Label text." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "ButtonHandle",
+      "kind": "struct",
+      "summary": "Handle to update a button's interactability or label.",
+      "members": [
+        {
+          "signature": "public void SetInteractable(bool on)",
+          "params": [
+            { "name": "on", "type": "bool", "desc": "Whether the button is interactable." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        },
+        {
+          "signature": "public void SetLabel(string s)",
+          "params": [
+            { "name": "s", "type": "string", "desc": "Button label text." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "SliderHandle",
+      "kind": "struct",
+      "summary": "Handle to get/set a slider's value.",
+      "members": [
+        {
+          "signature": "public void SetValue(float v)",
+          "params": [
+            { "name": "v", "type": "float", "desc": "Slider value." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        },
+        {
+          "signature": "public float Value { get; }",
+          "params": [],
+          "returns": "float — current slider value (0f if null).",
+          "remarks": ""
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "ToggleHandle",
+      "kind": "struct",
+      "summary": "Handle to get/set a toggle's state.",
+      "members": [
+        {
+          "signature": "public void SetOn(bool on)",
+          "params": [
+            { "name": "on", "type": "bool", "desc": "Whether the toggle is on." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        },
+        {
+          "signature": "public bool On { get; }",
+          "params": [],
+          "returns": "bool — current toggle state (false if null).",
+          "remarks": ""
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "InputHandle",
+      "kind": "struct",
+      "summary": "Handle to get/set an input field's text.",
+      "members": [
+        {
+          "signature": "public string Text { get; }",
+          "params": [],
+          "returns": "string — current text (empty string if null).",
+          "remarks": ""
+        },
+        {
+          "signature": "public void SetText(string s)",
+          "params": [
+            { "name": "s", "type": "string", "desc": "Text to set." }
+          ],
+          "returns": "void",
+          "remarks": ""
+        }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "SeparatorHandle",
+      "kind": "struct",
+      "summary": "Handle for a separator (no members).",
+      "members": [],
+      "hooks": []
+    }
+  ],
+  "example": "Panels.Register(\"myPanel\", ctx =>\n{\n    var w = ctx.Window(\"My Panel\", SizeMode.DefaultAuto);\n    var label = w.Label(\"Hello\");\n    var bar = w.Bar(\"Progress\", 0.5f);\n    w.Button(\"Click\", () => label.Set(\"Clicked!\"));\n});"
+}

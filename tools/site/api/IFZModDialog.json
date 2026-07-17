@@ -1,0 +1,49 @@
+{
+  "key": "IFZModDialog",
+  "title": "IFZModDialog",
+  "dll": "IFZModDialog.dll",
+  "guid": "com.ifzmod.dialog",
+  "version": "0.1.1",
+  "blurb": "A BepInEx library that fires the game's native radio transmission modal with 1–4 player-choice buttons and routes each click to a C# callback.",
+  "reference": {
+    "bepInDependency": "[BepInDependency(\"com.ifzmod.api\")]",
+    "hintPath": "<Reference Include=\"IFZModDialog\"><HintPath>..\\\\IFZModDialog\\\\bin\\\\Release\\\\netstandard2.1\\\\IFZModDialog.dll</HintPath></Reference>",
+    "notes": "Additive-only API. Do not version-pin the BepInDependency unless you require a specific minimum."
+  },
+  "types": [
+    {
+      "name": "Plugin",
+      "kind": "class",
+      "summary": "BepInEx plugin entry point for IFZModDialog. Exists so consumer mods can BepInDependency on it for load order, and to own the shared logger.",
+      "members": [
+        { "signature": "public const string Guid = \"com.ifzmod.dialog\"", "params": [], "returns": "string — the plugin GUID", "remarks": "Used by consumers as the BepInDependency target." },
+        { "signature": "internal static ManualLogSource Log", "params": [], "returns": "ManualLogSource — the plugin's logger", "remarks": "Set in Awake; accessible for logging from this library." },
+        { "signature": "private void Awake()", "params": [], "returns": "void", "remarks": "Called by BepInEx; initializes the shared logger." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "DialogOption",
+      "kind": "class",
+      "summary": "One choice on a radio prompt: a button label and the C# callback run when the player picks it.",
+      "members": [
+        { "signature": "public string Label", "params": [], "returns": "string — the button text shown to the player", "remarks": "If null, defaults to \"Option N\" in localization injection." },
+        { "signature": "public Action OnPick", "params": [], "returns": "Action — the callback invoked when the player selects this option", "remarks": "Set via the constructor or property assignment." },
+        { "signature": "public DialogOption()", "params": [], "returns": "DialogOption", "remarks": "Parameterless constructor for property-based initialization." },
+        { "signature": "public DialogOption(string label, Action onPick)", "params": [ { "name": "label", "type": "string", "desc": "The button text shown to the player" }, { "name": "onPick", "type": "Action", "desc": "The callback invoked when the player selects this option" } ], "returns": "DialogOption", "remarks": "Convenience constructor." }
+      ],
+      "hooks": []
+    },
+    {
+      "name": "RadioPrompt",
+      "kind": "static class",
+      "summary": "Fire the game's native radio transmission modal with 1–4 player-choice buttons, and route each click to a C# callback. Uses the real transmission lifecycle (load → show → play → answer → close), so audio and UI teardown are handled by the game.",
+      "members": [
+        { "signature": "public const int MaxOptions = 4", "params": [], "returns": "int — maximum buttons the native panel supports (default/option2/option3/option4)", "remarks": "Options beyond this count are silently truncated." },
+        { "signature": "public static void Ask(string id, string promptText, DialogOption[] options, Action onUnavailable = null)", "params": [ { "name": "id", "type": "string", "desc": "A stable unique key per prompt TYPE (used as the transmission id, the localization namespace, and the xml filename — keep it constant across calls of the same prompt)" }, { "name": "promptText", "type": "string", "desc": "The prompt text shown to the player" }, { "name": "options", "type": "DialogOption[]", "desc": "1–4 options. If more than 4, silently truncated to 4." }, { "name": "onUnavailable", "type": "Action", "desc": "Optional callback run when the UI can't be driven (resolves fail), so game logic never stalls on UI." } ], "returns": "void", "remarks": "Writes a loose transmission asset, injects localization, subscribes to DialogueManager, and starts the transmission. If any step fails, onUnavailable runs instead so game logic never stalls on UI." }
+      ],
+      "hooks": []
+    }
+  ],
+  "example": "var options = new DialogOption[]\n{\n    new DialogOption(\"Yes, send them in\", () => SendSquad()),\n    new DialogOption(\"Hold position\", () => HoldPosition()),\n};\nRadioPrompt.Ask(\"myRadioPrompt\", \"Squad, we have a contact. Send them in?\", options, () => HandleUnavailable());"
+}
