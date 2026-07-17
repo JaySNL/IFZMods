@@ -3,10 +3,16 @@
 Generates the static GitHub Pages landing page for the live IFZ mods.
 
 ## What this is
-- `render.mjs` — pure functions (esc/nexusUrl/orderMods/renderCard/renderPage + CSS). No I/O. Unit-tested.
+- `render.mjs` — pure functions (esc/nexusUrl/orderMods/renderCard/renderPage + CSS) plus the
+  API-page renderer (renderApiPage/renderApiSection + API_CSS). No I/O. Unit-tested.
 - `render.test.mjs` — `node:test`. Run: `node --test tools/site/render.test.mjs` (Node 26: pass the file/glob, a bare dir is read as a module).
 - `build-site.mjs` — reads `../nexus-publish/mods.json` + `../nexus-publish/media/{key}.png`,
-  writes `docs/index.html` + `docs/assets/banners/`. Run from repo root: `node tools/site/build-site.mjs`.
+  writes `docs/index.html` + `docs/assets/banners/`; also reads `tools/site/api/*.json` and writes
+  `docs/api.html` (the "API for Modders" reference page). Run from repo root: `node tools/site/build-site.mjs`.
+- `api/<Key>.json` — per-API reference data (public surface + reference boilerplate + example) rendered
+  into `docs/api.html`. **To add/refresh an API:** drop/edit its `api/<Key>.json` (schema: key,title,dll,
+  guid,version,blurb,reference{bepInDependency,hintPath,notes},types[{name,kind,summary,members,hooks}],
+  example) and push — CI regenerates. Order is fixed in `build-site.mjs` (`API_ORDER`), rest alpha.
 
 ## Rules
 - Zero npm deps — `node:` builtins only. Output makes no external network requests (CSS inline, banners local).
