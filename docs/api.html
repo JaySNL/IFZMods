@@ -1,0 +1,1911 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>API for Modders — Infection Free Zone Mods</title>
+<style>
+:root {
+  --bg: #f6f7f9; --fg: #1a1c1f; --muted: #5c636e; --card: #ffffff;
+  --line: #e2e5ea; --tile: #d9dee6; --accent: #d1495b; --accent-fg: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a; --fg: #e8eaed; --muted: #9aa2ad; --card: #1e2127;
+    --line: #2c313a; --tile: #2c313a; --accent: #e0637a; --accent-fg: #14161a;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg);
+  font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+a { color: inherit; }
+.hero { max-width: 1100px; margin: 0 auto; padding: 3rem 1.25rem 1.5rem; text-align: center; }
+.hero h1 { margin: 0 0 .25rem; font-size: 2.4rem; letter-spacing: -.02em; }
+.tagline { color: var(--muted); font-size: 1.15rem; margin: 0 0 1rem; }
+.install { color: var(--muted); font-size: .95rem; }
+.install code { background: var(--tile); padding: .1rem .35rem; border-radius: 4px; }
+.btn { display: inline-block; background: var(--accent); color: var(--accent-fg);
+  text-decoration: none; padding: .55rem 1rem; border-radius: 8px; font-weight: 600; }
+.btn.kofi { margin-top: 1rem; }
+.grid { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.25rem;
+  display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  overflow: hidden; display: flex; flex-direction: column; }
+.card .banner { width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  background: var(--tile); display: block; }
+.card .body { padding: .9rem 1rem 1.1rem; display: flex; flex-direction: column; gap: .5rem; flex: 1; }
+.card h3 { margin: 0; font-size: 1.1rem; display: flex; align-items: center; gap: .5rem; }
+.card p { margin: 0; color: var(--muted); font-size: .95rem; flex: 1; }
+.card .btn { align-self: flex-start; margin-top: .4rem; }
+.badge { font-size: .68rem; text-transform: uppercase; letter-spacing: .04em;
+  background: var(--tile); color: var(--muted); padding: .12rem .4rem; border-radius: 999px; }
+.donate { max-width: 1100px; margin: 2rem auto 0; padding: 1.5rem 1.25rem;
+  text-align: center; color: var(--muted); border-top: 1px solid var(--line); }
+footer { max-width: 1100px; margin: 1rem auto 3rem; padding: 0 1.25rem;
+  display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; color: var(--muted); }
+footer a { text-decoration: none; }
+footer a:hover, .donate a:hover { color: var(--accent); }
+
+.apimain { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.25rem; }
+.apinav { color: var(--muted); font-size: .95rem; }
+.apisec { border-top: 1px solid var(--line); padding-top: 1.5rem; margin-top: 1.5rem; }
+.apisec > .blurb { color: var(--muted); }
+.refbox { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: .75rem 1rem; margin: 1rem 0; }
+.refbox h4 { margin: 0 0 .4rem; }
+.apitype { margin: 1.25rem 0; }
+.apitype h3 { display: flex; align-items: center; gap: .5rem; margin: 0 0 .35rem; }
+table.api { width: 100%; border-collapse: collapse; font-size: .9rem; margin: .5rem 0 1rem; }
+table.api th, table.api td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); padding: .4rem .5rem; }
+table.api th { color: var(--muted); font-weight: 600; }
+pre { background: var(--tile); padding: .75rem 1rem; border-radius: 8px; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+.apitype code, .refbox code, td code { background: var(--tile); padding: .1rem .35rem; border-radius: 4px; }
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>API for Modders</h1>
+  <p class="tagline">Shared libraries you can build against. <a href="index.html">← Back to mods</a></p>
+  <p class="apinav"><a href="#IFZModAPI">IFZModAPI</a> · <a href="#IFZModPanels">IFZModPanels</a> · <a href="#IFZModDialog">IFZModDialog</a></p>
+</header>
+<main class="apimain">
+<section class="apisec" id="IFZModAPI">
+  <h2>IFZModAPI <span class="badge">v1.9.1</span></h2>
+  <p class="blurb">Shared API for Infection Free Zone BepInEx mods — provides controller caches, time-of-day helpers, VFX utilities, reflection helpers, and mod-coordination hooks.</p>
+  <div class="refbox">
+  <h4>Referencing this API</h4>
+  <p><strong>Load order (BepInDependency):</strong> <code>[BepInDependency(&quot;com.ifzmod.api&quot;)]</code></p>
+  <p><strong>Build reference (HintPath):</strong></p>
+  <pre><code>&lt;Reference Include=&quot;IFZModAPI&quot;&gt;&lt;HintPath&gt;..\\IFZModAPI\\bin\\Release\\netstandard2.1\\IFZModAPI.dll&lt;/HintPath&gt;&lt;/Reference&gt;</code></pre>
+  <p class="blurb">Additive-only API. Do not version-pin the BepInDependency unless you require a specific minimum.</p>
+</div>
+  <div class="apitype">
+  <h3>Plugin <span class="badge">class</span></h3>
+  <p>BepInEx plugin entry point. Binds config entries for Bloom and Sickness, patches all Harmony targets, and initializes the custom production API at load.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public const string Guid = &quot;com.ifzmod.api&quot;</code></td>
+    <td>—</td>
+    <td>The plugin GUID string</td>
+    <td>Used by consumer mods in [BepInDependency] for explicit load ordering.</td>
+  </tr>
+<tr>
+    <td><code>public static ManualLogSource Log</code></td>
+    <td>—</td>
+    <td>BepInEx's logger, set in Awake()</td>
+    <td>All IFZModAPI log output goes through this.</td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;bool&gt; BloomEnabled</code></td>
+    <td>—</td>
+    <td>Config: boost bloom at night (default true)</td>
+    <td>Off = vanilla bloom.</td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;float&gt; BloomNightIntensity</code></td>
+    <td>—</td>
+    <td>Config: peak Bloom intensity at full night (default 8f)</td>
+    <td>Vanilla is ~low single digits.</td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;float&gt; BloomThreshold</code></td>
+    <td>—</td>
+    <td>Config: brightness threshold for bloom (default 1.1f)</td>
+    <td>High = only bright emissive sources bloom.</td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;float&gt; BloomSoftKnee</code></td>
+    <td>—</td>
+    <td>Config: Bloom knee (0 hard, 1 soft) (default 0.5f)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;float&gt; BloomTransitionHours</code></td>
+    <td>—</td>
+    <td>Config: fade width around sunset/sunrise (default 1.5f)</td>
+    <td>Match DarkerNights for sync.</td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;float&gt; SicknessMaxNewSickPerDayFraction</code></td>
+    <td>—</td>
+    <td>Config: max fraction of population newly infected per day (default 0.10f)</td>
+    <td>Vanilla infections are separate and uncapped.</td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;SicknessCoordinator.Combine&gt; SicknessCombineMode</code></td>
+    <td>—</td>
+    <td>Config: how multiple mods' infect chances merge (Max or SumClamped)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;bool&gt; SicknessRollEnabled</code></td>
+    <td>—</td>
+    <td>Config: master switch for coordinated daily sickness roll (default true)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;bool&gt; SicknessDebugLog</code></td>
+    <td>—</td>
+    <td>Config: log each day's coordinated roll (default false)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;bool&gt; SicknessRequireTreatmentBuilding</code></td>
+    <td>—</td>
+    <td>Config: sickness stays OFF until player owns a treatment building (default true)</td>
+    <td>Off = sickness can roll from day one.</td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;int&gt; SicknessOnsetGraceDays</code></td>
+    <td>—</td>
+    <td>Config: days after treatment first available before sickness rolls (default 2)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static ConfigEntry&lt;int&gt; SicknessOnsetRampDays</code></td>
+    <td>—</td>
+    <td>Config: days over which sickness ramps 0..1 (default 15)</td>
+    <td>0 = full strength immediately after grace.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>Cache <span class="badge">static class</span></h3>
+  <p>Controller refs filled by Harmony postfixes. Consumers read e.g. IFZAPI.Cache.Buildings; null until the game has constructed each controller.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static BuildingsController Buildings</code></td>
+    <td>—</td>
+    <td>The game's BuildingsController, null until constructed</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static GroupsController Groups</code></td>
+    <td>—</td>
+    <td>The game's GroupsController</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static SquadsController Squads</code></td>
+    <td>—</td>
+    <td>The game's SquadsController</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static StockroomsController Stockrooms</code></td>
+    <td>—</td>
+    <td>The game's StockroomsController</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static WorkController Work</code></td>
+    <td>—</td>
+    <td>The game's WorkController (WorkSystem)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static ColorSwitcher ColorSwitcher</code></td>
+    <td>—</td>
+    <td>The game's ColorSwitcher (PPv2 profile holder)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static WeatherController Weather</code></td>
+    <td>—</td>
+    <td>The game's WeatherController</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static LightController Light</code></td>
+    <td>—</td>
+    <td>The game's LightController</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static HideoutsController Hideouts</code></td>
+    <td>—</td>
+    <td>The game's HideoutsController</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static Zenject.DiContainer Container</code></td>
+    <td>—</td>
+    <td>The current session's Zenject container</td>
+    <td>Set by ContainerCapturePatch on each session install.</td>
+  </tr>
+<tr>
+    <td><code>public static T TryResolve&lt;T&gt;() where T : class</code></td>
+    <td><code>T</code>: The singleton type to resolve</td>
+    <td>T, or null if no active session or type unbound</td>
+    <td>Re-resolve at point of use — never cache across loads.</td>
+  </tr>
+</tbody></table>
+  <h4>Hooks / events</h4>
+<table class="api"><thead><tr><th>Hook</th><th>Signature</th><th>When</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>Cache.ContainerReady</code></td>
+    <td><code>public static event System.Action&lt;Zenject.DiContainer&gt; ContainerReady</code></td>
+    <td>Fires after the game (re)installs its scene bindings — i.e. on a fresh game / save load. The scene DiContainer is rebuilt across loads; subscribe to reset per-session state.</td>
+    <td>Sole patcher of the installer is IFZModAPI; consumer mods must NOT patch it themselves.</td>
+  </tr>
+<tr>
+    <td><code>Cache.HideoutsReady</code></td>
+    <td><code>public static event System.Action&lt;HideoutsController&gt; HideoutsReady</code></td>
+    <td>Fires when the game (re)builds the HideoutsController — i.e. on a fresh game / save load.</td>
+    <td>Sole patcher of the ctor is IFZModAPI — consumer mods must NOT patch the HideoutsController ctor themselves.</td>
+  </tr>
+<tr>
+    <td><code>Cache.Exploded</code></td>
+    <td><code>public static event System.Action&lt;Explosion, Vector3&gt; Exploded</code></td>
+    <td>Fires after every Explosion.Explode, with the explosion and its world position.</td>
+    <td>Sole patcher of Explosion.Explode is IFZModAPI — consumer mods must NOT patch Explode themselves.</td>
+  </tr>
+<tr>
+    <td><code>Cache.RegisterMaxGroupCountAdjuster</code></td>
+    <td><code>public static void RegisterMaxGroupCountAdjuster(MaxGroupCountAdjuster a)</code></td>
+    <td>Registers a callback that adjusts the max member count for a group (raise only). Called by all registered adjusters.</td>
+    <td>Used by SquadMerge / VehicleSquadSize mods.</td>
+  </tr>
+<tr>
+    <td><code>Cache.RegisterOrderInterceptor</code></td>
+    <td><code>public static void RegisterOrderInterceptor(OrderInterceptor h)</code></td>
+    <td>Intercepts an OrdersQueue.GiveOrder call. Return true if the order was consumed (the original GiveOrder is then skipped). First interceptor that returns true wins.</td>
+    <td>Used by SquadMerge / VehicleSquadSize mods.</td>
+  </tr>
+<tr>
+    <td><code>Cache.DefenceModuleAdded</code></td>
+    <td><code>public static event System.Action&lt;Gameplay.Rebuilding.Towers.StructureDefenceModule&gt; DefenceModuleAdded</code></td>
+    <td>Fires when a defence module is spawned (Awake patch).</td>
+    <td>Main-thread only.</td>
+  </tr>
+<tr>
+    <td><code>Cache.DefenceModuleRemoved</code></td>
+    <td><code>public static event System.Action&lt;Gameplay.Rebuilding.Towers.StructureDefenceModule&gt; DefenceModuleRemoved</code></td>
+    <td>Fires when a defence module is destroyed (OnDestroy patch).</td>
+    <td>Main-thread only.</td>
+  </tr>
+<tr>
+    <td><code>Cache.AntennaAdded</code></td>
+    <td><code>public static event System.Action&lt;Gameplay.Rebuilding.Towers.Antenna&gt; AntennaAdded</code></td>
+    <td>Fires when an antenna is spawned (Awake patch).</td>
+    <td>Main-thread only.</td>
+  </tr>
+<tr>
+    <td><code>Cache.AntennaRemoved</code></td>
+    <td><code>public static event System.Action&lt;Gameplay.Rebuilding.Towers.Antenna&gt; AntennaRemoved</code></td>
+    <td>Fires when an antenna is destroyed (OnDestroy patch).</td>
+    <td>Main-thread only.</td>
+  </tr>
+<tr>
+    <td><code>Cache.CharacterDied</code></td>
+    <td><code>public static event System.Action&lt;Gameplay.Units.Characters.Character&gt; CharacterDied</code></td>
+    <td>Fires when a character dies, from a Prefix on Character.OnCharacterDeath — i.e. BEFORE the game's DestroyCharacter teardown, so LastAttackedBy / Health.KilledByEnemy are still valid for kill attribution.</td>
+    <td>Sole patcher of OnCharacterDeath (cross-mod: BlitzHund detonation + SquadTraits veterancy both subscribe here rather than double-patching).</td>
+  </tr>
+<tr>
+    <td><code>Cache.WeaponFired</code></td>
+    <td><code>public static event System.Action&lt;GunFireEffect, Gameplay.GameResources.ResourceID&gt; WeaponFired</code></td>
+    <td>Fires once per shot from a Postfix on GunFireEffect.StartAnimation.</td>
+    <td>Sole patcher of that method (cross-mod: GunfireLights muzzle flashes + Radiosity bounce-lights both subscribe here rather than double-patching).</td>
+  </tr>
+</tbody></table>
+</div>
+<div class="apitype">
+  <h3>Time <span class="badge">static class</span></h3>
+  <p>Time-of-day helpers. Hour / Sunrise / Sunset / IsNight / NightBlend(transitionHours). Fires once per in-game day at sunset/sunrise.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static float Hour</code></td>
+    <td>—</td>
+    <td>The current game hour (0..24)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static float Sunrise</code></td>
+    <td>—</td>
+    <td>The game's configured sunrise hour</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static float Sunset</code></td>
+    <td>—</td>
+    <td>The game's configured sunset hour</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static bool IsPaused</code></td>
+    <td>—</td>
+    <td>True when the game clock is paused (TimeController.SpeedMultiplier == 0)</td>
+    <td>IFZ pauses by setting SpeedMultiplier to 0, never touches UnityEngine.Time.timeScale.</td>
+  </tr>
+<tr>
+    <td><code>public static bool IsNight()</code></td>
+    <td>—</td>
+    <td>True when the current hour is before Sunrise or &gt;= Sunset</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static bool IsDay()</code></td>
+    <td>—</td>
+    <td>True when the current hour is between Sunrise and Sunset</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static int DaysFromPreviousGames { get; internal set; }</code></td>
+    <td>—</td>
+    <td>Days carried over from a previous playthrough (expedition mode). 0 on a plain base run.</td>
+    <td>Mirrored from TimeController so it survives reloads.</td>
+  </tr>
+<tr>
+    <td><code>public static int RunDay</code></td>
+    <td>—</td>
+    <td>The current run's OWN age in days (1-based). On an expedition it strips the inherited days (Day - DaysFromPreviousGames).</td>
+    <td>Floor 1.</td>
+  </tr>
+<tr>
+    <td><code>public static float NightBlend(float transitionHours)</code></td>
+    <td><code>transitionHours</code>: Hours over which the fade in/out around sunset/sunrise</td>
+    <td>Smooth 0..1 ramp. 1=deep night, 0=midday.</td>
+    <td>Cached per frame + per transitionHours; safe to call from many mods each frame.</td>
+  </tr>
+</tbody></table>
+  <h4>Hooks / events</h4>
+<table class="api"><thead><tr><th>Hook</th><th>Signature</th><th>When</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>Time.OnSunset</code></td>
+    <td><code>public static event System.Action OnSunset</code></td>
+    <td>Fires once per in-game day at sunset. Re-wired each session; safe to subscribe once at plugin load.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Time.OnSunrise</code></td>
+    <td><code>public static event System.Action OnSunrise</code></td>
+    <td>Fires once per in-game day at sunrise.</td>
+    <td></td>
+  </tr>
+</tbody></table>
+</div>
+<div class="apitype">
+  <h3>Vfx <span class="badge">static class</span></h3>
+  <p>Shared smoke prefab cache + pooled point-light flash system. CloneSmokeAt clones the game's work-site smoke; Flash creates a one-shot point-light that fades with quadratic falloff.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static ParticleSystem SmokePrefab()</code></td>
+    <td>—</td>
+    <td>The game's work-site smoke ParticleSystem, cached after first lookup. Null until at least one Smoke MonoBehaviour exists in the scene.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static GameObject CloneSmokeAt(Vector3 worldPos, Transform parent)</code></td>
+    <td><code>worldPos</code>: World position for the clone<br><code>parent</code>: Parent transform (or null)</td>
+    <td>A clone of the smoke prefab as an active GameObject, or null if prefab not yet cached.</td>
+    <td>Strips injected MonoBehaviours from the clone so it's pure visual.</td>
+  </tr>
+<tr>
+    <td><code>public static void Flash(Vector3 pos, Color color, float range, float intensity, float lifetime)</code></td>
+    <td><code>pos</code>: World position<br><code>color</code>: Flash color<br><code>range</code>: Light range<br><code>intensity</code>: Peak intensity<br><code>lifetime</code>: Fade-out lifetime</td>
+    <td>One-shot point-light flash that fades out with quadratic falloff.</td>
+    <td>Shared pool of 32 lights across all consumer mods; oldest reused once exhausted.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>GlowFx <span class="badge">static class</span></h3>
+  <p>Shared additive-glow primitives for 'real glow/bloom' looks (muzzle flashes, tower lamps, beacons, headlights, flares). A Unity Light illuminates surfaces but never blooms on its own; a bright additive sprite at the source does. Centralised here so every mod reuses ONE additive material + shader-resolve + mesh set instead of each re-deriving it.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static Camera Cam()</code></td>
+    <td>—</td>
+    <td>Main camera (cached, refreshed if lost). Null if no camera.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static Shader AdditiveShader()</code></td>
+    <td>—</td>
+    <td>Resolve an additive transparent shader once (engine candidates, else borrow a loaded additive material). Null if none.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static Material MakeAdditiveMaterial(Texture2D tex)</code></td>
+    <td><code>tex</code>: Texture to wrap in an additive material</td>
+    <td>An additive Material around tex. Null if no additive shader is available.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static Texture2D SoftGlowTexture()</code></td>
+    <td>—</td>
+    <td>Shared round soft-glow texture (white core, smooth alpha falloff to the rim).</td>
+    <td>Cached after first call.</td>
+  </tr>
+<tr>
+    <td><code>public class GlowSource : MonoBehaviour</code></td>
+    <td>—</td>
+    <td>Steady additive glow billboard pinned to a transform — gives a light SOURCE a visible heat halo that feeds Bloom.</td>
+    <td>Set Color/Size/Intensity each frame (or once). Billboard faces the camera.</td>
+  </tr>
+<tr>
+    <td><code>public static GlowSource GlowSource.Attach(Transform parent, Vector3 localPos, Color color, float size)</code></td>
+    <td><code>parent</code>: Parent transform<br><code>localPos</code>: Local position under parent<br><code>color</code>: Glow color (brightness carries intensity)<br><code>size</code>: Billboard size</td>
+    <td>A GlowSource component attached to a new GameObject, or null if no additive shader is available.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public class LightBeam : MonoBehaviour</code></td>
+    <td>—</td>
+    <td>Additive light-shaft cone along the host transform's +Z (forward). Parent it to a light and it beams where the light aims.</td>
+    <td>Set Color/Length/Radius/Intensity.</td>
+  </tr>
+<tr>
+    <td><code>public static LightBeam LightBeam.Attach(Transform parent, Color color, float length, float radius)</code></td>
+    <td><code>parent</code>: Parent transform<br><code>color</code>: Beam color<br><code>length</code>: Beam length<br><code>radius</code>: Cone tip radius (world)</td>
+    <td>A LightBeam component attached to a new GameObject, or null if no additive shader is available.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static class FlashGlow</code></td>
+    <td>—</td>
+    <td>One-shot pooled bright round additive dot for TRANSIENT sources (muzzle, explosion).</td>
+    <td>Camera-facing, pause-aware (frozen while the game clock is paused).</td>
+  </tr>
+<tr>
+    <td><code>public static void FlashGlow.Spawn(Vector3 pos, Color color, float size, float lifetime)</code></td>
+    <td><code>pos</code>: World position<br><code>color</code>: Color carries brightness (push &gt;1 to feed Bloom)<br><code>size</code>: Diameter in metres<br><code>lifetime</code>: Fade-out lifetime</td>
+    <td>One-shot glow dot. No-ops if no additive shader is available.</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>BloomControl <span class="badge">static class</span></h3>
+  <p>Drives the game's own PPv2 Bloom up at night so emissive sources actually glow. A Unity light illuminates surfaces but emits no bright pixel; bloom is what makes a bright pixel bleed. We boost Bloom on the game's existing ColorSwitcher.ppVolume profile (no camera-layer matching) and restore the captured original on disable. High threshold = only bright HDR emissive blooms, so the dark scene stays readable. Coexists with DarkerNights (which drives ColorGrading / AutoExposure on the same profile — different settings, no clobber).</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>internal class Driver : MonoBehaviour</code></td>
+    <td>—</td>
+    <td>Bloom boost driver. Runs on Update() and boosts Bloom at night based on Plugin's config entries.</td>
+    <td>Added to a DontDestroyOnLoad GameObject by Plugin.Awake().</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>Reflect <span class="badge">static class</span></h3>
+  <p>Cached AccessTools.Field lookups shared across all consumer mods. Drops ~5-15 static FieldInfo declarations per mod.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static FieldInfo Field(Type t, string name)</code></td>
+    <td><code>t</code>: Type to look up<br><code>name</code>: Field name</td>
+    <td>A cached AccessTools.Field lookup, or null if not found.</td>
+    <td>Cached per (Type, name) pair.</td>
+  </tr>
+<tr>
+    <td><code>public static T Get&lt;T&gt;(object instance, string fieldName) where T : class</code></td>
+    <td><code>instance</code>: Object to read from<br><code>fieldName</code>: Field name</td>
+    <td>Field value cast to T, or default(T) if field or value is null.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static T GetValue&lt;T&gt;(object instance, string fieldName) where T : struct</code></td>
+    <td><code>instance</code>: Object to read from<br><code>fieldName</code>: Field name</td>
+    <td>Field value as T, or default(T) if missing.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static void Set(object instance, string fieldName, object value)</code></td>
+    <td><code>instance</code>: Object to write to<br><code>fieldName</code>: Field name<br><code>value</code>: Value to set</td>
+    <td>void</td>
+    <td>No-ops if instance is null.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>FloatParam <span class="badge">static class</span></h3>
+  <p>PostProcessing v2 FloatParameter has a public value field. Wrapping the boxed-getter dance keeps DarkerNights / future lighting mods simpler.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static void SetValue(object floatParam, float v)</code></td>
+    <td><code>floatParam</code>: A PostProcessing FloatParameter<br><code>v</code>: Value to set</td>
+    <td>void</td>
+    <td>No-ops if floatParam is null.</td>
+  </tr>
+<tr>
+    <td><code>public static float GetValue(object floatParam)</code></td>
+    <td><code>floatParam</code>: A PostProcessing FloatParameter</td>
+    <td>The float value, or 0f if missing.</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>Wine <span class="badge">static class</span></h3>
+  <p>JIT-safety guards for the game's Proton/Wine Mono runtime. The FIRST time Mono compiles a method it can fail to load a callee's IL body and throw BadImageFormatException: 'Method has zero rva'. A DELEGATE invocation is never inlined by Mono, so routing the risky access through one of these guards keeps the cold callee behind a real call boundary.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>[MethodImpl(MethodImplOptions.NoInlining)] public static T Try&lt;T&gt;(Func&lt;T&gt; access, T fallback = default, string label = null)</code></td>
+    <td><code>access</code>: A value-returning access that may JIT-fail under Wine<br><code>fallback</code>: Value to return if the access throws<br><code>label</code>: Optional label for log output</td>
+    <td>The access result, or fallback (and logs once) if it throws.</td>
+    <td>The delegate boundary stops Mono inlining the cold callee past this guard.</td>
+  </tr>
+<tr>
+    <td><code>[MethodImpl(MethodImplOptions.NoInlining)] public static bool Try(Action access, string label = null)</code></td>
+    <td><code>access</code>: An action that may JIT-fail under Wine<br><code>label</code>: Optional label for log output</td>
+    <td>True on success, false (and logs once) if it throws.</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>Combat <span class="badge">static class</span></h3>
+  <p>Per-character outgoing-damage multiplier registry. Additive API surface: writers (e.g. SquadTraits veterancy) set a factor by Character.Id; the sole GetDamage patcher (SquadMoveFire) multiplies its result by it. Default 1f =&gt; zero effect until something writes, so no mod is coupled to this.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static float GetDamageMult(string id)</code></td>
+    <td><code>id</code>: Character.Id</td>
+    <td>The damage multiplier for the character, or 1f (no effect) if not set.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static void SetDamageMult(string id, float mult)</code></td>
+    <td><code>id</code>: Character.Id<br><code>mult</code>: Damage multiplier</td>
+    <td>void</td>
+    <td>No-ops if id is null/empty.</td>
+  </tr>
+<tr>
+    <td><code>public static void ClearDamageMult(string id)</code></td>
+    <td><code>id</code>: Character.Id</td>
+    <td>void</td>
+    <td>No-ops if id is null/empty.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>Production <span class="badge">static class</span></h3>
+  <p>Custom production recipe API for IFZ mods. This static class provides a way for mods to inject custom production recipes into buildings without causing Harmony patch collisions. The API handles all the patching internally and manages both real (local container) and virtual (global container) resource inputs.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>internal static void Init()</code></td>
+    <td>—</td>
+    <td>Armed once at API load (from Plugin.Awake), BEFORE any game session fires ContainerReady.</td>
+    <td>Subscribes to Cache.ContainerReady and ProductionUI.RowRefreshed.</td>
+  </tr>
+<tr>
+    <td><code>public static void Register(RecipeDef def)</code></td>
+    <td><code>def</code>: The recipe definition to register</td>
+    <td>void</td>
+    <td>No-ops on null, empty ID, or duplicate ID. Logs warnings.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>RecipeDef <span class="badge">sealed class</span></h3>
+  <p>Definition for a custom production recipe.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public string Id</code></td>
+    <td>—</td>
+    <td>Unique ID for this recipe (also used as content unlock ID)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public System.Func&lt;PlaceableObjectDraft, bool&gt; AppliesTo</code></td>
+    <td>—</td>
+    <td>Function to determine which building drafts should receive this recipe</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public System.Collections.Generic.List&lt;ResourceInput&gt; Cost</code></td>
+    <td>—</td>
+    <td>Real local-container inputs (e.g. wood/metal/etc.) - these will be consumed from the building's local container</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public System.Collections.Generic.List&lt;ResourceInput&gt; VirtualInputs</code></td>
+    <td>—</td>
+    <td>Virtual/global inputs (e.g. virt_infected_corpse) - these must be consumed from the global VirtualResourcesContainer</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public System.Collections.Generic.List&lt;ResourceInput&gt; Profit</code></td>
+    <td>—</td>
+    <td>Outputs of this production recipe (required, &gt;=1)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public ResourceID InheritTimeFromOutput = ResourceID.None</code></td>
+    <td>—</td>
+    <td>Borrow cycle time from the draft's existing recipe that outputs this ResourceID</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public float TotalProductionTime = 0f</code></td>
+    <td>—</td>
+    <td>Explicit cycle time if not inheriting (0 = use inherited time)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public bool AutoUnlock = true</code></td>
+    <td>—</td>
+    <td>Register and unlock content ID on load</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public System.Func&lt;UnityEngine.Sprite&gt; InputIcon</code></td>
+    <td>—</td>
+    <td>Optional custom input glyph for virtual inputs (null = no special glyph)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public UnityEngine.Color? InputIconColor</code></td>
+    <td>—</td>
+    <td>Optional tint for the input glyph. Vanilla resource icons are coloured by their sprite art, so a white monochrome glyph renders white — set this (e.g. a resource-green) to tint it. Null = untinted.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public string InputLabel</code></td>
+    <td>—</td>
+    <td>Optional label text beside the glyph (e.g. '20')</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>ResourceInput <span class="badge">struct</span></h3>
+  <p>Structure representing a resource input in a recipe.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public ResourceInput(ResourceID resource, float amount)</code></td>
+    <td><code>resource</code>: The resource<br><code>amount</code>: The amount</td>
+    <td>A new ResourceInput</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>ProductionUI <span class="badge">static class</span></h3>
+  <p>Sole patcher of ProductionBar.RefreshBar — the single injection point for the building info-panel 'SELECT PRODUCTION' rows. RefreshBar rebuilds a row from scratch every call (Clear() destroys the input ResourcePanels / output ProductionCycles, then GetCostPairs/GetProfitPairs repopulate them), so any mod that tweaks a row's icons or labels must re-do it on EVERY refresh. Two Harmony patches on one method crash under Wine (zero-rva, see wine-double-patch-zero-rva) and build.sh fatal-gates the collision — so consumer mods must NOT patch RefreshBar themselves. Subscribe to RowRefreshed instead.</p>
+  
+  <h4>Hooks / events</h4>
+<table class="api"><thead><tr><th>Hook</th><th>Signature</th><th>When</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>ProductionUI.RowRefreshed</code></td>
+    <td><code>public static event Action&lt;ProductionBar&gt; RowRefreshed</code></td>
+    <td>Fires AFTER the game finished rebuilding a production row's input/output icons. Runs on the game/UI thread. Handlers MUST be idempotent per refresh (the row is cleared and repopulated each time). A throwing handler is isolated so one mod cannot break the row for the others.</td>
+    <td>The ProductionBar is passed raw; subscribers reflect whatever private fields they need (_productionData, _productionWork, _productionCycles, neededResourcesParent, producedResourcesParent, ...) themselves — keeps this API surface minimal and additive.</td>
+  </tr>
+</tbody></table>
+</div>
+<div class="apitype">
+  <h3>Radio <span class="badge">static class</span></h3>
+  <p>Shared radio helper. A mod calls it to push ONE message into the vanilla radio — cloud bubble + transmission log + optional call audio — and ONLY when a mod calls it. It never patches, and never mutates, the vanilla radio. Message colour travels as TextMeshPro rich-text markup INSIDE the message string, so the game's own per-message type→colour styling (e.g. danger = white text + highlight box) is left completely intact ('typelocked').</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static void Message(string text, string type = null, string colorHex = null, float duration = 0f, bool bubble = true, bool log = true, bool sound = false, RadioSource source = RadioSource.NPC)</code></td>
+    <td><code>text</code>: Message text<br><code>type</code>: Free label; 'danger'/'alert' also UPPERCASE the text and add a trailing '!' (mirrors the game's own danger styling) — cosmetic only, never touches shared colour.<br><code>colorHex</code>: e.g. '#59A6FF' or '59A6FF' tints ONLY this message's bubble text via rich-text; pass null/empty for the game's default colour. It cannot affect vanilla messages.<br><code>duration</code>: Message duration (default 5f)<br><code>bubble</code>: Show cloud bubble (default true)<br><code>log</code>: Add to transmission log (default true)<br><code>sound</code>: Opt-in call blip + mumble (default false)<br><code>source</code>: Speaker type (default NPC)</td>
+    <td>void</td>
+    <td>No-ops on null/empty text or during a save load / loading screen.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>RadioSource <span class="badge">enum</span></h3>
+  <p>WHO's talking — drives the persistent-log speaker + mumble voice. NPC first so zero-value = NPC.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>NPC</code></td>
+    <td>—</td>
+    <td>NPC speaker (default)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Operator</code></td>
+    <td>—</td>
+    <td>Operator speaker</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Trader</code></td>
+    <td>—</td>
+    <td>Trader speaker</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Scout</code></td>
+    <td>—</td>
+    <td>Scout speaker</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Base</code></td>
+    <td>—</td>
+    <td>Base speaker</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>RadioSeverity <span class="badge">enum</span></h3>
+  <p>Legacy severity preset kept for back-compat callers. New code passes a colour hex to Radio.Message directly.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>Info</code></td>
+    <td>—</td>
+    <td>Info severity (null = native default cloud colour)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Warning</code></td>
+    <td>—</td>
+    <td>Warning severity (calm blue #59A6FF)</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Alert</code></td>
+    <td>—</td>
+    <td>Alert severity (alert red #FF4D40)</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>SaveStore <span class="badge">static class</span></h3>
+  <p>Per-save persistence for mods, keyed on the map's stable SaveHandler.Coordinates — NOT SaveInfo.Name, which embeds the in-game clock and drifts every day. That drift silently re-baselines a mod's per-save state on every reload (it bit Expanded Farming and ElderPop before this helper existed: each reload looked like a brand-new save). Layout: one JSON blob per (save, modId) at {SavesDirPath}/.ifzmods/{coordsKey}/{modId}.json — i.e. BESIDE the game's Saves dir (so it travels when a user copies their whole Saves folder) but NOT inside IFZ's per-save timestamped folders — those are recreated on every manual save, so anything written inside one is invisible to the next save of the same game. The coords key is stable across every reload/re-save of the same base location, which is exactly what per-save mod state needs. Serialization is UnityEngine.JsonUtility (Wine-safe, no Newtonsoft): pass a [Serializable] type with PUBLIC FIELDS. JsonUtility does not serialize Dictionary&lt;,&gt; — use a List field instead. All methods are null/exception-safe and no-op when no save is active (see HasSave), so a mod may call them freely without guarding for the main-menu / pre-load window.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static bool HasSave</code></td>
+    <td>—</td>
+    <td>True once a map is active (coordinates assigned). Persist only while in-game.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static string SaveKey</code></td>
+    <td>—</td>
+    <td>Clock-independent per-save key. Same base location -&gt; same key across every reload/re-save. Empty string when no save is active.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static bool Save(string modId, object data)</code></td>
+    <td><code>modId</code>: Mod identifier<br><code>data</code>: A [Serializable] type with PUBLIC FIELDS</td>
+    <td>True if saved, false (no-op) if no save is active.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static object Load(string modId, Type type)</code></td>
+    <td><code>modId</code>: Mod identifier<br><code>type</code>: The [Serializable] type to cast to</td>
+    <td>The loaded object, or null if none is stored / parsing fails.</td>
+    <td>NON-GENERIC ON PURPOSE: a generic Load&lt;T&gt; forces a cross-assembly generic instantiation that IFZ's Mono-under-Wine cannot JIT — it throws BadImageFormatException 'Method has zero rva' at the CALLER's entry, which took down ElderPop's sunrise/sunset hooks (the whole method the caller is in fails to compile). Unity's non-generic JsonUtility.FromJson(string, Type) sidesteps it.</td>
+  </tr>
+<tr>
+    <td><code>public static bool SaveText(string modId, string text)</code></td>
+    <td><code>modId</code>: Mod identifier<br><code>text</code>: Raw string blob (no JsonUtility)</td>
+    <td>True if saved, false (no-op) if no save is active.</td>
+    <td>Prefer this over Save/Load for anything list- or map-shaped: JsonUtility does not round-trip collection fields reliably under Wine, whereas a raw string is bulletproof. Stored at the same per-save path as the JSON blob, .txt suffix.</td>
+  </tr>
+<tr>
+    <td><code>public static string LoadText(string modId)</code></td>
+    <td><code>modId</code>: Mod identifier</td>
+    <td>The raw string blob written by SaveText, or null if none.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static bool Has(string modId)</code></td>
+    <td><code>modId</code>: Mod identifier</td>
+    <td>True if this mod has a stored blob for the current save.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static bool Delete(string modId)</code></td>
+    <td><code>modId</code>: Mod identifier</td>
+    <td>True if a file was removed.</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>SicknessCoordinator <span class="badge">static class</span></h3>
+  <p>The arbiter that stops multiple mods (ExtendedHealth, ElderPop, ...) from independently rolling sickness on the same pop and stacking into a death wave. Consumer mods RegisterSource(modId, fn) once at load; fn returns a per-pop, per-day chance in [0,1] (or &lt;=0 for 'no opinion'). Once per in-game day, at sunset (Time.OnSunset), this runs ONE roll per adult/non-dead/non-sick citizen: merges every registered source's chance (Max or SumClamped — CombineMode), rolls once, and caps the day's total NEW infections to a shared fraction of the population (MaxNewSickPerDayFraction, min 1) so no combination of mods can out-sick the vanilla die-chance/medicine/treatment-bed pipeline in one day. All actual sickness still goes through the game's own SicknessController.MakeCharacterSick, so existing recovery/death machinery is untouched — this only gates WHO gets sick and WHEN.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static bool Available</code></td>
+    <td>—</td>
+    <td>Presence flag for version-guarded callers (always true).</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static void RegisterSource(string modId, SicknessSource fn)</code></td>
+    <td><code>modId</code>: Mod identifier<br><code>fn</code>: Per-pop, per-day chance in [0,1] (or &lt;=0 for 'no opinion')</td>
+    <td>void</td>
+    <td>Register once at load. No-ops on null/empty modId or null fn.</td>
+  </tr>
+<tr>
+    <td><code>public static void UnregisterSource(string modId)</code></td>
+    <td><code>modId</code>: Mod identifier</td>
+    <td>void</td>
+    <td>No-ops on null/empty modId.</td>
+  </tr>
+<tr>
+    <td><code>internal static void Init()</code></td>
+    <td>—</td>
+    <td>Wired once by Plugin's deferred session wire: SicknessCoordinator.Init() subscribes Time.OnSunset += DailyRoll. Idempotent (unsub/sub) so a re-arm mid-session is harmless.</td>
+    <td>Drops the onset latch so the first roll reloads it from THIS save's SaveStore (or re-latches if this save has no clinic yet).</td>
+  </tr>
+<tr>
+    <td><code>public static float MaxNewSickPerDayFraction</code></td>
+    <td>—</td>
+    <td>Max fraction of population that mod sickness-sources may newly infect per day (shared cap across all mods). Vanilla infections are separate and uncapped.</td>
+    <td>Config-backed, set by Plugin at load (Config.Bind under the 'Sickness' section). Default 0.10f.</td>
+  </tr>
+<tr>
+    <td><code>public static Combine CombineMode</code></td>
+    <td>—</td>
+    <td>How multiple mods' infect chances merge for one pop: Max (no compounding) or SumClamped.</td>
+    <td>Config-backed, set by Plugin at load.</td>
+  </tr>
+<tr>
+    <td><code>public static bool RollEnabled</code></td>
+    <td>—</td>
+    <td>Master switch for the coordinated daily sickness roll.</td>
+    <td>Config-backed, set by Plugin at load.</td>
+  </tr>
+<tr>
+    <td><code>public static bool DebugLog</code></td>
+    <td>—</td>
+    <td>Log each day's coordinated roll.</td>
+    <td>Config-backed, set by Plugin at load.</td>
+  </tr>
+<tr>
+    <td><code>public static bool RequireTreatmentBuilding</code></td>
+    <td>—</td>
+    <td>Capability gate: mod-driven sickness stays OFF until the player owns a completed building that can treat citizens (a clinic/hospital). Prevents illness you have no means to cure. Off = sickness can roll from day one.</td>
+    <td>Config-backed, set by Plugin at load.</td>
+  </tr>
+<tr>
+    <td><code>public static int OnsetGraceDays</code></td>
+    <td>—</td>
+    <td>Days after treatment first becomes available before any mod-driven sickness rolls. A short buffer so a freshly-built clinic doesn't instantly trigger a wave.</td>
+    <td>Config-backed, set by Plugin at load.</td>
+  </tr>
+<tr>
+    <td><code>public static int OnsetRampDays</code></td>
+    <td>—</td>
+    <td>After the grace window, the day's whole sickness chance ramps linearly 0..1 over this many days, so difficulty eases in rather than spiking. 0 = full strength immediately after grace.</td>
+    <td>Config-backed, set by Plugin at load.</td>
+  </tr>
+</tbody></table>
+  <h4>Hooks / events</h4>
+<table class="api"><thead><tr><th>Hook</th><th>Signature</th><th>When</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>SicknessCoordinator.OnPopFellSick</code></td>
+    <td><code>public static event Action&lt;Character&gt; OnPopFellSick</code></td>
+    <td>Fires when a character becomes sick through the coordinated roll.</td>
+    <td></td>
+  </tr>
+</tbody></table>
+</div>
+  <h4>Example</h4>
+  <pre><code>// Register a custom production recipe
+var recipe = new RecipeDef
+{
+    Id = &quot;my_mod.special_bricks&quot;,
+    AppliesTo = draft =&gt; draft.Name.Contains(&quot;Brick Kiln&quot;),
+    Cost = new List&lt;ResourceInput&gt; { new ResourceInput(ResourceID.Clay, 10f) },
+    Profit = new List&lt;ResourceInput&gt; { new ResourceInput(ResourceID.Brick, 5f) },
+    InputIcon = () =&gt; MyMod.SpriteFromAssetBundle(&quot;bricks_icon&quot;),
+    InputLabel = &quot;10&quot;
+};
+Production.Register(recipe);
+
+// Listen to production row refreshes
+ProductionUI.RowRefreshed += bar =&gt; {
+    // Inject custom icons into the production row
+};
+
+// Use the shared radio
+Radio.Message(&quot;Hello world&quot;, type: &quot;info&quot;, colorHex: &quot;#59A6FF&quot;, sound: true);
+
+// Per-save persistence
+if (SaveStore.HasSave)
+{
+    SaveStore.Save(&quot;MyMod&quot;, mySaveData);
+    var loaded = (MySave)SaveStore.Load(&quot;MyMod&quot;, typeof(MySave));
+}</code></pre>
+</section>
+<section class="apisec" id="IFZModPanels">
+  <h2>IFZModPanels <span class="badge">v0.1.1</span></h2>
+  <p class="blurb">A BepInEx plugin that provides a panel system for building in-game UI windows with layout, theming, persistence, and interactive controls.</p>
+  <div class="refbox">
+  <h4>Referencing this API</h4>
+  <p><strong>Load order (BepInDependency):</strong> <code>[BepInDependency(&quot;com.ifzmod.api&quot;)]</code></p>
+  <p><strong>Build reference (HintPath):</strong></p>
+  <pre><code>&lt;Reference Include=&quot;IFZModPanels&quot;&gt;&lt;HintPath&gt;..\\IFZModPanels\\bin\\Release\\netstandard2.1\\IFZModPanels.dll&lt;/HintPath&gt;&lt;/Reference&gt;</code></pre>
+  <p class="blurb">Additive-only API. Do not version-pin the BepInDependency unless you require a specific minimum.</p>
+</div>
+  <div class="apitype">
+  <h3>Panels <span class="badge">static class</span></h3>
+  <p>Consumer entry point. Register a builder once; it re-runs on every Game-scene load.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static Theme DefaultTheme { get; set; }</code></td>
+    <td>—</td>
+    <td>Theme — the default theme applied to windows that don't override. Mutable.</td>
+    <td>Set once during mod init. Windows that pass a theme argument to Panels.Register use that instead.</td>
+  </tr>
+<tr>
+    <td><code>public static void Register(string id, Action&lt;PanelContext&gt; build)</code></td>
+    <td><code>id</code>: Unique identifier for the window. Used for persistence and toggling.<br><code>build</code>: A builder callback that receives a PanelContext to construct the window.</td>
+    <td>void</td>
+    <td>Idempotent — same id replaces. If a Game scene is already live, builds immediately into the current canvas.</td>
+  </tr>
+<tr>
+    <td><code>public static void Unregister(string id)</code></td>
+    <td><code>id</code>: The window id to remove.</td>
+    <td>void</td>
+    <td>Removes the builder and destroys the window if it exists.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>PanelContext <span class="badge">sealed class</span></h3>
+  <p>Builder context passed to the Action&lt;PanelContext&gt; callback. Creates a ModWindow and returns it.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public ModWindow Window(string title, SizeMode? size = null, Theme? theme = null, KeyCode toggleKey = KeyCode.None)</code></td>
+    <td><code>title</code>: Window title shown in the header.<br><code>size</code>: Sizing mode (AutoHeight, Fixed, Resizable). Defaults to DefaultAuto (320×400 max).<br><code>theme</code>: Per-window theme override. Defaults to Panels.DefaultTheme.<br><code>toggleKey</code>: Keyboard shortcut to show/hide the window. Defaults to None.</td>
+    <td>ModWindow — the created window, ready for further configuration.</td>
+    <td>Called once during registration. The window is persisted (pos/size/collapsed/visible) via WindowStore.Load.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>ModWindow <span class="badge">sealed partial class</span></h3>
+  <p>A single in-game window with header, body, and row-based layout. Supports drag, resize, collapse, and toggle.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public bool Locked { get; set; }</code></td>
+    <td>—</td>
+    <td>bool — whether the window is locked (cannot be dragged or resized).</td>
+    <td>When true, DraggablePanel and ResizeGrip are disabled.</td>
+  </tr>
+<tr>
+    <td><code>public bool Collapsed { get; set; }</code></td>
+    <td>—</td>
+    <td>bool — whether the body is collapsed (header only).</td>
+    <td>Toggling persists to disk via WindowStore.</td>
+  </tr>
+<tr>
+    <td><code>public bool Visible { get; set; }</code></td>
+    <td>—</td>
+    <td>bool — whether the window is visible.</td>
+    <td>Toggling persists to disk. Hidden windows can be reopened via toggleKey.</td>
+  </tr>
+<tr>
+    <td><code>public RectTransform Body { get; }</code></td>
+    <td>—</td>
+    <td>RectTransform — the scrollable content parent (from UiFactory.ScrollView).</td>
+    <td>Use this as the parent for NewRow and other layout calls.</td>
+  </tr>
+<tr>
+    <td><code>public LabelHandle Label(string text)</code></td>
+    <td><code>text</code>: Label text.</td>
+    <td>LabelHandle — a handle to update the label text or color.</td>
+    <td>Creates a new row with the label flexing to fill available width.</td>
+  </tr>
+<tr>
+    <td><code>public LabelHandle Section(string text)</code></td>
+    <td><code>text</code>: Section header text.</td>
+    <td>LabelHandle — a handle to update the section text or color.</td>
+    <td>Like Label but uses Accent color and Bold style.</td>
+  </tr>
+<tr>
+    <td><code>public ValueRow Value(string label, string initial = &quot;&quot;)</code></td>
+    <td><code>label</code>: Label text (left-aligned, muted).<br><code>initial</code>: Initial value text (right-aligned).</td>
+    <td>ValueRow — a handle to update the value text or color.</td>
+    <td>Creates a two-column row: label on left, value on right.</td>
+  </tr>
+<tr>
+    <td><code>public SeparatorHandle Separator()</code></td>
+    <td>—</td>
+    <td>SeparatorHandle — a 1px horizontal divider.</td>
+    <td>Creates a new row with a faint separator line.</td>
+  </tr>
+<tr>
+    <td><code>public BarHandle Bar(string label = null, float value01 = 0f)</code></td>
+    <td><code>label</code>: Optional label text.<br><code>value01</code>: Fill level 0..1.</td>
+    <td>BarHandle — a handle to update fill, color, or label.</td>
+    <td>Creates a track with an Accent-colored fill bar.</td>
+  </tr>
+<tr>
+    <td><code>public ButtonHandle Button(string text, Action onClick)</code></td>
+    <td><code>text</code>: Button label.<br><code>onClick</code>: Callback when clicked.</td>
+    <td>ButtonHandle — a handle to update interactability or label.</td>
+    <td>Creates a 120px-wide button row.</td>
+  </tr>
+<tr>
+    <td><code>public ButtonHandle IconButton(IconKind icon, Action onClick)</code></td>
+    <td><code>icon</code>: Icon to display.<br><code>onClick</code>: Callback when clicked.</td>
+    <td>ButtonHandle — a handle to update interactability.</td>
+    <td>Creates a square icon button (size = RowHeight).</td>
+  </tr>
+<tr>
+    <td><code>public SliderHandle Slider(string label, float min, float max, Action&lt;float&gt; onChange)</code></td>
+    <td><code>label</code>: Optional label text.<br><code>min</code>: Slider minimum.<br><code>max</code>: Slider maximum.<br><code>onChange</code>: Callback with current value.</td>
+    <td>SliderHandle — a handle to get/set the slider value.</td>
+    <td>Creates a horizontal slider with optional label.</td>
+  </tr>
+<tr>
+    <td><code>public ToggleHandle Toggle(string label, bool initial, Action&lt;bool&gt; onChange)</code></td>
+    <td><code>label</code>: Toggle label text.<br><code>initial</code>: Initial checked state.<br><code>onChange</code>: Callback with new state.</td>
+    <td>ToggleHandle — a handle to get/set the toggle state.</td>
+    <td>Creates a checkbox-style toggle with an Accent-colored check indicator.</td>
+  </tr>
+<tr>
+    <td><code>public InputHandle Input(string placeholder, Action&lt;string&gt; onChange)</code></td>
+    <td><code>placeholder</code>: Placeholder text shown when empty.<br><code>onChange</code>: Callback with current text.</td>
+    <td>InputHandle — a handle to get/set the input text.</td>
+    <td>Creates a TMP_InputField with placeholder.</td>
+  </tr>
+<tr>
+    <td><code>public ListRegion List()</code></td>
+    <td>—</td>
+    <td>ListRegion — a vertical container for ListRow items.</td>
+    <td>Creates a scrollable list with automatic height fitting.</td>
+  </tr>
+<tr>
+    <td><code>public GraphHandle Graph(GraphKind kind, float height = 80f)</code></td>
+    <td><code>kind</code>: Graph type (Line or Bar).<br><code>height</code>: Fixed graph height in pixels.</td>
+    <td>GraphHandle — a handle to push/set graph values.</td>
+    <td>Creates a graph with an inset from the background.</td>
+  </tr>
+<tr>
+    <td><code>public void EveryFrame(Action cb)</code></td>
+    <td><code>cb</code>: Callback invoked every frame.</td>
+    <td>void</td>
+    <td>Called every Tick. Use sparingly.</td>
+  </tr>
+<tr>
+    <td><code>public void Every(float seconds, Action cb)</code></td>
+    <td><code>seconds</code>: Interval in seconds (minimum 0.01f).<br><code>cb</code>: Callback invoked at the interval.</td>
+    <td>void</td>
+    <td>Called every N seconds. Use for periodic updates.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>ListRegion <span class="badge">sealed class</span></h3>
+  <p>A vertical container for ListRow items. Created by ModWindow.List().</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public void Clear()</code></td>
+    <td>—</td>
+    <td>void</td>
+    <td>Destroys all child row GameObjects.</td>
+  </tr>
+<tr>
+    <td><code>public ListRow Row()</code></td>
+    <td>—</td>
+    <td>ListRow — a new row inside this list.</td>
+    <td>Creates a new row with the region's theme.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>ListRow <span class="badge">sealed class</span></h3>
+  <p>A horizontal row inside a ListRegion. Created by ListRegion.Row().</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public LabelHandle Label(string s)</code></td>
+    <td><code>s</code>: Label text.</td>
+    <td>LabelHandle — a handle to update the label.</td>
+    <td>Creates a label that flexes to fill available width.</td>
+  </tr>
+<tr>
+    <td><code>public BarHandle Bar(float v01 = 0f)</code></td>
+    <td><code>v01</code>: Fill level 0..1.</td>
+    <td>BarHandle — a handle to update fill or color.</td>
+    <td>Creates a bar with the region's theme colors.</td>
+  </tr>
+<tr>
+    <td><code>public ButtonHandle Button(string s, Action onClick)</code></td>
+    <td><code>s</code>: Button label.<br><code>onClick</code>: Callback when clicked.</td>
+    <td>ButtonHandle — a handle to update interactability or label.</td>
+    <td>Creates a 70px-wide button.</td>
+  </tr>
+<tr>
+    <td><code>public IconGraphic Icon(IconKind k)</code></td>
+    <td><code>k</code>: Icon to display.</td>
+    <td>IconGraphic — the icon graphic.</td>
+    <td>Sizes the icon to RowHeight.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>Theme <span class="badge">struct</span></h3>
+  <p>A color and layout configuration applied to windows and their elements.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public Color Panel</code></td>
+    <td>—</td>
+    <td>Color — window background.</td>
+    <td>Default: (0.015, 0.055, 0.052, 0.96)</td>
+  </tr>
+<tr>
+    <td><code>public Color Header</code></td>
+    <td>—</td>
+    <td>Color — header background.</td>
+    <td>Default: (0.16, 0.22, 0.21, 0.98)</td>
+  </tr>
+<tr>
+    <td><code>public Color Button</code></td>
+    <td>—</td>
+    <td>Color — button background.</td>
+    <td>Default: (0.18, 0.27, 0.26, 0.98)</td>
+  </tr>
+<tr>
+    <td><code>public Color ButtonHover</code></td>
+    <td>—</td>
+    <td>Color — button hover state.</td>
+    <td>Default: (0.28, 0.42, 0.40, 1f)</td>
+  </tr>
+<tr>
+    <td><code>public Color ButtonPressed</code></td>
+    <td>—</td>
+    <td>Color — button pressed state.</td>
+    <td>Default: (0.08, 0.55, 0.36, 1f)</td>
+  </tr>
+<tr>
+    <td><code>public Color Accent</code></td>
+    <td>—</td>
+    <td>Color — accent color for fills, checks, graphs.</td>
+    <td>Default: (0.03, 0.78, 0.47, 1f)</td>
+  </tr>
+<tr>
+    <td><code>public Color Faint</code></td>
+    <td>—</td>
+    <td>Color — faint backgrounds (separators, scrollbars).</td>
+    <td>Default: (0.10, 0.13, 0.13, 0.85)</td>
+  </tr>
+<tr>
+    <td><code>public Color Text</code></td>
+    <td>—</td>
+    <td>Color — primary text.</td>
+    <td>Default: Color.white</td>
+  </tr>
+<tr>
+    <td><code>public Color TextMuted</code></td>
+    <td>—</td>
+    <td>Color — secondary/muted text.</td>
+    <td>Default: (0.6, 0.7, 0.68, 1f)</td>
+  </tr>
+<tr>
+    <td><code>public float CornerPad</code></td>
+    <td>—</td>
+    <td>float — padding in pixels for corners.</td>
+    <td>Default: 8f</td>
+  </tr>
+<tr>
+    <td><code>public float RowHeight</code></td>
+    <td>—</td>
+    <td>float — default row height.</td>
+    <td>Default: 26f</td>
+  </tr>
+<tr>
+    <td><code>public float HeaderHeight</code></td>
+    <td>—</td>
+    <td>float — default header height.</td>
+    <td>Default: 28f</td>
+  </tr>
+<tr>
+    <td><code>public TMP_FontAsset Font</code></td>
+    <td>—</td>
+    <td>TMP_FontAsset — font (null resolves to game default).</td>
+    <td>null -&gt; UiFactory resolves the game's default TMP font.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>SizeMode <span class="badge">struct</span></h3>
+  <p>Sizing mode for a window: AutoHeight (content-driven), Fixed, or Resizable.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public enum Kind { AutoHeight, Fixed, Resizable }</code></td>
+    <td>—</td>
+    <td>Kind — the sizing mode.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public Kind ModeKind</code></td>
+    <td>—</td>
+    <td>Kind</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public float Width</code></td>
+    <td>—</td>
+    <td>float — width in pixels.</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public float Height</code></td>
+    <td>—</td>
+    <td>float — height in pixels (Fixed/Resizable).</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public float MaxHeight</code></td>
+    <td>—</td>
+    <td>float — max height (AutoHeight).</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public Vector2 Min</code></td>
+    <td>—</td>
+    <td>Vector2 — minimum size (Resizable).</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public Vector2 Max</code></td>
+    <td>—</td>
+    <td>Vector2 — maximum size (Resizable).</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static SizeMode AutoHeight(float width, float maxHeight)</code></td>
+    <td><code>width</code>: Fixed width.<br><code>maxHeight</code>: Maximum height (content-driven up to this).</td>
+    <td>SizeMode</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static SizeMode Fixed(float width, float height)</code></td>
+    <td><code>width</code>: Fixed width.<br><code>height</code>: Fixed height.</td>
+    <td>SizeMode</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static SizeMode Resizable(float width, float height, Vector2 min, Vector2 max)</code></td>
+    <td><code>width</code>: Initial width.<br><code>height</code>: Initial height.<br><code>min</code>: Minimum size.<br><code>max</code>: Maximum size.</td>
+    <td>SizeMode</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public static SizeMode DefaultAuto</code></td>
+    <td>—</td>
+    <td>SizeMode</td>
+    <td>AutoHeight(320f, 400f).</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>IconKind <span class="badge">enum</span></h3>
+  <p>Icon types rendered by IconGraphic.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>Play</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Pause</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Prev</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Next</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Shuffle</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>List</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Lock</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Disc</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>IconGraphic <span class="badge">sealed class</span></h3>
+  <p>A MaskableGraphic that draws icons (play, pause, prev, next, shuffle, list, lock, disc) as vector shapes.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public IconKind Kind { get; set; }</code></td>
+    <td>—</td>
+    <td>IconKind</td>
+    <td>Changes the icon shape. Triggers a vertex rebuild.</td>
+  </tr>
+<tr>
+    <td><code>public float Fill { get; set; }</code></td>
+    <td>—</td>
+    <td>float — fill level (0..1, default 0.62).</td>
+    <td>Controls the size of the icon within its rect. Triggers a vertex rebuild.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>GraphKind <span class="badge">enum</span></h3>
+  <p>Graph types rendered by GraphGraphic.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>Line</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>Bar</code></td>
+    <td>—</td>
+    <td>—</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>GraphGraphic <span class="badge">sealed class</span></h3>
+  <p>A MaskableGraphic that draws line or bar graphs from a list of float values.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public GraphKind Kind</code></td>
+    <td>—</td>
+    <td>GraphKind</td>
+    <td>Line or Bar. Default: Line.</td>
+  </tr>
+<tr>
+    <td><code>public readonly List&lt;float&gt; Values</code></td>
+    <td>—</td>
+    <td>List&lt;float&gt;</td>
+    <td>Values to graph. Add/remove and call MarkDirty().</td>
+  </tr>
+<tr>
+    <td><code>public float Min</code></td>
+    <td>—</td>
+    <td>float</td>
+    <td>Y-axis minimum (used when AutoRange is false).</td>
+  </tr>
+<tr>
+    <td><code>public float Max</code></td>
+    <td>—</td>
+    <td>float</td>
+    <td>Y-axis maximum (used when AutoRange is false).</td>
+  </tr>
+<tr>
+    <td><code>public bool AutoRange</code></td>
+    <td>—</td>
+    <td>bool</td>
+    <td>When true, auto-scales Y to data range. Default: true.</td>
+  </tr>
+<tr>
+    <td><code>public float LineThickness</code></td>
+    <td>—</td>
+    <td>float</td>
+    <td>Thickness of line segments. Default: 2f.</td>
+  </tr>
+<tr>
+    <td><code>public void MarkDirty()</code></td>
+    <td>—</td>
+    <td>void</td>
+    <td>Calls SetVerticesDirty() to schedule a mesh rebuild.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>GraphHandle <span class="badge">struct</span></h3>
+  <p>Handle to update graph values, range, and color.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public void SetSeries(IReadOnlyList&lt;float&gt; values)</code></td>
+    <td><code>values</code>: All values to set.</td>
+    <td>void</td>
+    <td>Replaces all values and marks dirty.</td>
+  </tr>
+<tr>
+    <td><code>public void Push(float value, int maxPoints = 120)</code></td>
+    <td><code>value</code>: Value to append.<br><code>maxPoints</code>: Maximum points to keep (default 120). Evicts oldest.</td>
+    <td>void</td>
+    <td>Appends a value and evicts oldest if over maxPoints.</td>
+  </tr>
+<tr>
+    <td><code>public void SetRange(float min, float max)</code></td>
+    <td><code>min</code>: Y-axis minimum.<br><code>max</code>: Y-axis maximum.</td>
+    <td>void</td>
+    <td>Disables AutoRange and sets fixed range.</td>
+  </tr>
+<tr>
+    <td><code>public void SetColor(Color c)</code></td>
+    <td><code>c</code>: Graph color.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>ResizeGrip <span class="badge">sealed class</span></h3>
+  <p>Bottom-right drag grip that resizes Target within [Min, Max]. Fires Resized on end-drag.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public RectTransform Target</code></td>
+    <td>—</td>
+    <td>RectTransform</td>
+    <td>The window to resize.</td>
+  </tr>
+<tr>
+    <td><code>public Vector2 Min</code></td>
+    <td>—</td>
+    <td>Vector2</td>
+    <td>Minimum size (default 160×80).</td>
+  </tr>
+<tr>
+    <td><code>public Vector2 Max</code></td>
+    <td>—</td>
+    <td>Vector2</td>
+    <td>Maximum size (default 900×900).</td>
+  </tr>
+<tr>
+    <td><code>public Action&lt;Vector2&gt; Resized</code></td>
+    <td>—</td>
+    <td>Action&lt;Vector2&gt;</td>
+    <td>Fired on end-drag with the new size.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>PointerHold <span class="badge">sealed class</span></h3>
+  <p>Tracks whether a pointer is held (down/up). Implements IPointerDownHandler, IPointerUpHandler.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public bool Held { get; }</code></td>
+    <td>—</td>
+    <td>bool — true while pointer is held.</td>
+    <td>Reset to false on OnDisable.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>HoverTooltip <span class="badge">sealed class</span></h3>
+  <p>Shows/hides a Tooltip GameObject on pointer enter/exit.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public GameObject Tooltip</code></td>
+    <td>—</td>
+    <td>GameObject</td>
+    <td>The tooltip to show/hide.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>DraggablePanel <span class="badge">sealed class</span></h3>
+  <p>Makes a panel draggable by pointer. Implements IPointerDownHandler, IDragHandler, IEndDragHandler.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public bool Locked</code></td>
+    <td>—</td>
+    <td>bool</td>
+    <td>When true, dragging is disabled.</td>
+  </tr>
+<tr>
+    <td><code>public Action&lt;Vector2&gt; Moved</code></td>
+    <td>—</td>
+    <td>Action&lt;Vector2&gt;</td>
+    <td>Fired on end-drag with the new anchored position.</td>
+  </tr>
+<tr>
+    <td><code>public RectTransform Target</code></td>
+    <td>—</td>
+    <td>RectTransform</td>
+    <td>The panel to drag.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>CameraZoomHoverBlocker <span class="badge">sealed class</span></h3>
+  <p>Blocks camera zoom movement while pointer hovers over the panel. Implements IPointerEnterHandler, IPointerExitHandler.</p>
+  
+  
+</div>
+<div class="apitype">
+  <h3>WindowStore <span class="badge">static class</span></h3>
+  <p>Persists window state (position, size, collapsed, visible) to a JSON file under the DLL directory.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public static void Load(ModWindow w)</code></td>
+    <td><code>w</code>: Window to restore state for.</td>
+    <td>void</td>
+    <td>Applies saved state (pos/size/collapsed/visible). No-op until a window is registered.</td>
+  </tr>
+<tr>
+    <td><code>public static void Save(ModWindow w)</code></td>
+    <td><code>w</code>: Window to save state for.</td>
+    <td>void</td>
+    <td>Persists current state to disk. Called automatically by ModWindow on move/resize/collapse.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>WindowState <span class="badge">struct (Serializable)</span></h3>
+  <p>Serializable snapshot of a window's state for persistence.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public string id</code></td>
+    <td>—</td>
+    <td>string</td>
+    <td>Window identifier.</td>
+  </tr>
+<tr>
+    <td><code>public float x</code></td>
+    <td>—</td>
+    <td>float</td>
+    <td>X position.</td>
+  </tr>
+<tr>
+    <td><code>public float y</code></td>
+    <td>—</td>
+    <td>float</td>
+    <td>Y position.</td>
+  </tr>
+<tr>
+    <td><code>public float w</code></td>
+    <td>—</td>
+    <td>float</td>
+    <td>Width.</td>
+  </tr>
+<tr>
+    <td><code>public float h</code></td>
+    <td>—</td>
+    <td>float</td>
+    <td>Height.</td>
+  </tr>
+<tr>
+    <td><code>public bool collapsed</code></td>
+    <td>—</td>
+    <td>bool</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public bool visible</code></td>
+    <td>—</td>
+    <td>bool</td>
+    <td>Default: true.</td>
+  </tr>
+<tr>
+    <td><code>public bool hasSize</code></td>
+    <td>—</td>
+    <td>bool</td>
+    <td>True once user resized / fixed size stored.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>LabelHandle <span class="badge">struct</span></h3>
+  <p>Handle to update a label's text or color.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public void Set(string text)</code></td>
+    <td><code>text</code>: New text.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public void SetColor(Color c)</code></td>
+    <td><code>c</code>: New color.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>ValueRow <span class="badge">struct</span></h3>
+  <p>Handle to update a value row's text or color.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public void Set(string v)</code></td>
+    <td><code>v</code>: Text value.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public void Set(float v)</code></td>
+    <td><code>v</code>: Numeric value (formatted as 0.##).</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public void SetColor(Color c)</code></td>
+    <td><code>c</code>: New color.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>BarHandle <span class="badge">struct</span></h3>
+  <p>Handle to update a bar's fill, color, or label.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public void Set(float v01)</code></td>
+    <td><code>v01</code>: Fill level 0..1 (clamped).</td>
+    <td>void</td>
+    <td>Sets fill proportionally by anchor.</td>
+  </tr>
+<tr>
+    <td><code>public void SetColor(Color c)</code></td>
+    <td><code>c</code>: Fill color.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public void SetLabel(string s)</code></td>
+    <td><code>s</code>: Label text.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>ButtonHandle <span class="badge">struct</span></h3>
+  <p>Handle to update a button's interactability or label.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public void SetInteractable(bool on)</code></td>
+    <td><code>on</code>: Whether the button is interactable.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public void SetLabel(string s)</code></td>
+    <td><code>s</code>: Button label text.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>SliderHandle <span class="badge">struct</span></h3>
+  <p>Handle to get/set a slider's value.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public void SetValue(float v)</code></td>
+    <td><code>v</code>: Slider value.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public float Value { get; }</code></td>
+    <td>—</td>
+    <td>float — current slider value (0f if null).</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>ToggleHandle <span class="badge">struct</span></h3>
+  <p>Handle to get/set a toggle's state.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public void SetOn(bool on)</code></td>
+    <td><code>on</code>: Whether the toggle is on.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public bool On { get; }</code></td>
+    <td>—</td>
+    <td>bool — current toggle state (false if null).</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>InputHandle <span class="badge">struct</span></h3>
+  <p>Handle to get/set an input field's text.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public string Text { get; }</code></td>
+    <td>—</td>
+    <td>string — current text (empty string if null).</td>
+    <td></td>
+  </tr>
+<tr>
+    <td><code>public void SetText(string s)</code></td>
+    <td><code>s</code>: Text to set.</td>
+    <td>void</td>
+    <td></td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>SeparatorHandle <span class="badge">struct</span></h3>
+  <p>Handle for a separator (no members).</p>
+  
+  
+</div>
+  <h4>Example</h4>
+  <pre><code>Panels.Register(&quot;myPanel&quot;, ctx =&gt;
+{
+    var w = ctx.Window(&quot;My Panel&quot;, SizeMode.DefaultAuto);
+    var label = w.Label(&quot;Hello&quot;);
+    var bar = w.Bar(&quot;Progress&quot;, 0.5f);
+    w.Button(&quot;Click&quot;, () =&gt; label.Set(&quot;Clicked!&quot;));
+});</code></pre>
+</section>
+<section class="apisec" id="IFZModDialog">
+  <h2>IFZModDialog <span class="badge">v0.1.1</span></h2>
+  <p class="blurb">A BepInEx library that fires the game's native radio transmission modal with 1–4 player-choice buttons and routes each click to a C# callback.</p>
+  <div class="refbox">
+  <h4>Referencing this API</h4>
+  <p><strong>Load order (BepInDependency):</strong> <code>[BepInDependency(&quot;com.ifzmod.api&quot;)]</code></p>
+  <p><strong>Build reference (HintPath):</strong></p>
+  <pre><code>&lt;Reference Include=&quot;IFZModDialog&quot;&gt;&lt;HintPath&gt;..\\IFZModDialog\\bin\\Release\\netstandard2.1\\IFZModDialog.dll&lt;/HintPath&gt;&lt;/Reference&gt;</code></pre>
+  <p class="blurb">Additive-only API. Do not version-pin the BepInDependency unless you require a specific minimum.</p>
+</div>
+  <div class="apitype">
+  <h3>Plugin <span class="badge">class</span></h3>
+  <p>BepInEx plugin entry point for IFZModDialog. Exists so consumer mods can BepInDependency on it for load order, and to own the shared logger.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public const string Guid = &quot;com.ifzmod.dialog&quot;</code></td>
+    <td>—</td>
+    <td>string — the plugin GUID</td>
+    <td>Used by consumers as the BepInDependency target.</td>
+  </tr>
+<tr>
+    <td><code>internal static ManualLogSource Log</code></td>
+    <td>—</td>
+    <td>ManualLogSource — the plugin's logger</td>
+    <td>Set in Awake; accessible for logging from this library.</td>
+  </tr>
+<tr>
+    <td><code>private void Awake()</code></td>
+    <td>—</td>
+    <td>void</td>
+    <td>Called by BepInEx; initializes the shared logger.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>DialogOption <span class="badge">class</span></h3>
+  <p>One choice on a radio prompt: a button label and the C# callback run when the player picks it.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public string Label</code></td>
+    <td>—</td>
+    <td>string — the button text shown to the player</td>
+    <td>If null, defaults to &quot;Option N&quot; in localization injection.</td>
+  </tr>
+<tr>
+    <td><code>public Action OnPick</code></td>
+    <td>—</td>
+    <td>Action — the callback invoked when the player selects this option</td>
+    <td>Set via the constructor or property assignment.</td>
+  </tr>
+<tr>
+    <td><code>public DialogOption()</code></td>
+    <td>—</td>
+    <td>DialogOption</td>
+    <td>Parameterless constructor for property-based initialization.</td>
+  </tr>
+<tr>
+    <td><code>public DialogOption(string label, Action onPick)</code></td>
+    <td><code>label</code>: The button text shown to the player<br><code>onPick</code>: The callback invoked when the player selects this option</td>
+    <td>DialogOption</td>
+    <td>Convenience constructor.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+<div class="apitype">
+  <h3>RadioPrompt <span class="badge">static class</span></h3>
+  <p>Fire the game's native radio transmission modal with 1–4 player-choice buttons, and route each click to a C# callback. Uses the real transmission lifecycle (load → show → play → answer → close), so audio and UI teardown are handled by the game.</p>
+  <table class="api"><thead><tr><th>Member</th><th>Params</th><th>Returns</th><th>Remarks</th></tr></thead><tbody>
+<tr>
+    <td><code>public const int MaxOptions = 4</code></td>
+    <td>—</td>
+    <td>int — maximum buttons the native panel supports (default/option2/option3/option4)</td>
+    <td>Options beyond this count are silently truncated.</td>
+  </tr>
+<tr>
+    <td><code>public static void Ask(string id, string promptText, DialogOption[] options, Action onUnavailable = null)</code></td>
+    <td><code>id</code>: A stable unique key per prompt TYPE (used as the transmission id, the localization namespace, and the xml filename — keep it constant across calls of the same prompt)<br><code>promptText</code>: The prompt text shown to the player<br><code>options</code>: 1–4 options. If more than 4, silently truncated to 4.<br><code>onUnavailable</code>: Optional callback run when the UI can't be driven (resolves fail), so game logic never stalls on UI.</td>
+    <td>void</td>
+    <td>Writes a loose transmission asset, injects localization, subscribes to DialogueManager, and starts the transmission. If any step fails, onUnavailable runs instead so game logic never stalls on UI.</td>
+  </tr>
+</tbody></table>
+  
+</div>
+  <h4>Example</h4>
+  <pre><code>var options = new DialogOption[]
+{
+    new DialogOption(&quot;Yes, send them in&quot;, () =&gt; SendSquad()),
+    new DialogOption(&quot;Hold position&quot;, () =&gt; HoldPosition()),
+};
+RadioPrompt.Ask(&quot;myRadioPrompt&quot;, &quot;Squad, we have a contact. Send them in?&quot;, options, () =&gt; HandleUnavailable());</code></pre>
+</section>
+</main>
+<footer>
+  <a href="https://github.com/JaySNL" target="_blank" rel="noopener">GitHub</a>
+  <a href="https://discord.gg/habeKjNdN9" target="_blank" rel="noopener">Discord</a>
+</footer>
+</body>
+</html>
