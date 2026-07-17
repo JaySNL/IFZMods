@@ -77,6 +77,12 @@ Get-ChildItem "$PluginSource" -Filter *.dll | ForEach-Object {
     Copy-Item $_.FullName "$PluginDest\$($_.Name)" -Force
     Write-Host "  + $($_.Name)" -ForegroundColor DarkGray
 }
+# Loose mod assets (LUTs, textures) next to a DLL — e.g. CinematicPost_Bleach.png.
+# Mods load these by filename from the plugins dir, so a dll-only copy silently breaks them.
+Get-ChildItem "$PluginSource" -File | Where-Object { $_.Extension -ne '.dll' } | ForEach-Object {
+    Copy-Item $_.FullName "$PluginDest\$($_.Name)" -Force
+    Write-Host "  + $($_.Name)" -ForegroundColor DarkGray
+}
 if (Test-Path "$PluginSource\ConfigurationManager\ConfigurationManager.dll") {
     Copy-Item "$PluginSource\ConfigurationManager\ConfigurationManager.dll" "$PluginDest\ConfigurationManager\ConfigurationManager.dll" -Force
     Write-Host "  + ConfigurationManager/ConfigurationManager.dll" -ForegroundColor DarkGray

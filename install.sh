@@ -101,6 +101,14 @@ for f in "$PLUGIN_SRC"/*.dll; do
   echo "  + $(basename "$f")"
   copied=$((copied + 1))
 done
+# Loose mod assets (LUTs, textures) that live next to a DLL — e.g. CinematicPost_Bleach.png.
+# Mods load these by filename from the plugins dir, so a dll-only copy silently breaks them.
+for f in "$PLUGIN_SRC"/*; do
+  [ -f "$f" ] || continue
+  case "$f" in *.dll) continue;; esac
+  cp -f "$f" "$DEST/"
+  echo "  + $(basename "$f")"
+done
 if [ -f "$PLUGIN_SRC/ConfigurationManager/ConfigurationManager.dll" ]; then
   cp -f "$PLUGIN_SRC/ConfigurationManager/ConfigurationManager.dll" "$DEST/ConfigurationManager/"
   echo "  + ConfigurationManager/ConfigurationManager.dll"
