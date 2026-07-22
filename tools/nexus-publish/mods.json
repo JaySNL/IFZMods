@@ -633,7 +633,7 @@
       "dllPath": "../../plugins/Flares.dll",
       "name": "Flares - mortar illumination (experimental)",
       "summary": "At night, mortars autonomously lob illumination flares at dark infected clusters, revealing fog-of-war.",
-      "fileNotes": "0.2.0: finalised flare look - brighter amber illumination light, native smoke plume, and a soft additive glow. Requires IFZ Mod API 1.2.1+.",
+      "fileNotes": "0.2.1: the flare counter panel no longer shows when the mod is switched off - it now respects both the Enabled master toggle and ShowCounter. The L convert hotkey is gated on the master toggle too. Requires IFZ Mod API 1.2.1+.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay"
@@ -645,7 +645,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     {
       "key": "SwarmFix",
