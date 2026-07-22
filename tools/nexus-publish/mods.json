@@ -645,6 +645,9 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
+      "requires": [
+        "IFZModAPI"
+      ],
       "version": "0.2.1"
     },
     {

@@ -8,7 +8,7 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ## 2026-07-22 -- Flares 0.2.1
 
-**[Staged and verified -- not yet pushed to Nexus]**
+**[Pushed to Nexus mod 54 -- see STATUS.md]**
 
 ### Fixed
 - **Flares 0.2.1 -- the on-screen flare counter panel stayed on the HUD even with the mod switched off.** The native counter box ignored both the `Enabled` master toggle and the `ShowCounter` option, so a player who disabled the mod still had the box docked under the squad button, with only the undocumented `H` hotkey to hide it. Fix: the panel now checks `Enabled && ShowCounter` every frame, before it is even built -- turning either off hides (or never creates) it, turning them back on restores it live, no restart. The `L` convert-ammo hotkey and the old fallback IMGUI counter are now gated on the master toggle too.
