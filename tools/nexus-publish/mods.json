@@ -633,7 +633,7 @@
       "dllPath": "../../plugins/Flares.dll",
       "name": "Flares - mortar illumination (experimental)",
       "summary": "At night, mortars autonomously lob illumination flares at dark infected clusters, revealing fog-of-war.",
-      "fileNotes": "0.2.1: the flare counter panel no longer shows when the mod is switched off - it now respects both the Enabled master toggle and ShowCounter. The L convert hotkey is gated on the master toggle too. Requires IFZ Mod API 1.2.1+.",
+      "fileNotes": "0.2.1: the flare counter panel no longer shows when the mod is switched off - it now respects both the Enabled master toggle and ShowCounter. The L convert hotkey is gated on the master toggle too. Requires IFZ Mod API 1.9.1+.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay"
