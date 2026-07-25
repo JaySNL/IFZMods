@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-25 -- Surrounded 0.4.8
+
+**[Pushed to Nexus mod 55 -- see STATUS.md]**
+
+### Added
+- **Surrounded 0.4.8 -- `BreedSpeedMultiplier` (default 1 = off) lets lairs breed *faster* than vanilla.** Until now every breeding lever in the mod could only slow lairs down: `BreedRateMaxSlowdown` caps the automatic multi-lair throttle, and values below 1 were silently ignored, so there was no way to ask for more infected than the game's own rate. The new key reads the way you would expect -- higher is faster (`2` = twice as fast, `6` = six times), values under 1 slow instead, and it is clamped to 0.1-20. It is applied *after* `BreedRateBalance`, so it overrides the multi-lair throttle rather than fighting it: on a 49-lair save where the balancer is slowing breeding 3x, `6` nets 2x vanilla and `3` gets you back to plain vanilla. Note lair stockpiles do **not** count against `MaxLiveInfected` -- their members sit disabled inside the building -- so a high value grows large lairs and, with them, heavier waves; `LairWaveMaxRelease` still decides how much of one arrives at a time.
+
+---
+
 ## 2026-07-25 -- Surrounded 0.4.7 + Buildable Bridges 0.2.2.0
 
 **[Pushed to Nexus mods 55 / 67 -- see STATUS.md]**

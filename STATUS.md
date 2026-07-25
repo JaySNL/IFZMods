@@ -37,7 +37,7 @@ _Last updated: 2026-07-25_
 | 40 | Squad Merge (right-click) | 1.1.2 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/40) |
 | 41 | Better Vehicle Squad Size | 1.1.2 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/41) |
 | 54 | Flares — mortar illumination | 0.2.1 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/54) |
-| 55 | Surrounded — siege mode | 0.4.7 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/55) |
+| 55 | Surrounded — siege mode | 0.4.8 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/55) |
 | 56 | Hives — infected hive seeding | 0.1.6 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/56) |
 | 57 | Raider Escalation | 1.3.1-beta | 🟢 Live (beta) | API | [link](https://www.nexusmods.com/infectionfreezone/mods/57) |
 | 58 | Mass Deconstruct — drag-box | 1.4.0-beta | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/58) |

@@ -499,7 +499,7 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "v0.4.7 - Fixed lairs never attacking (capacity scaled to player size). New LairWaveMaxRelease (default 300) caps infected per wave. Renamed BreedRateMaxMultiplier to BreedRateMaxSlowdown. Verbose logs now explain empty night passes. Requires API 1.9.1+.",
+      "fileNotes": "v0.4.8 - New BreedSpeedMultiplier (default 1 = off) makes lairs breed FASTER than vanilla: 2 = twice as fast, 6 = six times. Applied after BreedRateBalance, so it overrides the multi-lair throttle; below 1 slows instead. Requires API 1.9.1+.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
@@ -512,7 +512,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.4.7"
+      "version": "0.4.8"
     },
     {
       "key": "SquadGrenades",
