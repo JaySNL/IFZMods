@@ -6,6 +6,23 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-25 -- Surrounded 0.4.7 + Buildable Bridges 0.2.2.0
+
+**[Pushed to Nexus mods 55 / 67 -- see STATUS.md]**
+
+### Fixed
+- **Surrounded 0.4.7 -- lairs bred up to bursting but never attacked.** A lair only fired a wave once its group reached 90% of that lair's capacity, on the assumption that capacity is a fixed property of the lair. It isn't: the game recomputes lair capacity from *your* citizen count, so on a large late-game base capacity climbs faster than a lair can breed and the 90% mark simply recedes forever. Reported from a day-109 save: 49 lairs sitting on 3578 infected, not one wave all night. A lair now fires at whichever comes first -- the capacity fraction (`LairReleaseAtCapacityFraction`) or an absolute body count (`LairReleaseThreshold`, default 30) -- so the breed-release-rebuild rhythm actually turns over. Lairs on affected saves will start attacking on the next night pass.
+
+### Added
+- **Surrounded 0.4.7 -- `LairWaveMaxRelease` (default 300) caps the size of a single lair wave.** With the release bug fixed, dozens of stockpiled lairs could empty in one pass and put thousands of live actors on the map at once -- the exact FPS collapse this mod exists to prevent. A pass now releases at most this many infected (scaled by the early-game ramp), so pressure arrives as repeated waves instead of one map-wide dump. Note this is *not* `LairWaveReserve`, which is unrelated: that one holds slack open inside `MaxLiveInfected` so a wave has somewhere to spawn.
+- **Surrounded 0.4.7 -- the Verbose log now says why a night pass sent nothing out**, counting lairs per gate (too small / not bred up / eligible). Previously only the first three lairs were ever logged, which is what made the bug above so hard to see.
+- **Buildable Bridges 0.2.2.0 -- `General.Enabled` master toggle.** Switched off, the mod does not load at all: no Harmony patches, no session hook, no `B` hotkey, no driver -- the game behaves as if the DLL weren't installed. Deliberately a hard bail rather than inert patches, since an installed-but-idle patch still carries the Wine trampoline risk. Takes effect on game restart; bridges already in a save remain but stop being re-stamped until you switch it back on.
+
+### Changed
+- **Surrounded 0.4.7 -- `BreedRateMaxMultiplier` renamed to `BreedRateMaxSlowdown`.** The value multiplies the *interval* between lair births, so a higher number means slower breeding -- but the old name read as "breed N times faster", which is backwards. Nothing about the behaviour changed, only the name and the wording of its description. Values below 1 were always ignored and still are: this lever can only slow breeding, never speed it past vanilla. A custom value on the old key does not carry over and reverts to the default of 3.
+
+---
+
 ## 2026-07-22 -- Flares 0.2.1
 
 **[Pushed to Nexus mod 54 -- see STATUS.md]**

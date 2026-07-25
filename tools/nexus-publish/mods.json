@@ -499,7 +499,7 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "0.4.6: HiveMind — any attack near an idle infected cluster (bullets included, not just shells) now wakes it to swarm the attacker; the roused hive pursues the shooter, or the nearest structure/HQ for shells. New HivemindMinCluster (default 3) gates the surge to real clusters. Requires API 1.4.2+.",
+      "fileNotes": "v0.4.7 - Fixed lairs never attacking (capacity scaled to player size). New LairWaveMaxRelease (default 300) caps infected per wave. Renamed BreedRateMaxMultiplier to BreedRateMaxSlowdown. Verbose logs now explain empty night passes. Requires API 1.9.1+.",
       "category": "Miscellaneous",
       "tags": [
         "Gameplay",
@@ -512,7 +512,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).\n\nRequires: 000_IFZModAPI (shared library, loads first — install it alongside this mod).\nRecommended: BepInEx ConfigurationManager (press F1 in-game to tweak live).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.4.6"
+      "version": "0.4.7"
     },
     {
       "key": "SquadGrenades",
@@ -758,8 +758,8 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "0.2.1.0 BETA - Fix: long/diagonal bridges walkable again (nav ribbon width decoupled from deck via NavWidth, default 4; too-thin ribbon dropped pathfinding cells so units could not cross). Adds shore-outward SequentialBuild + NavLateralOffset.",
-      "version": "0.2.1.0"
+      "fileNotes": "v0.2.2.0 - New General.Enabled master toggle. When off, mod does not load at all: no Harmony patches, no session hook, no hotkey, no driver. Takes effect on game restart. Requires API 1.9.1+.",
+      "version": "0.2.2.0"
     },
     {
       "key": "DemolishAnywhere",
