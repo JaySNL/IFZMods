@@ -6,6 +6,17 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-26 -- IFZ Mod Panels 0.1.3 + IFZ Quality of Life 1.7.1
+
+**[Pushed to Nexus mods 77 / 33 -- see STATUS.md]**
+
+### Fixed
+- **IFZ Mod Panels 0.1.3 -- panels appeared where they had no business being: over the main menu, and over the loading screen.** Two structural causes, not a missing check. The panel canvas hangs off the library's `DontDestroyOnLoad` host, so it *outlived* the Game scene and kept every registered panel on screen after you left to the menu; and panels were built from `sceneLoaded("Game")`, which fires while the loading screen still covers the scene and `GameInstaller` is only part-way through installing the session's bindings. 0.1.3 adds a universal gate: `PanelsRuntime` polls a readiness test five times a second (active scene is `Game`, no save mid-load, session container installed *and* a successful controller resolve -- the same "scene is fully up" proof IFZ Mod API uses) and shows the canvas only when all of it holds. Toggle keys and consumer timer callbacks are skipped while it doesn't, so a hotkey can't open a panel over the menu either. The gate switches the canvas rather than each window's own visible flag, so every panel's remembered position, size and open/closed state comes back untouched after a menu round-trip. Applies to every mod built on the library at once -- no consumer rebuild needed.
+
+- **IFZ Quality of Life 1.7.1 -- the master toggle didn't actually switch the whole mod off.** `General/Enabled` was honoured by every feature's hot path except BuildingIconToggle, whose hotkey poll and both `StructureIcon` patches ran unconditionally: with QoL "off" the icon hotkey (default `I`) still worked, and any icons left hidden stayed hidden with no live feature able to restore them. Two more parts outlived a flag check -- the housing panel stayed registered, so it still opened on a housing click and still ran its low-beds warning every two seconds. All of it is now behind the master toggle, and flipping the toggle in F1 takes effect immediately instead of needing a restart: the housing panel is registered or torn down on the spot, and building icons are handed straight back to the game's own rules. No other behaviour change.
+
+---
+
 ## 2026-07-26 -- IFZ Mod API 1.9.2
 
 **[Pushed to Nexus mod 42 -- see STATUS.md]**

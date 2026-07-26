@@ -263,7 +263,7 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "0.1.2 - Fix: minimizing a panel no longer leaves an empty window when reopened, on a new game, or after a restart. Collapse now remembers the open height, the resize grip un-collapses instead of growing an empty frame, and the open size is saved.",
+      "fileNotes": "0.1.3 - Fix: panels now show only during live gameplay. They no longer stay on screen over the main menu or appear over the loading screen, and hotkeys are dead outside gameplay. Each panel keeps its remembered position, size and open state.",
       "description": "IFZ Mod Panels is a shared library, not a standalone feature. Install it only if another mod lists it as a requirement (for example IFZ Quality of Life 1.6.0 uses it for its housing panel).\n\nWhat it does: gives IFZ mods a simple way to show draggable, closeable in-game windows — labelled value rows, bars, buttons, sliders, toggles, and graphs — without every mod hand-rolling its own UI. Window position, size, and open/closed state persist between sessions.\n\nFor modders: reference IFZModPanels.dll and call Panels.Register(id, build) once; see the API docs and the _TEMPLATE_PanelMod starter in the source repo.",
       "category": "Miscellaneous",
       "tags": [
@@ -278,7 +278,7 @@
         "requirements": "BepInEx 5.4.23.2. IFZModAPI. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.1.2"
+      "version": "0.1.3"
     },
     {
       "key": "IFZQualityOfLife",
@@ -290,7 +290,7 @@
         "IFZModAPI",
         "IFZModPanels"
       ],
-      "fileNotes": "1.7.0 - New AreaWorkMarker: fades the vanilla blue area-work-queued glow (trees/debris/nodes) to 0 at night, back to full by day (Mode: NightFade/Off/Vanilla). Live in F1. 1.6.2 added Ctrl-click 100-worker step. Needs IFZ Mod Panels.",
+      "fileNotes": "1.7.1 - Fix: the master toggle (General/Enabled) now switches the WHOLE mod off. Previously the building-icon hotkey still worked, icons left hidden stayed hidden, and the housing panel stayed active. Flipping it in F1 now applies at once, no restart.",
       "description": "Several small quality-of-life tweaks bundled in one DLL. Each feature is individually toggleable in F1 ConfigurationManager.\n\nNOTE: as of 1.5.1 the height/elevation features (TallBuildings, ElevatedFiring, HeightAdvantage) moved to the new HighGround mod, and clay-pit regen/demolish moved to the new ClayPitFixes mod. Install those separately if you want them.\n\nMain features:\n- TowerHMG: defensive towers accept Heavy MGs (eq_hcal) once carworkshop_hcal is researched.\n- VehicleAmmoFix: vehicles auto-refill ammo from their own trunk cargo when the stockroom path fails.\n- BuildingIconToggle: hotkey (default I) to hide/show all building icons; state persists.\n- ShellLairs: vanilla won't let you attack-order infected lairs. With mortar squad(s) selected, right-click a revealed infected lair to shell it; plain infantry still enter to clear as normal. Selected bunkers/towers that have a mortar weapon also shell the lair on the same right-click.\n- HousingPanel: click any house or shelter to open a summary window (house + shelter counts, beds used/total, homeless, free beds), built on IFZ Mod Panels. Closeable.\n- HousingWarning: a one-off blue radio message warns you when total free beds drop below a threshold (default 25); it re-arms only after beds recover (default back to 50), so it never spams.\n- AreaWorkMarker: the vanilla blue \"queued for area work\" fill (trees/debris/streetlights/wrecks queued for cutting, metal/resource nodes queued for scavenging) fades to 0 at night and back to full by day by default (Mode: NightFade/Off/Vanilla), keeping the daytime cue without the night glow.",
       "category": "Miscellaneous",
       "tags": [
@@ -305,7 +305,7 @@
         "requirements": "BepInEx 5.4.23.2. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton). IFZ Mod Panels.\n\nRecommended:\n- BepInEx ConfigurationManager (press F1 in-game to tweak this mod live)\n- LocaleFix (required if your Windows locale uses comma decimals — nl-NL, de-DE, fr-FR, etc.)",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "1.7.0"
+      "version": "1.7.1"
     },
     {
       "key": "LocaleFix",
