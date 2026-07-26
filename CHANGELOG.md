@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-26 -- IFZ Mod API 1.9.2
+
+**[Pushed to Nexus mod 42 -- see STATUS.md]**
+
+### Fixed
+- **IFZ Mod API 1.9.2 -- mod-driven sickness could stay silently switched off for weeks on a new colony.** `SicknessCoordinator` latches the day its sickness ramp starts and persists it per-save, but `SaveStore` keys per-save state on the **map coordinates alone** -- so a colony started on a tile you had already played read the *previous* colony's latch. That latch sits in the new colony's future, which makes the elapsed-days figure negative, pins readiness at 0, and suppresses **every** registered source (ElderPop frailty, ExtendedHealth, anything else) until the new colony's day counter climbs past the old onset day plus the grace window. There was no log line and nothing on screen -- the mods simply appeared to do nothing. A latch dated later than the day being loaded cannot belong to this colony, so it is now discarded and re-latched. Additive, no public API surface change; consumers need no rebuild. Found while fixing the same coordinate-key collision in ElderPop 0.1.2.
+
+---
+
 ## 2026-07-26 -- Elder Population 0.1.2
 
 **[Pushed to Nexus mod 81 -- see STATUS.md]**

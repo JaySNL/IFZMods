@@ -14,7 +14,7 @@ _Last updated: 2026-07-25_
 
 | ID | Mod | Version | State | Requires | Page |
 |----|-----|---------|-------|----------|------|
-| 42 | IFZ Mod API | 1.9.1 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
+| 42 | IFZ Mod API | 1.9.2 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/42) |
 | 71 | BlitzHund | 0.1.0 | 🟡 Draft | API | [link](https://www.nexusmods.com/infectionfreezone/mods/71) |
 | 72 | Expanded Farming (2x-4x) | 0.1.7 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/72) |
 | 24 | Army Backup AI Fix | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/24) |
