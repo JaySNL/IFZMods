@@ -263,7 +263,7 @@
       "requires": [
         "IFZModAPI"
       ],
-      "fileNotes": "0.1.1 - Fix: closing a panel no longer throws a NullReferenceException (game bug-report popup on close); state-save now no-ops on a torn-down window. Reusable in-game panel/window library other IFZ mods build on. Install only if a mod lists it as a requirement. Needs IFZModAPI + BepInEx.",
+      "fileNotes": "0.1.2 - Fix: minimizing a panel no longer leaves an empty window when reopened, on a new game, or after a restart. Collapse now remembers the open height, the resize grip un-collapses instead of growing an empty frame, and the open size is saved.",
       "description": "IFZ Mod Panels is a shared library, not a standalone feature. Install it only if another mod lists it as a requirement (for example IFZ Quality of Life 1.6.0 uses it for its housing panel).\n\nWhat it does: gives IFZ mods a simple way to show draggable, closeable in-game windows — labelled value rows, bars, buttons, sliders, toggles, and graphs — without every mod hand-rolling its own UI. Window position, size, and open/closed state persist between sessions.\n\nFor modders: reference IFZModPanels.dll and call Panels.Register(id, build) once; see the API docs and the _TEMPLATE_PanelMod starter in the source repo.",
       "category": "Miscellaneous",
       "tags": [
@@ -278,7 +278,7 @@
         "requirements": "BepInEx 5.4.23.2. IFZModAPI. Infection Free Zone Unity 6000.0.26 / beta 0.26.5.29+. Pure-managed netstandard2.1 — runs on Windows / macOS (Crossover) / Steam Deck (Proton).",
         "shoutOuts": "Built by JayMade. Source: https://github.com/JaySNL/IFZMods.\nBepInEx, Harmony, and the IFZ modding community."
       },
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "key": "IFZQualityOfLife",

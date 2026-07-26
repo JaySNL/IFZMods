@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-26 -- IFZ Mod Panels 0.1.2
+
+**[Pushed to Nexus mod 77 -- see STATUS.md]**
+
+### Fixed
+- **IFZ Mod Panels 0.1.2 -- minimizing a panel left it permanently empty.** Reported against ElderPop's panel with a step-by-step repro, but the defect is in the shared window library, so every mod panel was affected. The collapse handler wrote the header height into the window's stored open height, so un-collapsing computed a one-row-tall window; dragging the resize grip then wrote the frame size directly and never consulted the collapsed flag, growing the frame back to full size while the body viewport stayed deactivated -- a full-size window with a title bar and a resize grip but no rows and no scrollbar. That mismatched state persisted to `windows.json` as `{height: full, collapsed: true}`, and every later Game-scene load re-ran each mod's panel builder and parented its rows under the already-deactivated viewport, so the panel came back empty on every new game and every restart. It read as "the mod stopped working"; the mod logic was running the whole time. Collapse now remembers the open height and restores it, the resize grip un-collapses before resizing, and only the open height is persisted -- a `windows.json` written by 0.1.1 falls back to the panel's built height, so an affected install self-heals. No API surface change; consumer mods need no update.
+
+---
+
 ## 2026-07-25 -- Surrounded 0.4.8
 
 **[Pushed to Nexus mod 55 -- see STATUS.md]**

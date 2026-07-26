@@ -26,7 +26,7 @@ _Last updated: 2026-07-25_
 | 30 | Gunfire Lights | 1.4.10 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/30) |
 | 31 | House Power | 1.1.0 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/31) |
 | 32 | House Rebalance | 1.2.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/32) |
-| 77 | IFZ Mod Panels | 0.1.1 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/77) |
+| 77 | IFZ Mod Panels | 0.1.2 | 🟢 Live | API | [link](https://www.nexusmods.com/infectionfreezone/mods/77) |
 | 33 | IFZ Quality of Life Bundle | 1.7.0 | 🟢 Live | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/33) |
 | 34 | Locale Fix | 1.0.0 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/34) |
 | 35 | Performance Pack | 1.5.4 | 🟢 Live | — | [link](https://www.nexusmods.com/infectionfreezone/mods/35) |
