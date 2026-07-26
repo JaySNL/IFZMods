@@ -903,8 +903,8 @@
         "IFZModAPI",
         "IFZModPanels"
       ],
-      "fileNotes": "0.1.1 hotfix - Fresh new-game colonists and later immigrants now seed young (18-30) instead of the full age pyramid, which was killing elderly-seeded pops on day one. Established-save adoption baseline unchanged. No save-format change.",
-      "version": "0.1.1-hotfix"
+      "fileNotes": "0.1.2 - Fix: new colonists no longer spawn elderly (or pre-retired) on a fresh colony started at a map location you have played before. Panel key F11 is now shown in the panel title and rebindable in F1 (Panel/ToggleKey). SeedMinAge default 18 -> 12.",
+      "version": "0.1.2"
     },
     {
       "key": "NoMapLimitBuildings",

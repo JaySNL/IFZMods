@@ -6,6 +6,19 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-26 -- Elder Population 0.1.2
+
+**[Pushed to Nexus mod 81 -- see STATUS.md]**
+
+### Fixed
+- **ElderPop 0.1.2 -- new colonists sometimes spawned elderly, or already retired, on a brand-new colony.** The config promises fresh colonists seed young (`NewGameSeedMaxAge`, default 30), and it looked like that rule failed at random. It didn't: it only ever held on the *first* colony you played at a given map location. The mod's per-save data is keyed on the map coordinates alone, and the game's internal character-id counter restarts from the same value on every new colony -- so a second colony started at the same location loaded the previous colony's age data and applied it to the new colonists one-for-one, retirements included (hence "Retired: 1" on day one). The data file now records the in-game day it was written; a file stamped later than the day being loaded cannot belong to this colony and is discarded. Older files without that stamp are cleaned instead: ages above the young cap are dropped and re-seeded young, and retirements too young to be genuine are cleared. An affected colony repairs itself on the next load, and no save-format break -- old files are still read.
+- **ElderPop 0.1.2 -- the stats panel opened with F11, but nothing said so and the key couldn't be changed.** New `Panel/ToggleKey` setting in F1 (rebindable, default F11); the panel's own title bar now reads `ElderPop (F11)` with whatever key is bound, and the startup log names it too. Rebinding applies immediately, no restart.
+
+### Changed
+- **ElderPop 0.1.2 -- `SeedMinAge` default is now 12, was 18.** This is the youngest seeded adult age and doubles as the ceiling of the child seed band; 12 is the game's own adulthood threshold (`CharactersConfig.adultAge`, which your laws shift slightly). An existing config file keeps whatever value it already has -- press Reset in F1 to adopt the new default.
+
+---
+
 ## 2026-07-26 -- IFZ Mod Panels 0.1.2
 
 **[Pushed to Nexus mod 77 -- see STATUS.md]**
