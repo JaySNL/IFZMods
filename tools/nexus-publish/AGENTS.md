@@ -83,6 +83,16 @@ publish in the browser. So the order for a release where mod A requires new mod 
 sticks. The file upload + changelog + details for A all succeed regardless; only the Requirements row
 is blocked. (Seen: IFZQualityOfLife 1.6.0 requiring the new IFZModPanels page 77.)
 
+## `list` 403s on an UNPUBLISHED page — that is NOT proof the page is missing
+`nexus-upload.mjs list` reads the v1 `files.json`, which returns `403 {"code":403,"message":"Mod not
+available: <id>"}` for any page that is still an unpublished draft — **before and after** you upload a
+file to it. Do not read that 403 as "the page does not exist" and do not conclude it from comparing
+against another mod that lists fine (a page that lists fine is simply already published). Confirmed on
+mod 93 (Thai Language): 403 before upload, `publish-all --send` then succeeded on all four steps, and it
+still 403s afterwards because the page is a draft. To check whether a page exists, open its URL — the
+API cannot tell you. Corollary: a brand-new page must be **published in the browser** once its file,
+changelog and details are in; the API can fill a page but cannot publish it.
+
 ## Media (banner/gallery) upload needs a FRESH cookie; file upload does not
 File upload / requirements / changelog / details use `NEXUS_API_KEY` (stable). Gallery **media** upload
 (`upload-media-api.mjs` / `upload-media.mjs`) uses `NEXUS_COOKIE`+`NEXUS_UA` through Cloudflare and 403s

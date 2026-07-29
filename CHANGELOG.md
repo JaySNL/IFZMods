@@ -6,6 +6,21 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-29 -- Thai Language 0.1.0
+
+**[Pushed to Nexus mod 93 -- see STATUS.md]**
+
+### Added
+- **Thai Language 0.1.0 -- the game had a Thai translation it could not draw.** Adding a language to Infection Free Zone needs no code at all: `LEManager` scans `StreamingAssets/Languages/*.csv` and takes the filename as the language id, and the options dropdown is built from the plain-text `_LanguageList.txt`. What the game has no answer for is *glyphs*. Every TextMeshPro font asset it ships -- Brother1816 (latin), AlibabaPuHuiTi (CJK), Binggrae (korean) -- covers no Thai, so the Thai community's finished translation rendered as a wall of tofu boxes and had been unusable. This mod builds a dynamic `TMP_FontAsset` at runtime from a bundled Noto Sans Thai TTF and registers it in `TMP_Settings.fallbackFontAssets`, the global list TMP consults for any character missing from the active font. One entry covers every label in the game at once, including labels that mix Thai with latin, and nothing about the game's own font assets has to change.
+
+- **Ships the community translation, and makes it wrap.** The bundled `th-TH.csv` (4183 keys, exact key parity with `en-US`) is unpacked into `StreamingAssets/Languages/` and `th-TH,ไทย` is added to the dropdown list. That list is a shipped game file, so a Steam update or a file validation silently reverts the entry -- the mod re-adds it on every launch rather than once, so it self-heals. Thai is also written without spaces between words while TMP only breaks lines at spaces, which makes an untouched Thai string one unbreakable token that overflows every fixed-width element. The bundled CSV is therefore pre-segmented with 26,952 zero-width spaces at word boundaries found by libthai (the breaker GTK/pango use), which TMP does treat as break opportunities. `WordBreakHints` off strips them back out and reproduces the community file byte for byte.
+
+- **Optional Thai names and graffiti.** While the game is in Thai, citizen names and wall graffiti can come from bundled Thai data. In vanilla both are chosen by the map's biome country code and no shipped biome names Thailand, so the data files alone would never be reached; a Harmony postfix on `NamesDatabase.GetDataFileName` and `GraffitiDatabase.GetDataFileName` redirects the lookup. Dog names are excluded. Both toggles default on and are gated on the active language, so nothing changes for players not using Thai. Four config entries in F1 (`InstallTranslation`, `WordBreakHints`, `ThaiNames`, `ThaiGraffiti`), all default on; turning `InstallTranslation` off keeps the font fix and lets a player supply their own `th-TH.csv`. Standalone -- no IFZ Mod API dependency, everything is embedded in the single DLL. Translation by the Thai IFZ community (posted by "Bank"); font is Noto Sans Thai under the SIL Open Font License 1.1, bundled with its licence text.
+
+- **Experimental, and two limits worth stating plainly.** TextMeshPro does no GPOS mark positioning, so stacked Thai tone marks over tall consonants (ป, ฟ) can sit wrong or collide -- a TMP limitation every Unity game shares, not something a mod can fix. And this first release has not yet been verified in-game, which is why it ships flagged experimental.
+
+---
+
 ## 2026-07-26 -- IFZ Mod Panels 0.1.3 + IFZ Quality of Life 1.7.1
 
 **[Pushed to Nexus mods 77 / 33 -- see STATUS.md]**

@@ -926,6 +926,27 @@
       },
       "fileNotes": "1.0.0 - Lifts the map-selection building-count limit that blocks dense real-world areas. The cap is hardware-benchmarked (20k weak to 50k top rig); Multiplier (default x10) raises it. The native 'too many buildings' warning still shows.",
       "version": "1.0.0"
+    },
+    {
+      "key": "ThaiLanguage",
+      "nexusModId": 93,
+      "dllPath": "../../plugins/ThaiLanguage.dll",
+      "name": "Thai Language",
+      "summary": "Thai language support - bundles a Thai font as a TextMeshPro fallback so Thai text renders instead of boxes, and installs the community Thai translation.",
+      "category": "Miscellaneous",
+      "tags": [
+        "Gameplay"
+      ],
+      "sections": {
+        "description": "Thai language support for Infection Free Zone.\n\nThe game can already load a Thai translation on its own - it reads any CSV you drop into its Languages folder. What it cannot do is DRAW Thai: none of the fonts it ships contain Thai glyphs, so every line of Thai text comes out as a row of empty boxes. That is what this mod fixes.\n\nIt registers a bundled Noto Sans Thai font as a global TextMeshPro fallback, which gives Thai coverage to every label in the game at once, and it installs the community Thai translation (4183 lines, complete) and adds it to the language dropdown in Options as Thai. Pick it there and restart if the menu does not refresh.\n\nThai is written without spaces between words, and the game's text engine only wraps lines at spaces - so the bundled translation is pre-segmented with invisible zero-width spaces at real word boundaries, which lets Thai text wrap in narrow panels instead of running off the edge. You can turn that off in F1 if you would rather have the raw text.\n\nOptionally, while you are playing in Thai, citizens can be given Thai names and walls can show Thai graffiti, on any map. Both are on by default and both can be switched off in F1.\n\nEXPERIMENTAL first release - not yet widely tested. One known rough edge: the game's text engine does not do Thai mark positioning, so tone marks above tall consonants can sit slightly wrong or collide. That is a limitation of the engine rather than of the font, and a mod cannot correct it. Reports of anything else off are welcome.\n\nThe Thai translation is the work of the Thai Infection Free Zone community (posted by Bank) - full credit to them; this mod only makes the game able to display it.",
+        "installation": "Drop ThaiLanguage.dll into <game>/BepInEx/plugins/. Nothing else to copy - the font and the translation are both inside the DLL and are unpacked on first launch. Then start the game and pick Thai in Options. Standalone: no other mod required.",
+        "mainFeatures": "- Thai font added as a global TextMeshPro fallback - fixes every label at once\n- Bundles the complete community Thai translation (4183 keys)\n- Adds Thai to the in-game language dropdown, and re-adds it after game updates\n- Word-break hints so Thai text wraps instead of overflowing panels\n- Optional Thai citizen names and Thai wall graffiti while playing in Thai\n- Single self-contained DLL, no dependencies, everything tunable in F1",
+        "requirements": "BepInEx 5.4.23.2. No other mods required. Pure-managed netstandard2.1 - Windows / macOS (Crossover) / Steam Deck (Proton).",
+        "shoutOuts": "Thai translation by the Thai Infection Free Zone community (posted by Bank). Font is Noto Sans Thai, SIL Open Font License 1.1. Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
+      },
+      "requires": [],
+      "fileNotes": "0.1.0 - Experimental first release. Adds Thai language support: bundles Noto Sans Thai as a TextMeshPro fallback so Thai text renders instead of boxes, and installs the community Thai translation (4183 keys) into the language dropdown. Standalone.",
+      "version": "0.1.0"
     }
   ]
 }
