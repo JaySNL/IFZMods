@@ -6,7 +6,7 @@ Players: spot a bug? **[Open an issue](https://github.com/JaySNL/IFZMods/issues/
 **Legend** — Release state: 🟢 Live (on Nexus) · 🟡 Staged (built/verified, not yet pushed) · 🔬 Experimental · 🛠 WIP (unreleased)
 Bug status: 🔴 Open · 🟠 In progress · 🟢 Fixed (shipped) · ⚪ Won't fix / vanilla limit
 
-_Last updated: 2026-07-29_
+_Last updated: 2026-07-30_
 
 ---
 
@@ -53,7 +53,7 @@ _Last updated: 2026-07-29_
 | 80 | Extended Health | 0.1.0 | 🔬 Experimental | API | [link](https://www.nexusmods.com/infectionfreezone/mods/80) |
 | 81 | Elder Population | 0.1.2 | 🔬 Experimental | API, Panels | [link](https://www.nexusmods.com/infectionfreezone/mods/81) |
 | 85 | No Map Limit - Buildings | 1.0.0 | 🟡 Draft | — | [link](https://www.nexusmods.com/infectionfreezone/mods/85) |
-| 93 | Thai Language | 0.1.0 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/93) |
+| 93 | Thai Language | 0.1.1 | 🔬 Experimental | — | [link](https://www.nexusmods.com/infectionfreezone/mods/93) |
 
 > "Requires: API" = needs **IFZ Mod API** (mod 42). "Panels" = needs **IFZ Mod Panels** (mod 77), a UI library — install only if a mod lists it as a requirement. Match API version to the mod's requirement; always update API + mods together.
 

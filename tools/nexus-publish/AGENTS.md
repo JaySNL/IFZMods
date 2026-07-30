@@ -46,6 +46,14 @@ auto|<ver>`, `update auto|<ver>`. To inspect file IDs before acting, ALWAYS `nod
 [Key…]` — never a bare or exploratory call. Prefer `publish-all.mjs --send <Key>` (dry-run unless `--send`)
 for real releases; call `nexus-upload.mjs` directly only when you specifically need the raw file step.
 
+## NEVER re-run `publish-all --send` to look at its output
+Piping it through `head`/`sed`/`tail` truncates your VIEW, not the run — a second `--send` performs a
+second REAL upload. Doing this on ThaiLanguage 0.1.1 created two identical v0.1.1 MAIN files (320 +
+321) minutes apart. Capture the output the first time (`| tee`) or read the whole thing; if you already
+double-uploaded, `node archive-old-files.mjs --send <Key>` keeps the newest and archives the rest.
+The changelog survives it — `push-changelog.mjs` skips a version that already has an entry unless
+`--force` — so a double-run costs you a duplicate FILE, not a duplicate changelog entry.
+
 ## Run the ONE pipeline, not piecemeal
 `node publish-all.mjs --send <Key>` does upload + requirements + details in order. Running steps by hand
 drops the Requirements tab (happened: RaiderEscalation shipped without the API dep). For the post-upload

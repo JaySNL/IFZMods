@@ -945,8 +945,8 @@
         "shoutOuts": "Thai translation by the Thai Infection Free Zone community (posted by Bank). Font is Noto Sans Thai, SIL Open Font License 1.1. Built by JayMade. Source: https://github.com/JaySNL/IFZMods."
       },
       "requires": [],
-      "fileNotes": "0.1.0 - Experimental first release. Adds Thai language support: bundles Noto Sans Thai as a TextMeshPro fallback so Thai text renders instead of boxes, and installs the community Thai translation (4183 keys) into the language dropdown. Standalone.",
-      "version": "0.1.0"
+      "fileNotes": "0.1.1 - Translation update from the Thai community: 386 strings that were still untranslated are now filled in, plus one citizen-name fix. The new text is word-break segmented like the rest so it wraps correctly in narrow panels. No code changes.",
+      "version": "0.1.1"
     }
   ]
 }

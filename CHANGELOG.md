@@ -6,6 +6,19 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-07-30 -- Thai Language 0.1.1
+
+**[Pushed to Nexus mod 93 -- see STATUS.md]**
+
+### Changed
+- **Thai Language 0.1.1 -- 386 strings that were still English are now Thai.** A translation-only update from the Thai community: every change in this release is a string that shipped in 0.1.0 with an empty translation and now has one, covering tutorial dialogue, tooltips and loading tips. Nothing was reworded, so anything you already saw in Thai reads exactly as before. One citizen name is also corrected (`ดีกลาง` to `กลาง`).
+
+  The new text arrived unsegmented, which matters here: Thai has no spaces between words and TextMeshPro only breaks lines at spaces, so those 386 strings would have rendered as single unbreakable runs and overflowed their panels -- precisely the failure the 0.1.0 segmentation pass exists to prevent. The whole file was therefore re-segmented rather than patched, taking it from 26,952 to 31,213 zero-width word-break hints so old and new text behave the same. Hand-editing had also dropped the `Code.Minor ` row, which is restored; that string would otherwise have quietly regressed to English.
+
+  No code changes -- the plugin, the font and the graffiti data are byte-identical to 0.1.0.
+
+---
+
 ## 2026-07-29 -- Thai Language 0.1.0
 
 **[Pushed to Nexus mod 93 -- see STATUS.md]**
