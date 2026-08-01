@@ -6,6 +6,15 @@ Format: `YYYY-MM-DD` headers + bullet list per release. Each bullet names the mo
 
 ---
 
+## 2026-08-01 -- Thai Language 0.1.1.1
+
+**[Pushed to Nexus mod 93 -- see STATUS.md]**
+
+### Changed
+- **Thai Language 0.1.1.1 -- re-upload of 0.1.1, nothing else.** The 0.1.1 file did not come through the Nexus file scanner cleanly, so it was rebuilt and uploaded again under a new version number. The mod itself is unchanged from 0.1.1: same translation, same font, same code. If 0.1.1 is already installed and working there is nothing to gain from updating.
+
+---
+
 ## 2026-07-30 -- Thai Language 0.1.1
 
 **[Pushed to Nexus mod 93 -- see STATUS.md]**
